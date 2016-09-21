@@ -7,33 +7,60 @@
   <link rel="stylesheet" href="lib/bootstrap.min.css">
   <script src="lib/jquery.min.js"></script>
   <script src="lib/bootstrap.min.js"></script>
+  
+  
 </head>
 <body>
 
-<div class="jumbotron text-center">
+<div class="jumbotron text-center" style="background-image: url('img/backc2.png'); background-size: 100% 140%;text-shadow: 3px 3px 0px #FFFFFF;">
   <h1>Projects presentation page</h1>
-  <p>A page to showcase some computer-science related projects.</p>
 </div>
-  
+
+<div class="container">
+  <p>This is a page to showcase some processing or p5.js projects by E. Jacob</p>
+</div>
+
 <div class="container">
   <div class="row">
     <div class="col-sm-4">
       <h3><a href="https://rawgit.com/Bleuje/Rainbow-Code/master/challenges/CC_24_PerlinNoiseFlowField/index.html">Vector field drawing</a></h3>
-      <p>After I found out about Processing, I found rapidly Daniel Shiffman's excellent videos.
+	  
+	  <img class="img-responsive" src="img/yellowish.png" alt="Yellow painting">
+	  
+	  <p></br></p>
+	  
+      <p  style="text-indent : 15px;">After I found out about Processing, I rapidly came across Daniel Shiffman's excellent videos.
 	  More precisely I find p5.js great because it makes it so easy to share your work.
 	  This vector drawing tool was a nice project to discover lots of features from Processing/p5.js.</p>
-      <p>About the project content : some particles paint a canvas, guided by forces generated from Perlin Noise.
+      <p  style="text-indent : 15px;">About the project content : some particles paint a canvas, guided by forces generated from Perlin Noise.
 	  The physics and colors are very customizable.</p>
     </div>
+	
     <div class="col-sm-4">
-      <h3>Column 2</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+      <h3><a href="https://rawgit.com/Bleuje/p5js-myprojects/master/spinning-shapes/index.html">Spinning shapes</a></h3>
+	  
+	  <img class="img-responsive" src="img/spin1.png" alt="Spinning triangles">
+	  
+	  <p></br></p>
+	  
+      <p  style="text-indent : 15px;">This mostly just something to have a second project, to make this page more useful.
+	  This is a p5.js project. Some colored shapes (right now just triangles) move and spin...</p>
     </div>
+	
     <div class="col-sm-4">
-      <h3>Column 3</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+      <h3>Other projects on Github</h3>
+      <p><a href="https://github.com/Bleuje/ocaml-mesh-plot">ocaml-mesh-plot</a></p>
+      <p>A module to plot 3D meshes with Objective Caml </br></p>
+	  <p><a href="https://github.com/Bleuje/antcolonysystem-tsp-qt">antcolonysystem-tsp-qt</a></p>
+      <p>Optimization of the traveling salesman problem (TSP) by ant colony optimization.
+	  Implemented in C++ with Qt.
+	  It should be somewhat ready for release although I'm not 100% sure it works as well as it is supposed to.</br></p>
+	  <p><a href="https://github.com/Bleuje/ocaml-mazelab">ocaml-mazelab</a></p>
+      <p>An OCaml module to show and/or generate meshes of 3D mazes.
+	  Genrerated meshes can be easily transefered to Blender's renderer for example.</br></p>
+	  <p><a href="https://github.com/Bleuje/ocaml-4dmaze-render">ocaml-4dmaze-render</a></p>
+      <p>An old project about generating and rendering in 3D some 4D perfect mazes.
+	  </br></p>
     </div>
   </div>
 </div>
