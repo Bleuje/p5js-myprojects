@@ -3,6 +3,8 @@ var playing = true;
 var myGrad;
 var custom_image;
 
+var application = 1;
+
 var selected_picture = true;
 
 function preload()
@@ -14,6 +16,7 @@ function preload()
 }
 
 var dictionary = {};
+var dictionary2 = {};
 
 var cnv;
 
@@ -21,6 +24,8 @@ function setup() {
   dictionary["Coquelicots"] = img1;
   dictionary["Starry night"] = img2;
   dictionary["Persistence of memory"] = img3;
+  dictionary2["Webcam"] = 1;
+  dictionary2["Random walks"] = 0;
   
   cnv = createCanvas(50,50);
   cnv.parent("canvas")
@@ -28,7 +33,7 @@ function setup() {
   
   var button = createButton('Reset page');
   button.mousePressed(reset);
-  button.parent('line1');
+  button.parent('line2');
   
   sel = createSelect();
   sel.option('Select a picture');
@@ -38,7 +43,14 @@ function setup() {
   sel.changed(mySelectEvent);
   sel.parent('pic-choice');
   
-  launch = createButton('Use an ellipse to find a color gradient (can take a little time)');
+  sel2 = createSelect();
+  sel2.option('Select an application');
+  sel2.option('Webcam');
+  sel2.option('Random walks');
+  sel2.changed(mySelectEvent2);
+  sel2.parent('pic-choice');
+  
+  launch = createButton('Push here to use an ellipse to find a color gradient from the picture and use it in the chosen application');
   launch.mousePressed(ellipseEvent);
   launch.parent('launch');
 /*
@@ -47,44 +59,6 @@ function setup() {
 }
 
 var img;
-
-function dropped() {
-  image(img, 0, 0, width, height);
-  if (selected_picture === false) {
-      cnv = createCanvas(img.width, img.height);
-      cnv.parent('canvas');
-  }
-  resizeCanvas(img.width, img.height);
-  
-  selected_picture = true;
-  image(img,0,0,width,height);
-}
-
-function gotFile(file) {
-  img = createImg(file.data);
-}
-
-function checkURL(url) {
-    return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
-}
-
-function myInputEvent(){
-  var s = this.value();
-  if (checkURL(s)) {
-    img = loadImage(s);
-    
-    if (selected_picture === false) {
-        cnv = createCanvas(img.width, img.height);
-        cnv.parent('canvas');
-    }
-    
-    resizeCanvas(img.width, img.height);
-    
-    selected_picture = true;
-    image(img,0,0,width,height);
-    
-  }
-}
 
 function mySelectEvent() {
   var item = sel.value();
@@ -101,6 +75,13 @@ function mySelectEvent() {
     
     selected_picture = true;
     image(img,0,0,width,height);
+  }
+}
+
+function mySelectEvent2() {
+  var item = sel2.value();
+  if (item != 'Select an application'){
+    application = dictionary2[item];
   }
 }
 
@@ -154,9 +135,16 @@ function ball() {
     
 }
 
+var capture;
+
+var cnv3;
+
+
+
 function ellipseEvent() {
   if(!choice_done) {
     sel.hide();
+    sel2.hide();
     
     myGrad = new colorGrad(100);
     myGrad.circleMethod();
@@ -165,25 +153,55 @@ function ellipseEvent() {
     app = createP('<h3>Application :</h3>');
     app.parent('canvas2');
     
-    cnv2 = createCanvas(500,500);
-    cnv2.parent('canvas2');
-    background(100);
-    
-    for(var i = 0; i<NB_BALLS;i++){
-      balls[i] = new ball();
+    if (application === 0) {
+      cnv3 = createCanvas(500,500);
+      cnv3.parent('canvas2');
+      background(100);
+      
+      for(var i = 0; i<NB_BALLS;i++){
+        balls[i] = new ball();
+      }
+      
+      choice_done = true;
+      
+      button2 = createButton('Pause/Play (P)');
+      button2.mousePressed(pause_play);
+      button2.parent('buttons');
+      button3 = createButton('Save canvas (S)');
+      button3.mousePressed(canvas_save);
+      button3.parent('buttons');
+      button4 = createButton('Clear canvas (C)');
+      button4.mousePressed(clear_canvas);
+      button4.parent('buttons');
+    } else if (application === 1) {
+        capture = createCapture(VIDEO);
+        cnv3 = createCanvas(320,240);
+        cnv3.parent('canvas2');
+        capture.parent('canvas2');
+        capture.size(width/3, height/3);
+        image(capture,0,0,width,height);
+        
+        button = createButton('Draw from video capture');
+        button.mousePressed(drawCapt);
+        button.parent('buttons');
+        
+        button3 = createButton('Save canvas (S)');
+        button3.mousePressed(canvas_save);
+        button3.parent('buttons');
+        
+        resolt = createP('Resolution');
+        resolt.parent('col3');
+        resol = createSlider(1,20,10,1);
+        resol.parent('col3');
+        
+        gloopt = createP('Gradient loops');
+        gloopt.parent('col3');
+        gloop = createSlider(0.5,10,3,0.1);
+        gloop.parent('col3');
+        
+        
+        choice_done = true;
     }
-    
-    choice_done = true;
-    
-    button2 = createButton('Pause/Play (P)');
-    button2.mousePressed(pause_play);
-    button2.parent('buttons');
-    button3 = createButton('Save canvas (S)');
-    button3.mousePressed(canvas_save);
-    button3.parent('buttons');
-    button4 = createButton('Clear canvas (C)');
-    button4.mousePressed(clear_canvas);
-    button4.parent('buttons');
     
   }
   
@@ -241,6 +259,7 @@ function colorGrad(n) {
   
   this.getColor = function(t) {
     var ind = (t-floor(t))*this.complexity;
+    //console.log('pas bug',t);
     var r = lerp(this.colors[floor(ind)][0],this.colors[floor(ind+1)%this.complexity][0],ind-floor(ind));
     var g = lerp(this.colors[floor(ind)][1],this.colors[floor(ind+1)%this.complexity][1],ind-floor(ind));
     var b = lerp(this.colors[floor(ind)][2],this.colors[floor(ind+1)%this.complexity][2],ind-floor(ind));
@@ -257,16 +276,70 @@ function colorGrad(n) {
   }
 }
 
+function drawCapt() {
+    cury = 0;
+    image(capture,0,0,width,height);
+}
+
 var test = 0;
+
+var cury = 0;
+
+var lines = 1;
+
+var stepSize = 10;
+
+function applyGrad() {
+    //capture.loadPixels();
+    noStroke();
+    
+    if (cury<height) {
+        var k = 0;
+        while (k<lines) {
+            for (var x=0; x<width; x+=resol.value()) {
+              //var i = y * width + x;
+              //var brightness = pixels[i*4] / 255;
+              
+              var co = get(x,cury);
+              
+              var moy = (co[0]+co[1]+co[2])/(255*3);
+              
+              
+              //console.log('pas bug',pixels[i*4]);
+              var c = myGrad.getColor(gloop.value()*moy);
+              fill(c);
+              rect(x, cury, resol.value(), resol.value());
+            }
+            cury += resol.value();
+            k++;
+        }
+    }
+
+    
+    //capture.updatePixels();
+}
+
+var firstcapt = 0;
 
 function draw() {
   
-  if (choice_done) {
-    for(var i = 0; i<NB_BALLS;i++){
-      balls[i].move();
-      balls[i].show();
+  if (application === 0) {
+    if (choice_done) {
+      for(var i = 0; i<NB_BALLS;i++){
+        balls[i].move();
+        balls[i].show();
+      }
+      //console.log(balls[0].pos.x,balls[0].pos.y);
+      //ellipse(balls[0].pos.x,balls[0].pos.y,5,5);
     }
-    //console.log(balls[0].pos.x,balls[0].pos.y);
-    //ellipse(balls[0].pos.x,balls[0].pos.y,5,5);
+  } else if (choice_done && application === 1) {
+    if(firstcapt ===0){
+      cury = 0;
+      image(capture,0,0,width,height);
+      firstcapt++;
+    }
+    applyGrad();
+    resolt.html('Resolution (squares size) : ' + resol.value());
+    gloopt.html('Gradient loops : ' + gloop.value());
   }
 }
