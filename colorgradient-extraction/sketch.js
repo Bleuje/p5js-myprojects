@@ -18,7 +18,7 @@ var dictionary = {};
 var cnv;
 
 function setup() {
-  dictionary["Red flowers"] = img1;
+  dictionary["Coquelicots"] = img1;
   dictionary["Starry night"] = img2;
   dictionary["Persistence of memory"] = img3;
   
@@ -32,7 +32,7 @@ function setup() {
   
   sel = createSelect();
   sel.option('Select a picture');
-  sel.option("Red flowers");
+  sel.option("Coquelicots");
   sel.option("Starry night");
   sel.option("Persistence of memory");
   sel.changed(mySelectEvent);
@@ -161,6 +161,9 @@ function ellipseEvent() {
     myGrad = new colorGrad(100);
     myGrad.circleMethod();
     //myGrad.draw(100,25,200,50);
+    
+    app = createP('<h3>Application :</h3>');
+    app.parent('canvas2');
     
     cnv2 = createCanvas(500,500);
     cnv2.parent('canvas2');
