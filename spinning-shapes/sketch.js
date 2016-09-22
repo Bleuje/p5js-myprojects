@@ -127,6 +127,12 @@ function keyTyped() {
   }
 }
 
+function mousePressed() {
+    if (!playing) {
+        pause_play();
+    }
+}
+
 var triangles = [];
 
 var colorGradientFrequency = 0.01;
@@ -221,17 +227,26 @@ var latest = myDate.getTime()-1000;
 function draw() {
   if(fadeS.value()>0) background(0,fadeS.value());
   
-  myDate = new Date();
   
-  if (mouseIsPressed && mouseX>=0 && mouseY >=0 && mouseX < width && mouseY < height && (triangles.length<MOD || !triangles[triangles.length -1].active ) && myDate.getTime()>latest+50) {
-    triangles[min(MOD-1,triangles.length)] = new movingTriangle(mouseX,mouseY);
-    millis(100);
-    latest = myDate.getTime();
+  
+  if (mouseIsPressed && mouseX>=0 && mouseY >=0 && mouseX < width && mouseY < height && (triangles.length<MOD || !triangles[triangles.length -1].active )) {
+    myDate = new Date();
+    if (myDate.getTime()>latest+50) {
+        triangles[min(MOD-1,triangles.length)] = new movingTriangle(mouseX,mouseY);
+        millis(100);
+        latest = myDate.getTime();
+    }
   }
   
   triangles.sort(function(a, b) {
       return parseFloat(a.pos.x) - parseFloat(b.pos.x);
   });
+  
+  if (triangles.length>0 && triangles[0].pos.x > 1.05*width) {
+    triangles = [];
+    //console.log('atchoum')
+    pause_play();
+  }
   
   for(var i = 0; i<min(triangles.length,MOD); i++){
     if(triangles[i].moves>0) triangles[i].show();
