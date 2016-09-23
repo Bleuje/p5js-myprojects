@@ -312,7 +312,7 @@ function setup() {
   
   console.log('test32');
   
-  p6 = createP('Max frame rate : ' + 40);
+  p6 = createP('Maximum frame rate : ' + 40);
   p6.parent('interaction');
   framerateSlider = createSlider(1, 60, 40, 1);
   framerateSlider.parent('interaction');
