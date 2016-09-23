@@ -26,6 +26,7 @@ var defsel = 'line';
 var bounce = false;
 var color_noise = false;
 var field_mode = 0;
+var panels_are_there = true;
 
 var playing = true;
 
@@ -41,6 +42,7 @@ function setup() {
   //var x = (windowWidth - width) / 2;
   //var y = (windowHeight - height) / 2;
   cnv.parent('canvas');
+  cnv.style('z-index: 1')
   background(255);
   colorMode(RGB, 255);
   cols = floor(width / scl);
@@ -83,8 +85,15 @@ function setup() {
   button7.mousePressed(change_mode);
   button7.parent('buttons');
   
+  button8 = createButton('Show/hide panels of parameters (X)');
+  button8.mousePressed(disp_panels);
+  button8.parent('buttons2');
+  
+  //div1.hide();
+  
   part1 = createP('<h3>Physics</h3>');
   part1.parent('physics');
+
   
   part2 = createP('<h3>Interaction</h3>');
   part2.parent('interaction');
@@ -354,6 +363,8 @@ function setup() {
     p3bis.hide();
     pp10t.hide();
     pp10bis.hide();
+    
+    disp_panels();
   
   console.log('test');
   
@@ -486,24 +497,12 @@ function new_particles() {
 }
 
 function remove_bias() {
-  xbiasSlider.remove();
-  xbiasSlider = createSlider(-10, 10, 0, 0.1);
-  xbiasSlider.position(20,300);
-  ybiasSlider.remove();
-  ybiasSlider = createSlider(-10, 10, 0, 0.1);
-  ybiasSlider.position(20,320);
-  sbiasSlider.remove();
-  sbiasSlider = createSlider(-5, 5, 0, 0.1);
-  sbiasSlider.position(20,360);
-  sbiasXSlider.remove();
-  sbiasXSlider = createSlider(0, width, width/2, 1);
-  sbiasXSlider.position(20,400);
-  sbiasYSlider.remove();
-  sbiasYSlider = createSlider(0, height, height/2, 1);
-  sbiasYSlider.position(20,420);
-  sbiasRSlider.remove();
-  sbiasRSlider = createSlider(-5.0, 5.0, -0.3, 0.01);
-  sbiasRSlider.position(20,440);
+  xbiasSlider.value(0);
+  ybiasSlider.value(0);
+  sbiasSlider.value(0);
+  sbiasXSlider.value(width/2);
+  sbiasYSlider.value(height/2);
+  sbiasRSlider.value(-0.3);
 }
 
 function myCheckedEvent() {
@@ -548,6 +547,23 @@ function reset() {
     seedNoise();
 }
 
+function disp_panels() {
+  if (panels_are_there) {
+    document.getElementById('physics').style.display = 'none';
+    document.getElementById('interaction').style.display = 'none';
+    document.getElementById('pen-colors').style.display = 'none';
+    document.getElementById('rectangle-mode').style.display = 'none';
+    document.getElementById('void').style.display = 'block';
+  } else {
+    document.getElementById('physics').style.display = 'block';
+    document.getElementById('interaction').style.display = 'block';
+    document.getElementById('pen-colors').style.display = 'block';
+    document.getElementById('rectangle-mode').style.display = 'block';
+    document.getElementById('void').style.display = 'none';
+  }
+  panels_are_there = !panels_are_there;
+}
+
 function change_mode() {
     mode = (mode + 1) % 2;
     new_particles();
@@ -579,6 +595,8 @@ function keyTyped() {
     new_particles();
   } else if (key === 'm') {
     change_mode();
+  } else if (key === 'x') {
+    disp_panels();
   }
 }
 
