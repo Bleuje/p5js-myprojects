@@ -46,6 +46,8 @@ var pixelsadd = 200;
 
 var cnv;
 
+var myGrad;
+
 function setup() {
   cnv = createCanvas(max(50,windowWidth-bpixels), HEI + csize*pixelsadd);
   cnv.style("border:1px solid #000000;");

@@ -56,7 +56,7 @@
 		   ">
 
 	</div>
-  <div class="row" id="physics" style="z-index: 0;width:90%;top: 20px;">
+  <div class="row" id="physics" style="z-index: 0;top: 20px;">
     <div class="col-sm-3" id="physics1" style="border-radius: 10px;
     border: 4px solid rgba(0,0,0,0.3);
     padding: 10px;
@@ -126,6 +126,14 @@
 
 </div>
 
+<script>
+    document.getElementById('physics').style.display = 'none';
+    document.getElementById('interaction').style.display = 'none';
+    document.getElementById('pen-colors').style.display = 'none';
+    document.getElementById('rectangle-mode').style.display = 'none';
+    document.getElementById('gradient').style.display = 'none';
+</script>
+
 <div class="container" id="void" style="height: 600px;">
 </div>
 
@@ -135,7 +143,7 @@
 <div class="container" id="button3" style="margin-left: 75px;text-align:center;">
 </div>
 	
-<div class="container" style="margin-left: 75px;">
+<div class="container" id="docgal" style="margin-left: 75px;">
 <div class="row">
 <div class="col-sm-6" style="border-radius: 10px;
     border: 4px solid rgba(0,0,0,0.3);
