@@ -41,11 +41,13 @@ var capture;
 var color_mode = 'Normal';
 
 var csize = 0;
+var bpixels = 250;
+var pixelsadd = 200;
 
 var cnv;
 
 function setup() {
-  cnv = createCanvas(max(50,windowWidth-150), HEI);
+  cnv = createCanvas(max(50,windowWidth-bpixels), HEI + csize*pixelsadd);
   cnv.style("border:1px solid #000000;");
   cnv.parent('canvas');
   cnv.style('z-index: 1')
@@ -519,7 +521,7 @@ function mySelectEvent5() {
 function resizec() {
   csize = (csize + 1)%2;
   cnv.remove();
-  cnv = createCanvas(max(50,windowWidth-150), HEI + csize*200);
+  cnv = createCanvas(max(50,windowWidth-bpixels), HEI + csize*pixelsadd);
   cnv.style("border:1px solid #000000;");
   cnv.parent('canvas');
   cnv.style('z-index: 1');
