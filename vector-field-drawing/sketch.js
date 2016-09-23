@@ -1,3 +1,7 @@
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 var inc = 0.01;
 var scl = 20;
 var cols, rows;
@@ -25,7 +29,7 @@ var redoSlider,blueoSlider,greenoSlider;
 var defsel = 'line';
 var bounce = false;
 var color_noise = false;
-var field_mode = 0;
+var field_mode = getRandomInt(0, 1);
 var panels_are_there = true;
 
 var playing = true;
@@ -63,6 +67,8 @@ function setup() {
   }
   background(255);
   
+  console.log('test104');
+  
   button = createButton('Reset (R)');
   button.mousePressed(reset);
   button.parent('buttons');
@@ -85,44 +91,103 @@ function setup() {
   button7.mousePressed(change_mode);
   button7.parent('buttons');
   
-  button8 = createButton('Show/hide panels of parameters (X)');
-  button8.mousePressed(disp_panels);
-  button8.parent('buttons2');
+  console.log('test1041');
   
+  button8 = createButton('Physics panel (1)');
+  button8.mousePressed(disp_panel_phys);
+  button8.parent('buttons2');
+  button9 = createButton('Drawing style panel (2)');
+  button9.mousePressed(disp_panel_draw);
+  button9.parent('buttons2');
+  button10 = createButton('Interaction/Misc. panel (3)');
+  button10.mousePressed(disp_panel_inter);
+  button10.parent('buttons2');
+  button11 = createButton('Rectangle mode panel (4)');
+  button11.mousePressed(disp_panel_rect);
+  button11.parent('buttons2');
+  button12 = createButton('Color gradient extraction panel (5)');
+  button12.mousePressed(disp_panel_grad);
+  button12.parent('buttons2');
+  
+  console.log('test1042');
   //div1.hide();
   
   part1 = createP('<h3>Physics</h3>');
-  part1.parent('physics');
+  part1.parent('physics1');
+
 
   
-  part2 = createP('<h3>Interaction</h3>');
-  part2.parent('interaction');
+  part2 = createP('<h3>Miscellaneous</h3>');
+  part2.parent('mouse');
+    
+  p6a = createP('<h4>Performance settings</h4>');
+  p6a.parent('performance');
+  
+
   
   part3 = createP('<h3>Drawing style</h3>');
-  part3.parent('pen-colors');
+  part3.parent('pen');
+
+  part31 = createP('<h4>Color settings</h4>');
+  part31.parent('color1');
+  part32 = createP('<h4>Color gradient</h4>');
+  part32.parent('color2');
+  part32 = createP('<h4>Color noise settings</h4>');
+  part32.parent('colorn');
   
   part4 = createP('<h3>Rectangle mode settings</h3>');
   part4.parent('rectangle-mode');
   
+    
+      console.log('test1043');
+  
   part5 = createP('<h3>Custom color gradient</h3>');
   part5.parent('gradient');
   
+  console.log('test103');
+  
+  pp1a = createP('<h4>Particle settings</h4>');
+  pp1a.parent('physics1');
+  
   bounceCbox = createCheckbox('Border bounce',false);
-  bounceCbox.parent('physics');
+  bounceCbox.parent('physics1');
   bounceCbox.changed(myCheckedEvent);
+  
+  pp1 = createP('Particle speed : ');
+  pp1.parent('physics1');
+  speedSlider = createSlider(0, 0.98, 0.7,0.02);
+  speedSlider.parent('physics1');
+  nbp = createP('Current number of particles : ' + NB_PARTICLES);
+  nbp.parent('physics1');
+  nbp2 = createP('Number of particles in the next set : ');
+  nbp2.parent('physics1');
+  particleNumberSlider = createSlider(1, sqrt(sqrt(3000)), sqrt(sqrt(250)), 0.01);
+  particleNumberSlider.parent('physics1');
+  
+  psel5a = createP('<h4>Force field settings</h4>');
+  psel5a.parent('physicsf');
+  
   psel5 = createP('<strong>Field type :</strong>')
-  psel5.parent('physics');
+  psel5.parent('physicsf');
   sel5 = createSelect();
-  sel5.parent('physics');
-  sel5.option('Basic');
-  sel5.option('Moving torus in 3D');
+  sel5.parent('physicsf');
+  if (field_mode === 0) {
+    sel5.option('Basic');
+    sel5.option('Moving torus in 3D');
+  } else {
+    sel5.option('Moving torus in 3D');
+    sel5.option('Basic');
+  }
+  
   sel5.changed(mySelectEvent5);
   
+  console.log('test102');
   
-  psel = createP('<strong>Pen style :</strong>')
-  psel.parent('pen-colors');
+  
+  psel = createP('<h4>Pen settings</h4> Pen style :')
+  psel.parent('pen');
   sel = createSelect();
-  sel.parent('pen-colors');
+  sel.parent('pen');
   sel.option('line');
   sel.option('circle');
   sel.option('square');
@@ -131,133 +196,106 @@ function setup() {
   sel.changed(mySelectEvent);
   
   pp7a = createP('Pen size : ');
-  pp7a.parent('pen-colors');
+  pp7a.parent('pen');
   penSizeSlider = createSlider(sqrt(5), sqrt(300), sqrt(40.0), 0.1);
-  penSizeSlider.parent('pen-colors');
+  penSizeSlider.parent('pen');
   pp7c = createP('Pen size noise : ');
-  pp7c.parent('pen-colors');
+  pp7c.parent('pen');
   penNoiseSlider = createSlider(0, 1, 1, 0.01);
-  penNoiseSlider.parent('pen-colors');
+  penNoiseSlider.parent('pen');
   
   stylestroke = createP('Stroke weight : ');
-  stylestroke.parent('pen-colors');
+  stylestroke.parent('pen');
   stylestroke.hide();
   penstrokeSlider = createSlider(1, 10, 1, 1);
-  penstrokeSlider.parent('pen-colors');
+  penstrokeSlider.parent('pen');
   penstrokeSlider.hide();
   
+  console.log('test101');
   
-  pp1 = createP('Speed : ');
-  pp1.parent('physics');
-  speedSlider = createSlider(0, 0.98, 0.7,0.02);
-  speedSlider.parent('physics');
   pp2 = createP('Space size : ');
-  pp2.parent('physics');
+  pp2.parent('physicsf');
   incSlider = createSlider(0, sqrt(0.3), sqrt(inc),0.00001);
-  incSlider.parent('physics');
+  incSlider.parent('physicsf');
   pp3 = createP('Force noise : ');
-  pp3.parent('physics');
+  pp3.parent('physicsf');
   forceNoiseSlider = createSlider(0, 10, 2.0, 0.1);
-  forceNoiseSlider.parent('physics');
+  forceNoiseSlider.parent('physicsf');
   pp4 = createP('Force field magnitude : ');
-  pp4.parent('physics');
+  pp4.parent('physicsf');
   forceMagSlider = createSlider(0, 10, 2.0, 0.1);
-  forceMagSlider.parent('physics');
+  forceMagSlider.parent('physicsf');
   pp5 = createP('Force field change rate : ');
-  pp5.parent('physics');
+  pp5.parent('physicsf');
   fieldChangeRateSlider = createSlider(0, sqrt(0.002), sqrt(0.00008), 0.0000001);
-  fieldChangeRateSlider.parent('physics');
+  fieldChangeRateSlider.parent('physicsf');
   pp6 = createP('Color gradient frequency : ');
-  pp6.parent('pen-colors');
+  pp6.parent('color2');
   colorGradientSlider = createSlider(0, sqrt(50), 1.0, 0.01);
-  colorGradientSlider.parent('pen-colors');
-  pp6bis = createP('Blend mode : ');
-  pp6bis.parent('pen-colors');
-  sel2 = createSelect();
-  sel2.parent('pen-colors');
-  sel2.option('BLEND (default)');
-  sel2.option('ADD');
-  sel2.option('DARKEST');
-  sel2.option('LIGHTEST');
-  sel2.option('DIFFERENCE');
-  sel2.option('EXCLUSION');
-  sel2.option('MULTIPLY');
-  sel2.option('SCREEN');
-  sel2.option('OVERLAY');
-  sel2.option('DODGE');
-  sel2.option('BURN');
-  sel2.changed(mySelectEvent2);
-  
-  pp6bis = createP('Filter : ');
-  pp6bis.parent('pen-colors');
-  sel4 = createSelect();
-  sel4.parent('pen-colors');
-  sel4.option('NONE');
-  sel4.option('GRAY');
-  sel4.option('BLUR');
-  sel4.option('DILATE');
-  sel4.option('ERODE');
-  sel4.changed(mySelectEvent4);
+  colorGradientSlider.parent('color2');
+
   
   console.log('test1');
 
   pp7b = createP('Color alpha : ');
-  pp7b.parent('pen-colors');
+  pp7b.parent('color1');
   alphaSlider = createSlider(0, 1, 1, 0.001);
-  alphaSlider.parent('pen-colors');
+  alphaSlider.parent('color1');
   p5_ = createP('Background fade : ');
-  p5_.parent('pen-colors');
+  p5_.parent('color1');
   fade1Slider = createSlider(0, 1, 0, 0.01);
-  fade1Slider.parent('pen-colors');
+  fade1Slider.parent('color1');
   fade2Slider = createSlider(0, 255, 255, 1);
-  fade2Slider.parent('pen-colors');
+  fade2Slider.parent('color1');
   pp8 = createP('Color contrast : ');
-  pp8.parent('pen-colors');
+  pp8.parent('color1');
   contrastSlider = createSlider(10, 300, 130, 1);
-  contrastSlider.parent('pen-colors');
+  contrastSlider.parent('color1');
   pp8bis = createP('Color brightness : ');
-  pp8bis.parent('pen-colors');
+  pp8bis.parent('color1');
   brightSlider = createSlider(10, 275, 150, 1);
-  brightSlider.parent('pen-colors');
+  brightSlider.parent('color1');
   pp10 = createP('Particle color offset : ');
-  pp10.parent('pen-colors');
+  pp10.parent('color2');
   particleColorOffsetSlider = createSlider(0.1, 25, 1, 0.01);
-  particleColorOffsetSlider.parent('pen-colors');
+  particleColorOffsetSlider.parent('color2');
   noiseCbox = createCheckbox('Color noise',false);
-  noiseCbox.parent('pen-colors');
+  noiseCbox.parent('colorn');
   noiseCbox.changed(myCheckedEvent2);
   pp10bis = createP('Synchronized color noise : ');
-  pp10bis.parent('pen-colors');
+  pp10bis.parent('colorn');
   colornoiseSlider = createSlider(0, 100, 0, 0.01);
-  colornoiseSlider.parent('pen-colors');
+  colornoiseSlider.parent('colorn');
   pp10t = createP('Noise \"frequency\" : ');
-  pp10t.parent('pen-colors');
+  pp10t.parent('colorn');
   noisefreqSlider = createSlider(0, 1, 0.2, 0.01);
-  noisefreqSlider.parent('pen-colors');
+  noisefreqSlider.parent('colorn');
   
   console.log('test2');
   
+  pp11a = createP('<h4>Field bias</h4>');
+  pp11a.parent('physics2');
   pp11 = createP('X and Y bias : ');
-  pp11.parent('physics');
+  pp11.parent('physics2');
   xbiasSlider = createSlider(-10, 10, 0, 0.1);
-  xbiasSlider.parent('physics');
+  xbiasSlider.parent('physics2');
   ybiasSlider = createSlider(-10, 10, 0, 0.1);
-  ybiasSlider.parent('physics');
+  ybiasSlider.parent('physics2');
   pp12 = createP('Swirl bias : ');
-  pp12.parent('physics');
+  pp12.parent('physics2');
   sbiasSlider = createSlider(-5, 5, 0, 0.1);
-  sbiasSlider.parent('physics');
+  sbiasSlider.parent('physics2');
   pp12 = createP('Swirl bias xy position, radius : ');
-  pp12.parent('physics');
+  pp12.parent('physics2');
   sbiasXSlider = createSlider(0, width, width/2, 1);
-  sbiasXSlider.parent('physics');
+  sbiasXSlider.parent('physics2');
   sbiasYSlider = createSlider(0, height, height/2, 1);
-  sbiasYSlider.parent('physics');
+  sbiasYSlider.parent('physics2');
   sbiasRSlider = createSlider(-5.0, 5.0, -0.3, 0.01);
-  sbiasRSlider.parent('physics');
+  sbiasRSlider.parent('physics2');
   
   buttonbias = createButton('Remove bias');
-  buttonbias.parent('physics');
+  buttonbias.parent('physics2');
   buttonbias.mousePressed(remove_bias);
   
   fr = createP('');
@@ -265,13 +303,7 @@ function setup() {
   
   console.log('test3');
   
-  
-  nbp = createP('Current number of particles : ' + NB_PARTICLES);
-  nbp.parent('interaction');
-  nbp2 = createP('Number of particles in the next set : ');
-  nbp2.parent('interaction');
-  particleNumberSlider = createSlider(1, sqrt(sqrt(3000)), sqrt(sqrt(250)), 0.01);
-  particleNumberSlider.parent('interaction');
+
   
   /*
   psel3 = createP('<strong>Color mode :</strong>')
@@ -284,47 +316,49 @@ function setup() {
   
   console.log('test31');
   
+  p2a = createP('<h4>Mouse-click parameters</h4>');
+  p2a.parent('mouse');
   p2 = createP('Mouse-click attraction/repulsion :');
-  p2.parent('interaction');
+  p2.parent('mouse');
   mouseSlider = createSlider(-5, 5, -1.4, 0.01);
-  mouseSlider.parent('interaction');
+  mouseSlider.parent('mouse');
   p2 = createP('Mouse-click swirl :');
-  p2.parent('interaction');
+  p2.parent('mouse');
   mouseSwirlSlider = createSlider(-4, 4, 0, 0.01);
-  mouseSwirlSlider.parent('interaction');
+  mouseSwirlSlider.parent('mouse');
   p3 = createP('Color offsets : ');
-  p3.parent('pen-colors');
+  p3.parent('color2');
   redoSlider = createSlider(0, 5, 5*noise(10000), 0.01);
-  redoSlider.parent('pen-colors');
+  redoSlider.parent('color2');
   greenoSlider = createSlider(0, 5, 5*noise(20000), 0.01);
-  greenoSlider.parent('pen-colors');
+  greenoSlider.parent('color2');
   blueoSlider = createSlider(0, 5, 5*noise(30000), 0.01);
-  blueoSlider.parent('pen-colors');
+  blueoSlider.parent('color2');
   p3bis = createP('Specialized noise intensity : ');
-  p3bis.parent('pen-colors');
+  p3bis.parent('colorn');
   rednSlider = createSlider(0, 100, 0, 0.01);
-  rednSlider.parent('pen-colors');
+  rednSlider.parent('colorn');
   greennSlider = createSlider(0, 100, 0, 0.01);
-  greennSlider.parent('pen-colors');
+  greennSlider.parent('colorn');
   bluenSlider = createSlider(0, 100, 0, 0.01);
-  bluenSlider.parent('pen-colors');
+  bluenSlider.parent('colorn');
   p4 = createP('Color oscillation frequencies : ');
   p4bis = createP('(Align them or set them to 0 to get simpler color gradients)');
-  p4.parent('pen-colors');
-  p4bis.parent('pen-colors');
+  p4.parent('color2');
+  p4bis.parent('color2');
   redSlider = createSlider(0, 20, 3, 1);
-  redSlider.parent('pen-colors');
+  redSlider.parent('color2');
   greenSlider = createSlider(0, 20, 3, 1);
-  greenSlider.parent('pen-colors');
+  greenSlider.parent('color2');
   blueSlider = createSlider(0, 20, 3, 1);
-  blueSlider.parent('pen-colors');
+  blueSlider.parent('color2');
   
   console.log('test32');
-  
+
   p6 = createP('Maximum frame rate : ' + 40);
-  p6.parent('interaction');
+  p6.parent('performance');
   framerateSlider = createSlider(1, 60, 40, 1);
-  framerateSlider.parent('interaction');
+  framerateSlider.parent('performance');
   
   console.log('test321');
   
@@ -347,24 +381,45 @@ function setup() {
   
   console.log('test4');
   
+  pp6bis = createP('<h4>Effects</h4> ');
+  pp6bis.parent('pen');
+  pp6bis = createP('Blend mode : ');
+  pp6bis.parent('pen');
+  sel2 = createSelect();
+  sel2.parent('pen');
+  sel2.option('BLEND (default)');
+  sel2.option('ADD');
+  sel2.option('DARKEST');
+  sel2.option('LIGHTEST');
+  sel2.option('DIFFERENCE');
+  sel2.option('EXCLUSION');
+  sel2.option('MULTIPLY');
+  sel2.option('SCREEN');
+  sel2.option('OVERLAY');
+  sel2.option('DODGE');
+  sel2.option('BURN');
+  sel2.changed(mySelectEvent2);
+  
+  pp6bis = createP('Filter : ');
+  pp6bis.parent('pen');
+  sel4 = createSelect();
+  sel4.parent('pen');
+  sel4.option('NONE');
+  sel4.option('GRAY');
+  sel4.option('BLUR');
+  sel4.option('DILATE');
+  sel4.option('ERODE');
+  sel4.changed(mySelectEvent4);
+  
   filterframe = createP('Filter every ' + 30 + ' frames : ');
-  filterframe.parent('pen-colors');
+  filterframe.parent('pen');
   filterframe.hide();
   
   filterframeSlider = createSlider(1, 100, 30, 1);
-  filterframeSlider.parent('pen-colors');
+  filterframeSlider.parent('pen');
   filterframeSlider.hide();
-  
-    colornoiseSlider.hide();
-    noisefreqSlider.hide();
-    rednSlider.hide();
-    greennSlider.hide();
-    bluenSlider.hide();
-    p3bis.hide();
-    pp10t.hide();
-    pp10bis.hide();
     
-    disp_panels();
+    disp_panel_phys();
   
   console.log('test');
   
@@ -518,26 +573,8 @@ function myCheckedEvent() {
 function myCheckedEvent2() {
   if (this.checked()) {
     color_noise = true;
-    colornoiseSlider.show();
-    noisefreqSlider.show();
-    rednSlider.show();
-    greennSlider.show();
-    bluenSlider.show();
-    p3bis.show();
-    pp10t.show();
-    pp10bis.show();
-    console.log("Checking!");
   } else {
     color_noise = false;
-    colornoiseSlider.hide();
-    noisefreqSlider.hide();
-    rednSlider.hide();
-    greennSlider.hide();
-    bluenSlider.hide();
-    p3bis.hide();
-    pp10t.hide();
-    pp10bis.hide();
-    console.log("Unchecking!");
   }
 }
 
@@ -547,18 +584,96 @@ function reset() {
     seedNoise();
 }
 
-function disp_panels() {
+function disp_panel_phys() {
   if (panels_are_there) {
     document.getElementById('physics').style.display = 'none';
     document.getElementById('interaction').style.display = 'none';
     document.getElementById('pen-colors').style.display = 'none';
     document.getElementById('rectangle-mode').style.display = 'none';
+    document.getElementById('gradient').style.display = 'none';
     document.getElementById('void').style.display = 'block';
   } else {
     document.getElementById('physics').style.display = 'block';
-    document.getElementById('interaction').style.display = 'block';
+    document.getElementById('interaction').style.display = 'none';
+    document.getElementById('pen-colors').style.display = 'none';
+    document.getElementById('rectangle-mode').style.display = 'none';
+    document.getElementById('gradient').style.display = 'none';
+    document.getElementById('void').style.display = 'none';
+  }
+  panels_are_there = !panels_are_there;
+}
+
+function disp_panel_draw() {
+  if (panels_are_there) {
+    document.getElementById('physics').style.display = 'none';
+    document.getElementById('interaction').style.display = 'none';
+    document.getElementById('pen-colors').style.display = 'none';
+    document.getElementById('rectangle-mode').style.display = 'none';
+    document.getElementById('gradient').style.display = 'none';
+    document.getElementById('void').style.display = 'block';
+  } else {
+    document.getElementById('physics').style.display = 'none';
+    document.getElementById('interaction').style.display = 'none';
     document.getElementById('pen-colors').style.display = 'block';
+    document.getElementById('rectangle-mode').style.display = 'none';
+    document.getElementById('gradient').style.display = 'none';
+    document.getElementById('void').style.display = 'none';
+  }
+  panels_are_there = !panels_are_there;
+}
+
+function disp_panel_inter() {
+  if (panels_are_there) {
+    document.getElementById('physics').style.display = 'none';
+    document.getElementById('interaction').style.display = 'none';
+    document.getElementById('pen-colors').style.display = 'none';
+    document.getElementById('rectangle-mode').style.display = 'none';
+    document.getElementById('gradient').style.display = 'none';
+    document.getElementById('void').style.display = 'block';
+  } else {
+    document.getElementById('physics').style.display = 'none';
+    document.getElementById('interaction').style.display = 'block';
+    document.getElementById('pen-colors').style.display = 'none';
+    document.getElementById('rectangle-mode').style.display = 'none';
+    document.getElementById('gradient').style.display = 'none';
+    document.getElementById('void').style.display = 'none';
+  }
+  panels_are_there = !panels_are_there;
+}
+
+function disp_panel_rect() {
+  if (panels_are_there) {
+    document.getElementById('physics').style.display = 'none';
+    document.getElementById('interaction').style.display = 'none';
+    document.getElementById('pen-colors').style.display = 'none';
+    document.getElementById('rectangle-mode').style.display = 'none';
+    document.getElementById('gradient').style.display = 'none';
+    document.getElementById('void').style.display = 'block';
+  } else {
+    document.getElementById('physics').style.display = 'none';
+    document.getElementById('interaction').style.display = 'none';
+    document.getElementById('pen-colors').style.display = 'none';
     document.getElementById('rectangle-mode').style.display = 'block';
+    document.getElementById('gradient').style.display = 'none';
+    document.getElementById('void').style.display = 'none';
+  }
+  panels_are_there = !panels_are_there;
+}
+
+function disp_panel_grad() {
+  if (panels_are_there) {
+    document.getElementById('physics').style.display = 'none';
+    document.getElementById('interaction').style.display = 'none';
+    document.getElementById('pen-colors').style.display = 'none';
+    document.getElementById('rectangle-mode').style.display = 'none';
+    document.getElementById('gradient').style.display = 'none';
+    document.getElementById('void').style.display = 'block';
+  } else {
+    document.getElementById('physics').style.display = 'none';
+    document.getElementById('interaction').style.display = 'none';
+    document.getElementById('pen-colors').style.display = 'none';
+    document.getElementById('rectangle-mode').style.display = 'none';
+    document.getElementById('gradient').style.display = 'block';
     document.getElementById('void').style.display = 'none';
   }
   panels_are_there = !panels_are_there;
@@ -595,8 +710,16 @@ function keyTyped() {
     new_particles();
   } else if (key === 'm') {
     change_mode();
-  } else if (key === 'x') {
-    disp_panels();
+  } else if (key === '1') {
+    disp_panel_phys();
+  } else if (key === '2') {
+    disp_panel_draw();
+  } else if (key === '3') {
+    disp_panel_inter();
+  } else if (key === '4') {
+    disp_panel_rect();
+  } else if (key === '5') {
+    disp_panel_grad();
   }
 }
 

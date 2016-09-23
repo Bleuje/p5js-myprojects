@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
@@ -44,7 +45,7 @@
 </div>
 
 
-<div class="container" style="color: #000000;text-shadow: 0px 0px 1px #FFFFFF, 
+<div class="container" style="color: #000000;text-shadow: 0px 0px 3px #FFFFFF, 
                0px 0px 10px #FFFFFF, 
                0px 0px 10px #FFFFFF;">
 	<div class="container"  id="canvas" style="
@@ -56,26 +57,71 @@
 		   ">
 
 	</div>
-  <div class="row" style="z-index: 0;width:90%;top: 20px;">
-    <div class="col-sm-3" id="physics" style="border-radius: 10px;
+  <div class="row" id="physics" style="z-index: 0;width:90%;top: 20px;">
+    <div class="col-sm-3" id="physics1" style="border-radius: 10px;
     border: 4px solid rgba(0,0,0,0.3);
     padding: 10px;
 	background-color: rgba(255,255,255,0.3);left: 50px;">
     </div>
-	<div class="col-sm-3" id="interaction" style="border-radius: 10px;
+	<div class="col-sm-3" id="physicsf" style="border-radius: 10px;
     border: 4px solid rgba(0,0,0,0.3);
     padding: 10px;
 	background-color: rgba(255,255,255,0.3);left: 50px;">
     </div>
-	<div class="col-sm-3" id="pen-colors" style="border-radius: 10px;
+    <div class="col-sm-3" id="physics2" style="border-radius: 10px;
     border: 4px solid rgba(0,0,0,0.3);
     padding: 10px;
 	background-color: rgba(255,255,255,0.3);left: 50px;">
     </div>
-	<div class="col-sm-3" id="rectangle-mode" style="border-radius: 10px;
+	</div>
+	
+  <div class="row" id="interaction" style="z-index: 0;width:90%;top: 20px;">
+    <div class="col-sm-3" id="mouse" style="border-radius: 10px;
     border: 4px solid rgba(0,0,0,0.3);
     padding: 10px;
 	background-color: rgba(255,255,255,0.3);left: 50px;">
+    </div>
+	<div class="col-sm-3" id="performance" style="border-radius: 10px;
+    border: 4px solid rgba(0,0,0,0.3);
+    padding: 10px;
+	background-color: rgba(255,255,255,0.3);left: 50px;">
+    </div>
+	</div>
+	
+	<div class="row" id="pen-colors" style="z-index: 0;width:90%;top: 20px;">
+	<div class="col-sm-3" id="pen" style="border-radius: 10px;
+    border: 4px solid rgba(0,0,0,0.3);
+    padding: 10px;
+	background-color: rgba(255,255,255,0.3);left: 50px;">
+	</div>
+	<div class="col-sm-3" id="color1" style="border-radius: 10px;
+    border: 4px solid rgba(0,0,0,0.3);
+    padding: 10px;
+	background-color: rgba(255,255,255,0.3);left: 50px;">
+	</div>
+	<div class="col-sm-3" id="color2" style="border-radius: 10px;
+    border: 4px solid rgba(0,0,0,0.3);
+    padding: 10px;
+	background-color: rgba(255,255,255,0.3);left: 50px;">
+    </div>
+	<div class="col-sm-3" id="colorn" style="border-radius: 10px;
+    border: 4px solid rgba(0,0,0,0.3);
+    padding: 10px;
+	background-color: rgba(255,255,255,0.3);left: 50px;">
+    </div>
+	</div>
+	
+	<div class="row" style="z-index: 0;width:90%;top: 20px;">
+	<div class="col-sm-3" id="rectangle-mode" id="rectangle-mode" style="border-radius: 10px;
+    border: 4px solid rgba(0,0,0,0.3);
+    padding: 10px;
+	background-color: rgba(255,255,255,0.3);left: 50px;">
+    </div>
+	<div class="col-sm-3" id="gradient" style="border-radius: 10px;
+    border: 4px solid rgba(0,0,0,0.3);
+    padding: 10px;
+	background-color: rgba(255,255,255,0.3);left: 50px;">
+	Coming soon :
     </div>
   </div>
 
@@ -84,22 +130,11 @@
 <div class="container" id="void" style="height: 550px;">
 </div>
 
-<div class="container">
-  <div class="row">
-    <div class="col-sm-4" id="gradient" style="border-radius: 10px;
-    border: 4px solid rgba(0,0,0,0.3);
-    padding: 10px;">
-	Coming soon :
-    </div>
-  </div>
- </div>
 
+<div class="container" style="position: absolute;
+    top: 900px;">
 <div class="divider">
 </div>
-<div class="divider">
-</div>
-
-<div class="container">
   <p> <a href="../home.html"> Other projects </a> </p>
 </div>
 
