@@ -20,7 +20,7 @@ var GRAD = [];
 var flowfield;
 
 var WID = 800;
-var HEI = 600;
+var HEI = 400;
 
 var speedSlide,incSlider,forceNoiseSlider,forceMagSlider,brightSlider;
 var button,button2,button3,button4,button5,button6,button7;
@@ -40,17 +40,26 @@ var capture;
 
 var color_mode = 'Normal';
 
+var csize = 0;
+
+var cnv;
+
 function setup() {
-  var cnv = createCanvas(max(50,windowWidth-225), HEI);
+  cnv = createCanvas(max(50,windowWidth-225), HEI);
   cnv.style("border:1px solid #000000;");
-  //var x = (windowWidth - width) / 2;
-  //var y = (windowHeight - height) / 2;
   cnv.parent('canvas');
   cnv.style('z-index: 1')
   background(255);
   colorMode(RGB, 255);
   cols = floor(width / scl);
   rows = floor(height / scl);
+  
+  buttonr = createButton('Change canvas size');
+  buttonr.mousePressed(resizec);
+  buttonr.style('width:75%')
+  buttonr.parent('button3');
+  vdp = createP('</br></br>');
+  vdp.parent('button3');
 
   flowfield = new Array(cols * rows);
   
@@ -505,6 +514,20 @@ function mySelectEvent5() {
   } else if (choice === 'Basic') {
     field_mode = 0;
   }
+}
+
+function resizec() {
+  csize = (csize + 1)%2;
+  cnv.remove();
+  cnv = createCanvas(max(50,windowWidth-225), HEI + csize*200);
+  cnv.style("border:1px solid #000000;");
+  cnv.parent('canvas');
+  cnv.style('z-index: 1');
+  cnv.parent('canvas');
+  cols = floor(width / scl);
+  rows = floor(height / scl);
+  background(255);
+  //cnv.resize(max(50,windowWidth-225), HEI + csize*200);
 }
 
 var capture;
