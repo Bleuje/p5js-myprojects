@@ -75,7 +75,7 @@ function Rectangle(pos_seed) {
     
     this.acc.add(createVector((2*random()-1)*forceNoiseSlider.value(),(2*random()-1)*forceNoiseSlider.value()));
     
-    if (mouseIsPressed && mouseX>=0 && mouseY>=0 && mouseX<width && mouseY<height) {
+    if ((meffectCbox.checked() || panels_are_there === 0) && mouseIsPressed && mouseX>=0 && mouseY>=0 && mouseX<width && mouseY<height) {
         var attraction = createVector(mouseX - this.pos.x,mouseY - this.pos.y);
         attraction.normalize();
         attraction.mult(mouseSlider.value()*forceMagSlider.value());

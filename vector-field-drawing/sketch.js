@@ -30,7 +30,7 @@ var defsel = 'line';
 var bounce = false;
 var color_noise = false;
 var field_mode = getRandomInt(0, 1);
-var panels_are_there = true;
+var panels_are_there = 0;
 
 var playing = true;
 
@@ -108,6 +108,9 @@ function setup() {
   button12 = createButton('Color gradient extraction panel (5)');
   button12.mousePressed(disp_panel_grad);
   button12.parent('buttons2');
+  button13 = createButton('Hide panels (H)');
+  button13.mousePressed(hidepanels);
+  button13.parent('buttons2');
   
   console.log('test1042');
   //div1.hide();
@@ -148,6 +151,7 @@ function setup() {
   
   pp1a = createP('<h4>Particle settings</h4>');
   pp1a.parent('physics1');
+  
   
   bounceCbox = createCheckbox('Border bounce',false);
   bounceCbox.parent('physics1');
@@ -418,7 +422,12 @@ function setup() {
   filterframeSlider = createSlider(1, 100, 30, 1);
   filterframeSlider.parent('pen');
   filterframeSlider.hide();
+  
+  meffectCbox = createCheckbox('Effect with panels',false);
+  meffectCbox.parent('mouse');
+  meffectCbox.changed(myCheckedEvent);
     
+    disp_panel_phys();
     disp_panel_phys();
   
   console.log('test');
@@ -585,13 +594,14 @@ function reset() {
 }
 
 function disp_panel_phys() {
-  if (panels_are_there) {
+  if (panels_are_there===1) {
     document.getElementById('physics').style.display = 'none';
     document.getElementById('interaction').style.display = 'none';
     document.getElementById('pen-colors').style.display = 'none';
     document.getElementById('rectangle-mode').style.display = 'none';
     document.getElementById('gradient').style.display = 'none';
     document.getElementById('void').style.display = 'block';
+    panels_are_there = 0;
   } else {
     document.getElementById('physics').style.display = 'block';
     document.getElementById('interaction').style.display = 'none';
@@ -599,18 +609,19 @@ function disp_panel_phys() {
     document.getElementById('rectangle-mode').style.display = 'none';
     document.getElementById('gradient').style.display = 'none';
     document.getElementById('void').style.display = 'none';
+    panels_are_there = 1;
   }
-  panels_are_there = !panels_are_there;
 }
 
 function disp_panel_draw() {
-  if (panels_are_there) {
+  if (panels_are_there===2) {
     document.getElementById('physics').style.display = 'none';
     document.getElementById('interaction').style.display = 'none';
     document.getElementById('pen-colors').style.display = 'none';
     document.getElementById('rectangle-mode').style.display = 'none';
     document.getElementById('gradient').style.display = 'none';
     document.getElementById('void').style.display = 'block';
+    panels_are_there = 0;
   } else {
     document.getElementById('physics').style.display = 'none';
     document.getElementById('interaction').style.display = 'none';
@@ -618,18 +629,19 @@ function disp_panel_draw() {
     document.getElementById('rectangle-mode').style.display = 'none';
     document.getElementById('gradient').style.display = 'none';
     document.getElementById('void').style.display = 'none';
+    panels_are_there = 2;
   }
-  panels_are_there = !panels_are_there;
 }
 
 function disp_panel_inter() {
-  if (panels_are_there) {
+  if (panels_are_there===3) {
     document.getElementById('physics').style.display = 'none';
     document.getElementById('interaction').style.display = 'none';
     document.getElementById('pen-colors').style.display = 'none';
     document.getElementById('rectangle-mode').style.display = 'none';
     document.getElementById('gradient').style.display = 'none';
     document.getElementById('void').style.display = 'block';
+    panels_are_there = 0;
   } else {
     document.getElementById('physics').style.display = 'none';
     document.getElementById('interaction').style.display = 'block';
@@ -637,18 +649,19 @@ function disp_panel_inter() {
     document.getElementById('rectangle-mode').style.display = 'none';
     document.getElementById('gradient').style.display = 'none';
     document.getElementById('void').style.display = 'none';
+    panels_are_there = 3;
   }
-  panels_are_there = !panels_are_there;
 }
 
 function disp_panel_rect() {
-  if (panels_are_there) {
+  if (panels_are_there===4) {
     document.getElementById('physics').style.display = 'none';
     document.getElementById('interaction').style.display = 'none';
     document.getElementById('pen-colors').style.display = 'none';
     document.getElementById('rectangle-mode').style.display = 'none';
     document.getElementById('gradient').style.display = 'none';
     document.getElementById('void').style.display = 'block';
+    panels_are_there = 0;
   } else {
     document.getElementById('physics').style.display = 'none';
     document.getElementById('interaction').style.display = 'none';
@@ -656,18 +669,19 @@ function disp_panel_rect() {
     document.getElementById('rectangle-mode').style.display = 'block';
     document.getElementById('gradient').style.display = 'none';
     document.getElementById('void').style.display = 'none';
+    panels_are_there = 4;
   }
-  panels_are_there = !panels_are_there;
 }
 
 function disp_panel_grad() {
-  if (panels_are_there) {
+  if (panels_are_there===5) {
     document.getElementById('physics').style.display = 'none';
     document.getElementById('interaction').style.display = 'none';
     document.getElementById('pen-colors').style.display = 'none';
     document.getElementById('rectangle-mode').style.display = 'none';
     document.getElementById('gradient').style.display = 'none';
     document.getElementById('void').style.display = 'block';
+    panels_are_there = 0;
   } else {
     document.getElementById('physics').style.display = 'none';
     document.getElementById('interaction').style.display = 'none';
@@ -675,8 +689,18 @@ function disp_panel_grad() {
     document.getElementById('rectangle-mode').style.display = 'none';
     document.getElementById('gradient').style.display = 'block';
     document.getElementById('void').style.display = 'none';
+    panels_are_there = 5;
   }
-  panels_are_there = !panels_are_there;
+}
+
+function hidepanels() {
+    document.getElementById('physics').style.display = 'none';
+    document.getElementById('interaction').style.display = 'none';
+    document.getElementById('pen-colors').style.display = 'none';
+    document.getElementById('rectangle-mode').style.display = 'none';
+    document.getElementById('gradient').style.display = 'none';
+    document.getElementById('void').style.display = 'block';
+    panels_are_there = 0;
 }
 
 function change_mode() {
@@ -720,6 +744,8 @@ function keyTyped() {
     disp_panel_rect();
   } else if (key === '5') {
     disp_panel_grad();
+  } else if (key === 'h') {
+    hidepanels();
   }
 }
 
@@ -811,7 +837,7 @@ function draw() {
   frameRate(framerateSlider.value());
 
   fr.html("FPS : " + floor(frameRate()));
-  p6.html('Max frame rate : ' + framerateSlider.value());
+  p6.html('Maximum frame rate : ' + framerateSlider.value());
   
   nbp.html('Current number of particles : ' + NB_PARTICLES);
   nbp2.html('Number of particles in the next set : ' + int(particleNumberSlider.value()*particleNumberSlider.value()*particleNumberSlider.value()*particleNumberSlider.value()));
