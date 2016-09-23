@@ -3,7 +3,7 @@ var playing = true;
 var myGrad;
 var custom_image;
 
-var nsampling = 400;
+var nsampling = 200;
 
 var application = 1;
 
