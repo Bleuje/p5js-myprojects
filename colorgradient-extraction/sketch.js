@@ -3,6 +3,8 @@ var playing = true;
 var myGrad;
 var custom_image;
 
+var nsampling = 400;
+
 var application = 1;
 
 var selected_picture = true;
@@ -27,7 +29,7 @@ function setup() {
   dictionary2["Webcam"] = 1;
   dictionary2["Random walks"] = 0;
   
-  cnv = createCanvas(50,50);
+  cnv = createCanvas(200,200);
   cnv.parent("canvas")
   background(51);
   
@@ -42,6 +44,12 @@ function setup() {
   sel.option("Persistence of memory");
   sel.changed(mySelectEvent);
   sel.parent('pic-choice');
+  inpt = createP('</br> Or use your own picture : ');
+  inpt.parent('pic-choice');
+  inp = createFileInput(gotFile);
+  inp.parent('pic-choice');
+  inpt2 = createP('</br> </br>');
+  inpt2.parent('pic-choice');
   
   sel2 = createSelect();
   sel2.option('Select an application');
@@ -53,12 +61,28 @@ function setup() {
   launch = createButton('Push here to use an ellipse to find a color gradient from the picture and use it in the chosen application');
   launch.mousePressed(ellipseEvent);
   launch.parent('launch');
-/*
-  inp = createFileInput(dropped, gotFile);
-  inp.parent('pic-choice');*/
+
 }
 
 var img;
+
+function gotFile(file) {
+  
+  if (!file.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+    alert('This is not recognized as an image');
+  } else {
+    img = createImg(file.data).hide();
+    if (selected_picture === false) {
+          cnv = createCanvas(img.width, img.height);
+          cnv.parent('canvas');
+      }
+      
+      resizeCanvas(img.width, img.height);
+      
+      selected_picture = true;
+      image(img,0,0,width,height);
+  }
+}
 
 function mySelectEvent() {
   var item = sel.value();
@@ -145,8 +169,11 @@ function ellipseEvent() {
   if(!choice_done) {
     sel.hide();
     sel2.hide();
+    inpt.hide();inpt2.hide();
+    inp.hide();
+    launch.hide();
     
-    myGrad = new colorGrad(100);
+    myGrad = new colorGrad(nsampling);
     myGrad.circleMethod();
     //myGrad.draw(100,25,200,50);
     
