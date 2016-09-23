@@ -49,10 +49,8 @@
                0px 0px 10px #FFFFFF, 
                0px 0px 10px #FFFFFF;">
 	<div class="container"  id="canvas" style="
-			width:100%;height:100%;position:absolute;
+			width:100%;position:absolute;
            left: 100px;
-		   width:100%;
-           height:100%;
            z-index:-1;
 		   ">
 
@@ -133,8 +131,12 @@
 <div class="container" style="position: absolute;
     top: 900px;">
 	
-<div class="container">
-<p style="margin: 25px;">
+<div class="container" style="margin-left: 75px;">
+<div class="row">
+<div class="col-sm-6" style="border-radius: 10px;
+    border: 4px solid rgba(0,0,0,0.3);
+    padding: 10px;">
+<p>
 <h2>Documentation/comments</h2>
 <h3>Physics</h3>
 Some particles move in a random force field, somehow following Newton's second law of dynamics.
@@ -150,7 +152,7 @@ The first one (<strong>Basic</strong>) uses 3D Perlin noise to generate random v
 </br>
 </br>
 The second method (<strong>Moving torus in 3D</strong>) is similar, but it uses a torus that moves randomly through 3D Perlin Noise to take the vector angles values. That way there are no problems on the borders.
-A new problem that appears is that the generation is unbabalanced, some areas are "contracted" in 3D space. 
+A new problem that appears is that the generation is unbalanced, some areas are "contracted" in 3D space. 
 There is a clean way to avoid that by using 4D noise, but it doesn't seem easy to get in javascript.
 </br>
 </br>
@@ -163,7 +165,7 @@ When <strong>Force noise</strong> is increased, some random values of higher int
 <strong>Force field magnitude</strong> controls the norm (i.e. intensity) of the vectors in the force field. 
 </br>
 </br>
-<strong>Force change rate</strong> controls the speed at each we evolve using the third dimension of the Perlin Noise. 
+<strong>Force change rate</strong> controls the speed at which we evolve using the third dimension of the Perlin Noise. 
 </br>
 </br>
 <h4>Field bias</h4>
@@ -195,8 +197,48 @@ This mode is the same as the default one, excepted that the particles are drawn 
  height (depending on the direction).
 </p>
 </div>
-<div class="divider">
+<div class="col-sm-6" style="border-radius: 10px;
+    border: 4px solid rgba(0,0,0,0.3);
+    padding: 10px;">
+<h2>Gallery of examples</h2>
+	
+<img class="img-responsive" src="examples/blueish.png" alt="Yellow painting" style="
+   border:1px solid black;">
+   
+ <img class="img-responsive" src="examples/redbrown.png" alt="Yellow painting" style="
+   border:1px solid black;">
+   
+   <img class="img-responsive" src="examples/circles.png" alt="Yellow painting" style="
+   border:1px solid black;">
+   
+   <img class="img-responsive" src="examples/bigcircles.png" alt="Yellow painting" style="
+   border:1px solid black;">
+   
+   <img class="img-responsive" src="examples/squareglow.png" alt="Yellow painting" style="
+   border:1px solid black;">
+   
+   <img class="img-responsive" src="examples/psych.png" alt="Yellow painting" style="
+   border:1px solid black;">
+   
+      <img class="img-responsive" src="examples/living.png" alt="Yellow painting" style="
+   border:1px solid black;">
+   
+      <img class="img-responsive" src="examples/blurred.png" alt="Yellow painting" style="
+   border:1px solid black;">
+   
+      <img class="img-responsive" src="examples/weird.png" alt="Yellow painting" style="
+   border:1px solid black;">
+   
+      <img class="img-responsive" src="examples/nice.png" alt="Yellow painting" style="
+   border:1px solid black;">
+   
+      <img class="img-responsive" src="examples/glitch.png" alt="Yellow painting" style="
+   border:1px solid black;">
+   
 </div>
+</div>
+</div>
+<div class="divider"></div>
 <div class="divider">
 </div>
   <p> <a href="../home.html"> Other projects </a>

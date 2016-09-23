@@ -20,7 +20,7 @@ var GRAD = [];
 var flowfield;
 
 var WID = 800;
-var HEI = 500;
+var HEI = 600;
 
 var speedSlide,incSlider,forceNoiseSlider,forceMagSlider,brightSlider;
 var button,button2,button3,button4,button5,button6,button7;
