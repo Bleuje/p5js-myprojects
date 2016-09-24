@@ -23,7 +23,8 @@
     border: 1px solid #777;
     padding: 0 1.5em;
     margin: 0.5em;
-    font: 1em/2em Arial, Helvetica;
+    font-family: 1em/2em Arial, sans-serif;
+	font-size: 1.2em;
     text-decoration: none;
     color: #333;
     text-shadow: 0 1px 0 rgba(255,255,255,.8);
@@ -32,9 +33,9 @@
 }
 
 .button:hover {
-    background-color: #aaf;        
-    background-image: linear-gradient(top, #aaaafa, #ddd);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#aaaafa', EndColorStr='#dddddd');        
+    background-color: #ddd;        
+    background-image: linear-gradient(top, #fafafa, #ddd);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#fafafa', EndColorStr='#dddddd');        
 }
 
 .button:active {
@@ -45,11 +46,11 @@
 
 .button:focus {
     outline: 0;
-    background: #aaaafa;
+    background: #eee;
 }    
 
 .button:before {
-    background: #aaf;
+    background: #ccc;
     background: rgba(0,0,0,.1);
     float: left;        
     width: 1em;

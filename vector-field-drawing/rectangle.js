@@ -91,11 +91,18 @@ function Rectangle(pos_seed) {
     
   this.show = function() {
     
-    var param = (sin(0.01*redSlider.value()*this.h + redoSlider.value())+1)/2;
-    var param2 = (sin(0.01*greenSlider.value()*this.h + greenoSlider.value())+1)/2;
-    var param3 = (sin(0.01*blueSlider.value()*this.h + blueoSlider.value())+1)/2;
+    var myalpha = alphaSlider.value()*alphaSlider.value()*255;
     
-
+    if (color_mode === 'Normal') {
+      
+      this.h2 = this.h2 + colorGradientSlider.value();
+      this.h = this.rectangleOffset*particleColorOffsetSlider.value() + this.h2;
+      
+      var param = (sin(0.01*redSlider.value()*this.h + redoSlider.value())+1)/2;
+      var param2 = (sin(0.01*greenSlider.value()*this.h + greenoSlider.value())+1)/2;
+      var param3 = (sin(0.01*blueSlider.value()*this.h + blueoSlider.value())+1)/2;
+    
+    
         var freq,myred,mygreen,myblue;
         if (color_noise) {
           freq = noisefreqSlider.value()*noisefreqSlider.value();
@@ -108,15 +115,14 @@ function Rectangle(pos_seed) {
           mygreen = this.start_green + this.amp_green*param2;
           myblue = this.start_blue + this.amp_blue*param3;
         }
-        
+      fill(myred, mygreen, myblue, myalpha);
+
+    } else {
+      var auxxx = myGrad.getColor(this.h);
+      stroke(auxxx[0], auxxx[1], auxxx[2], myalpha);
+    }
+    
     stroke(box2Slider.value(),boxSlider.value());
-    fill(myred, mygreen, myblue, alphaSlider.value()*alphaSlider.value()*255);
-    this.h2 = this.h2 + colorGradientSlider.value();
-    this.h = this.rectangleOffset*particleColorOffsetSlider.value() + this.h2;
-    var sw = (1-penNoiseSlider.value())*0.5 + penNoiseSlider.value()*noise(20000 + 0.01*frameCount + this.offp);
-    
-    var aux_sz = penSizeSlider.value();
-    
     strokeWeight(penstrokeSlider.value());
     
     rect(this.minx, this.miny, this.maxx - this.minx, this.maxy - this.miny);

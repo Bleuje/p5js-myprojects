@@ -15,8 +15,6 @@ var fr;
 var particles = [];
 var rectangles = [];
 
-var GRAD = [];
-
 var flowfield;
 
 var WID = 800;
@@ -67,6 +65,7 @@ function setup() {
   buttonr.parent('button3');
   vdp = createP('</br></br>');
   vdp.parent('button3');
+  buttonr.class('btn btn-primary');
   //document.getElementById('void').style.height = pixtab[csize];
 
   flowfield = new Array(cols * rows);
@@ -86,58 +85,60 @@ function setup() {
   
   console.log('test104');
   
-  button = createButton('Reset (R)');
+  button = createButton('Reset [R]');
   button.mousePressed(reset);
   button.parent('buttons');
-  button.class('button delete');
-  button2 = createButton('Pause/Play (P)');
+  button.style('font-size: 1.3em;');
+  button.class('btn btn-default');
+  button2 = createButton('Pause/Play [P]');
   button2.mousePressed(pause_play);
   button2.parent('buttons');
-  button2.class('button play');
-  button3 = createButton('Save canvas (S)');
+  button2.style('font-size: 1.3em;');
+  button2.class('btn btn-default');
+  button3 = createButton('Save canvas [S]');
   button3.mousePressed(canvas_save);
   button3.parent('buttons0');
-  button3.class('button');
-  button4 = createButton('Clear canvas (C)');
+  button3.class('btn btn-default');
+  button4 = createButton('Clear canvas [C]');
   button4.mousePressed(clear_canvas);
   button4.parent('buttons0');
-  button4.class('button');
-  button5 = createButton('Change color gradient (G)');
+  button4.class('btn btn-default');
+  button5 = createButton('Change color gradient [G]');
   button5.mousePressed(change_color);
   button5.parent('buttons0');
-  button5.class('button');
-  button6 = createButton('New set of particles (N)');
+  button5.class('btn btn-default');
+  button6 = createButton('New set of particles [N]');
   button6.mousePressed(new_particles);
   button6.parent('buttons0');
-  button6.class('button');
-  button7 = createButton('Rectangle mode On/Off (M)');
+  button6.class('btn btn-default');
+  button7 = createButton('Rectangle mode On/Off [M]');
   button7.mousePressed(change_mode);
   button7.parent('buttons0');
-  button7.class('button');
+  button7.class('btn btn-default');
   
   console.log('test1041');
   
-  button8 = createButton('Physics panel (1)');
+  button8 = createButton('<strong>Physics</strong> panel [1]');
   button8.mousePressed(disp_panel_phys);
   button8.parent('buttons2');
   button8.class('btn btn-default');
-  button9 = createButton('Drawing style panel (2)');
+  button9 = createButton('<strong>Drawing style</strong> panel [2]');
   button9.mousePressed(disp_panel_draw);
   button9.parent('buttons2');
   button9.class('btn btn-default');
-  button10 = createButton('Interaction/Misc. panel (3)');
+  button10 = createButton('<strong>Interaction/Misc.</strong> panel [3]');
   button10.mousePressed(disp_panel_inter);
   button10.parent('buttons2');
   button10.class('btn btn-default');
-  button11 = createButton('Rectangle mode panel (4)');
+  button11 = createButton('<strong>Rectangle mode</strong> panel [4]');
   button11.mousePressed(disp_panel_rect);
   button11.parent('buttons2');
   button11.class('btn btn-default');
-  button12 = createButton('Color gradient extraction panel (5)');
+  button12 = createButton('<strong>Color gradient extraction</strong> panel [5]');
   button12.mousePressed(disp_panel_grad);
   button12.parent('buttons2');
   button12.class('btn btn-default');
-  button13 = createButton('Hide panels (H)');
+  button13 = createButton('Hide panels [H]');
   button13.mousePressed(hidepanels);
   button13.parent('buttons2');
   button13.style('background-color: #aaaaaa;border: #000000');
@@ -335,19 +336,6 @@ function setup() {
   
   fr = createP('');
   fr.parent("buttons00")
-  
-  console.log('test3');
-  
-
-  
-  /*
-  psel3 = createP('<strong>Color mode :</strong>')
-  psel3.position(710,520);
-  sel3 = createSelect();
-  sel3.position(710, 540);
-  sel3.option('Normal');
-  sel3.option('Capture');
-  sel3.changed(mySelectEvent3);*/
   
   console.log('test31');
   
@@ -554,22 +542,7 @@ function resizec() {
 }
 
 var capture;
-/*
-function mySelectEvent3() {
-  var choice = sel3.value();
-  if (choice === 'Normal') {
-    color_mode = 'Normal';
-    capture.remove();
-  } else if (choice === 'Capture') {
-    color_mode = 'Capture';
-    capture = createCapture(VIDEO);
-    capture.size(320, 240);
-    image(capture, 0, 0, 320, 240);
-    loadPixels();
-    GRAD = new ColorG(1);
-  }
-}
-*/
+
 function clear_canvas() {
   blendMode(BLEND);
   background(fade2Slider.value());
@@ -805,13 +778,7 @@ var z_zoff = 0;
 
 
 function draw() {
-  /*
-  if(color_mode === 'Capture'){
-    image(capture, 0, 0, 320, 240);
-    loadPixels();
-    GRAD = new ColorG(1);
-  }*/
-  
+
   blendMode(BLEND);
   
   var aux = fade1Slider.value();

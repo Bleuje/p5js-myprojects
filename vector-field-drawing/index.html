@@ -13,9 +13,21 @@
   <script language="javascript" type="text/javascript" src="sketch.js"></script>
   <script language="javascript" type="text/javascript" src="particle.js"></script>
   <script language="javascript" type="text/javascript" src="rectangle.js"></script>
+  <script language="javascript" type="text/javascript" src="color.js"></script>
   <script src="../lib/jquery.min.js"></script>
   <script src="../lib/bootstrap.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+  
+  <style>
+  .btn {
+	border-radius: 0px;
+	font-family: 'Josefin Sans', arial, sans-serif;
+}
+.btn-default:focus {
+    background: #fff;
+}  
+
+  </style>
   
 </head>
 
@@ -26,13 +38,13 @@
   <h5> (You may have to wait a little bit for pictures to load) </h5>
 </div>
 
-<div class="container"  id="buttons" style="text-align:center;">
+<div class="container"  id="buttons" style="text-align:center;font-family: 'Josefin Sans', arial, sans-serif;">
 </div>
 
-<div class="container"  id="buttons0" style="text-align:center;">
+<div class="container"  id="buttons0" style="text-align:center;font-family: 'Josefin Sans', arial, sans-serif;">
 </div>
 
-<div class="container"  id="buttons00" style="text-align:center;">
+<div class="container"  id="buttons00" style="text-align:center;font-family: 'Josefin Sans', arial, sans-serif;">
 </div>
 
 <div class="divider">
@@ -54,9 +66,10 @@
 	</div>
 
 
-<div class="container" style="color: #000000;text-shadow: 0px 0px 3px #FFFFFF, 
+<div class="container" style="color: #000000;text-shadow: 0px 0px 5px #FFFFFF, 
                0px 0px 10px #FFFFFF, 
-               0px 0px 10px #FFFFFF;">
+               0px 0px 10px #FFFFFF;
+			   font-family: 'Josefin Sans', arial, sans-serif;">
   <div class="row" id="physics" style="z-index: 0;top: 20px;">
     <div class="col-sm-3" id="physics1" style="border-radius: 10px;
     border: 4px solid rgba(0,0,0,0.3);
