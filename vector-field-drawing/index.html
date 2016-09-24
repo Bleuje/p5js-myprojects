@@ -15,40 +15,36 @@
   <script language="javascript" type="text/javascript" src="rectangle.js"></script>
   <script src="../lib/jquery.min.js"></script>
   <script src="../lib/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
   
 </head>
 
 <body>
 
-<div class="jumbotron text-center" style="background-size: 100% 140%;text-shadow: 2px 2px 2px #FFFFFF;">
-  <h2> Vector field drawing </h2>
+<div class="jumbotron text-center" style="background-size: 100% 140%;text-shadow: 2px 2px 2px #FFFFFF;font-family: 'Josefin Sans', arial, sans-serif;">
+  <h1> Vector field drawing </h1>
   <h5> (You may have to wait a little bit for pictures to load) </h5>
 </div>
 
-<div class="container">
-</div>
-
-<div class="divider">
-</div>
-
 <div class="container"  id="buttons" style="text-align:center;">
+</div>
+
+<div class="container"  id="buttons0" style="text-align:center;">
+</div>
+
+<div class="container"  id="buttons00" style="text-align:center;">
+</div>
+
+<div class="divider">
+</div>
+
+<div class="container"  id="buttons2" style="text-align:center;padding-left: 5px;">
 
 </div>
 
 <div class="divider">
 </div>
 
-<div class="container"  id="buttons2" style="text-align:center;">
-
-</div>
-
-<div class="divider">
-</div>
-
-
-<div class="container" style="color: #000000;text-shadow: 0px 0px 3px #FFFFFF, 
-               0px 0px 10px #FFFFFF, 
-               0px 0px 10px #FFFFFF;">
 	<div class="container"  id="canvas" style="
 			width:90%;position:absolute;
            left: 100px;
@@ -56,6 +52,11 @@
 		   ">
 
 	</div>
+
+
+<div class="container" style="color: #000000;text-shadow: 0px 0px 3px #FFFFFF, 
+               0px 0px 10px #FFFFFF, 
+               0px 0px 10px #FFFFFF;">
   <div class="row" id="physics" style="z-index: 0;top: 20px;">
     <div class="col-sm-3" id="physics1" style="border-radius: 10px;
     border: 4px solid rgba(0,0,0,0.3);
@@ -138,12 +139,12 @@
 </div>
 
 <div class="container" style="position: absolute;
-    top: 1000px;">
+    top: 1200px;">
 	
 <div class="container" id="button3" style="margin-left: 75px;text-align:center;">
 </div>
 	
-<div class="container" id="docgal" style="margin-left: 75px;">
+<div class="container" id="docgal" style="margin-left: 75px;font-size: 1.2em;font-family: 'Josefin Sans', arial, sans-serif;">
 <div class="row">
 <div class="col-md-6" style="border-radius: 10px;
     border: 4px solid rgba(0,0,0,0.3);
@@ -160,7 +161,7 @@ The <strong>particle speed</strong> slider lets you choose this coefficient betw
 The force field is generated from Perlin noise, but there are two methods here.
 </br>
 </br>
-The first one (<strong>Basic</strong>) uses 3D Perlin noise to generate random vector angles in 2D in "continuous way". The third dimension is used as time to make the angles change.
+The first one (<strong>Basic</strong>) uses 3D Perlin noise to generate random vector angles in 2D in a "continuous way". The third dimension is used as time to get the angles to change.
 </br>
 </br>
 The second method (<strong>Moving torus in 3D</strong>) is similar, but it uses a torus that moves randomly through 3D Perlin Noise to take the vector angles values. That way there are no problems on the borders.

@@ -41,8 +41,11 @@ var capture;
 var color_mode = 'Normal';
 
 var csize = 0;
+var csize_mod = 4;
 var bpixels = 250;
-var pixelsadd = 200;
+var pixelsadd = 100;
+//var pixtab = ['800px','900px','1000px','1100px'];
+//var pixtab = ['500px','500px','5000px','500px'];
 
 var cnv;
 
@@ -64,6 +67,7 @@ function setup() {
   buttonr.parent('button3');
   vdp = createP('</br></br>');
   vdp.parent('button3');
+  //document.getElementById('void').style.height = pixtab[csize];
 
   flowfield = new Array(cols * rows);
   
@@ -85,45 +89,59 @@ function setup() {
   button = createButton('Reset (R)');
   button.mousePressed(reset);
   button.parent('buttons');
+  button.class('button delete');
   button2 = createButton('Pause/Play (P)');
   button2.mousePressed(pause_play);
   button2.parent('buttons');
+  button2.class('button play');
   button3 = createButton('Save canvas (S)');
   button3.mousePressed(canvas_save);
-  button3.parent('buttons');
+  button3.parent('buttons0');
+  button3.class('button');
   button4 = createButton('Clear canvas (C)');
   button4.mousePressed(clear_canvas);
-  button4.parent('buttons');
+  button4.parent('buttons0');
+  button4.class('button');
   button5 = createButton('Change color gradient (G)');
   button5.mousePressed(change_color);
-  button5.parent('buttons');
+  button5.parent('buttons0');
+  button5.class('button');
   button6 = createButton('New set of particles (N)');
   button6.mousePressed(new_particles);
-  button6.parent('buttons');
+  button6.parent('buttons0');
+  button6.class('button');
   button7 = createButton('Rectangle mode On/Off (M)');
   button7.mousePressed(change_mode);
-  button7.parent('buttons');
+  button7.parent('buttons0');
+  button7.class('button');
   
   console.log('test1041');
   
   button8 = createButton('Physics panel (1)');
   button8.mousePressed(disp_panel_phys);
   button8.parent('buttons2');
+  button8.class('btn btn-default');
   button9 = createButton('Drawing style panel (2)');
   button9.mousePressed(disp_panel_draw);
   button9.parent('buttons2');
+  button9.class('btn btn-default');
   button10 = createButton('Interaction/Misc. panel (3)');
   button10.mousePressed(disp_panel_inter);
   button10.parent('buttons2');
+  button10.class('btn btn-default');
   button11 = createButton('Rectangle mode panel (4)');
   button11.mousePressed(disp_panel_rect);
   button11.parent('buttons2');
+  button11.class('btn btn-default');
   button12 = createButton('Color gradient extraction panel (5)');
   button12.mousePressed(disp_panel_grad);
   button12.parent('buttons2');
+  button12.class('btn btn-default');
   button13 = createButton('Hide panels (H)');
   button13.mousePressed(hidepanels);
   button13.parent('buttons2');
+  button13.style('background-color: #aaaaaa;border: #000000');
+  button13.class('btn btn-primary');
   
   console.log('test1042');
   //div1.hide();
@@ -316,7 +334,7 @@ function setup() {
   buttonbias.mousePressed(remove_bias);
   
   fr = createP('');
-  fr.parent("buttons")
+  fr.parent("buttons00")
   
   console.log('test3');
   
@@ -521,13 +539,14 @@ function mySelectEvent5() {
 }
 
 function resizec() {
-  csize = (csize + 1)%2;
+  csize = (csize + 1)%csize_mod;
   cnv.remove();
   cnv = createCanvas(max(50,windowWidth-bpixels), HEI + csize*pixelsadd);
   cnv.style("border:1px solid #000000;");
   cnv.parent('canvas');
   cnv.style('z-index: 1');
   cnv.parent('canvas');
+  //document.getElementById('void').style.height = pixtab[csize];
   cols = floor(width / scl);
   rows = floor(height / scl);
   background(255);
@@ -627,7 +646,7 @@ function disp_panel_phys() {
     document.getElementById('pen-colors').style.display = 'none';
     document.getElementById('rectangle-mode').style.display = 'none';
     document.getElementById('gradient').style.display = 'none';
-    document.getElementById('void').style.display = 'block';
+    //document.getElementById('void').style.display = 'block';
     panels_are_there = 0;
   } else {
     document.getElementById('physics').style.display = 'block';
@@ -635,7 +654,7 @@ function disp_panel_phys() {
     document.getElementById('pen-colors').style.display = 'none';
     document.getElementById('rectangle-mode').style.display = 'none';
     document.getElementById('gradient').style.display = 'none';
-    document.getElementById('void').style.display = 'none';
+    //document.getElementById('void').style.display = 'none';
     panels_are_there = 1;
   }
 }
@@ -647,7 +666,7 @@ function disp_panel_draw() {
     document.getElementById('pen-colors').style.display = 'none';
     document.getElementById('rectangle-mode').style.display = 'none';
     document.getElementById('gradient').style.display = 'none';
-    document.getElementById('void').style.display = 'block';
+    //document.getElementById('void').style.display = 'block';
     panels_are_there = 0;
   } else {
     document.getElementById('physics').style.display = 'none';
@@ -655,7 +674,7 @@ function disp_panel_draw() {
     document.getElementById('pen-colors').style.display = 'block';
     document.getElementById('rectangle-mode').style.display = 'none';
     document.getElementById('gradient').style.display = 'none';
-    document.getElementById('void').style.display = 'none';
+    //document.getElementById('void').style.display = 'none';
     panels_are_there = 2;
   }
 }
@@ -667,7 +686,7 @@ function disp_panel_inter() {
     document.getElementById('pen-colors').style.display = 'none';
     document.getElementById('rectangle-mode').style.display = 'none';
     document.getElementById('gradient').style.display = 'none';
-    document.getElementById('void').style.display = 'block';
+    //document.getElementById('void').style.display = 'block';
     panels_are_there = 0;
   } else {
     document.getElementById('physics').style.display = 'none';
@@ -675,7 +694,7 @@ function disp_panel_inter() {
     document.getElementById('pen-colors').style.display = 'none';
     document.getElementById('rectangle-mode').style.display = 'none';
     document.getElementById('gradient').style.display = 'none';
-    document.getElementById('void').style.display = 'none';
+    //document.getElementById('void').style.display = 'none';
     panels_are_there = 3;
   }
 }
@@ -687,7 +706,7 @@ function disp_panel_rect() {
     document.getElementById('pen-colors').style.display = 'none';
     document.getElementById('rectangle-mode').style.display = 'none';
     document.getElementById('gradient').style.display = 'none';
-    document.getElementById('void').style.display = 'block';
+    //document.getElementById('void').style.display = 'block';
     panels_are_there = 0;
   } else {
     document.getElementById('physics').style.display = 'none';
@@ -695,7 +714,7 @@ function disp_panel_rect() {
     document.getElementById('pen-colors').style.display = 'none';
     document.getElementById('rectangle-mode').style.display = 'block';
     document.getElementById('gradient').style.display = 'none';
-    document.getElementById('void').style.display = 'none';
+    //document.getElementById('void').style.display = 'none';
     panels_are_there = 4;
   }
 }
@@ -707,7 +726,7 @@ function disp_panel_grad() {
     document.getElementById('pen-colors').style.display = 'none';
     document.getElementById('rectangle-mode').style.display = 'none';
     document.getElementById('gradient').style.display = 'none';
-    document.getElementById('void').style.display = 'block';
+    //document.getElementById('void').style.display = 'block';
     panels_are_there = 0;
   } else {
     document.getElementById('physics').style.display = 'none';
@@ -715,7 +734,7 @@ function disp_panel_grad() {
     document.getElementById('pen-colors').style.display = 'none';
     document.getElementById('rectangle-mode').style.display = 'none';
     document.getElementById('gradient').style.display = 'block';
-    document.getElementById('void').style.display = 'none';
+    //document.getElementById('void').style.display = 'none';
     panels_are_there = 5;
   }
 }
