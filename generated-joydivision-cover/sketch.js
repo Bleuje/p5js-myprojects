@@ -6,13 +6,18 @@ function setup() {
   cnv = createCanvas(400,400);
   cnv.parent('canvas');
   
-  button = createButton('Reload page');
+  button = createButton('New cover');
   button.parent('buttons');
   button.class('btn btn-default')
-  button.mousePressed(reset);
+  button.mousePressed(new_cover);
   
   noiseDetail(3);
   
+  new_cover();
+  
+}
+
+function new_cover() {
   for(var i = 0;i<400/6;i++){
     lines[i] = new divisionLine(0,i*6);
   }
@@ -37,19 +42,6 @@ function setup() {
   for(var i = 0;i<400/6;i++){
     lines[i].show();
   }
-  
-  //filter(BLUR,1);
-  /*
-  for(var i = 0;i<400/6;i++){
-    lines[i].show();
-  }*/
-  
-}
-
-function reset() {
-    location.reload();
-    seedRandom();
-    seedNoise();
 }
 
 

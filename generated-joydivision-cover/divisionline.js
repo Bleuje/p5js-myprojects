@@ -58,14 +58,14 @@ var divisionLine = function(t,start_y) {
         var realY = map(this.y,0,400,start_posh,end_posh);
         
         beginShape();
-        //vertex(start_pos,height);
+        vertex(start_pos,realY+4);
         for(var i = 0;i<nb_points;i++){
             myInterpoler = transition(i*width/nb_points);
             vertex(start_pos + i*(end_pos-start_pos)/nb_points,
                  realY +  lerp(this.randomArray[i],this.addedValue[i],myInterpoler));
         }
-        //vertex(end_pos,height);
-        endShape();
+        vertex(end_pos,realY+4);
+        endShape(CLOSE);
         noStroke();
         rect(start_pos-1,realY+2,end_pos-start_pos+2,end_posh + 1 - realY);
     }
