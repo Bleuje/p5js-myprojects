@@ -50,7 +50,7 @@ var pixelsadd = 100;
 var cnv;
 
 var myGrad;
-var nsampling = 100;
+var nsampling = 200;
 
 function setup() {
   cnv = createCanvas(max(50,windowWidth-bpixels), HEI + csize*pixelsadd);
