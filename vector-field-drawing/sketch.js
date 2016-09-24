@@ -30,6 +30,8 @@ var color_noise = false;
 var field_mode = getRandomInt(0, 1);
 var panels_are_there = 0;
 
+var selected_picture = true;
+
 var playing = true;
 
 var mode = 0;
@@ -48,6 +50,7 @@ var pixelsadd = 100;
 var cnv;
 
 var myGrad;
+var nsampling = 100;
 
 function setup() {
   cnv = createCanvas(max(50,windowWidth-bpixels), HEI + csize*pixelsadd);
@@ -184,6 +187,18 @@ function setup() {
   pp1a = createP('<h4>Particle settings</h4>');
   pp1a.parent('physics1');
   
+  
+  inpt = createP('</br> Use your own picture to paint the canvas : ');
+  inpt.parent('gradient');
+  inp = createFileInput(gotFile);
+  inp.parent('gradient');
+  inpt2 = createP('</br> </br>');
+  inpt2.parent('gradient');
+  buttonellipset = createP('Find a color gradient from the canvas </br> with the ellipse method :');
+  buttonellipset.parent('gradient');
+    buttonellipse = createButton('Go !');
+    buttonellipse.mousePressed(ellipseEvent);
+  buttonellipse.parent('gradient');
   
   bounceCbox = createCheckbox('Border bounce',false);
   bounceCbox.parent('physics1');
@@ -546,7 +561,7 @@ var capture;
 function clear_canvas() {
   blendMode(BLEND);
   background(fade2Slider.value());
-  blendMode(curMode);
+  mySelectEvent2();
 }
 
 function change_color() {
@@ -619,6 +634,7 @@ function disp_panel_phys() {
     document.getElementById('pen-colors').style.display = 'none';
     document.getElementById('rectangle-mode').style.display = 'none';
     document.getElementById('gradient').style.display = 'none';
+    document.getElementById("buttons2").before = true;
     //document.getElementById('void').style.display = 'block';
     panels_are_there = 0;
   } else {
@@ -639,6 +655,7 @@ function disp_panel_draw() {
     document.getElementById('pen-colors').style.display = 'none';
     document.getElementById('rectangle-mode').style.display = 'none';
     document.getElementById('gradient').style.display = 'none';
+    document.getElementById("buttons2").before = true;
     //document.getElementById('void').style.display = 'block';
     panels_are_there = 0;
   } else {
@@ -659,6 +676,7 @@ function disp_panel_inter() {
     document.getElementById('pen-colors').style.display = 'none';
     document.getElementById('rectangle-mode').style.display = 'none';
     document.getElementById('gradient').style.display = 'none';
+    document.getElementById("buttons2").before = true;
     //document.getElementById('void').style.display = 'block';
     panels_are_there = 0;
   } else {
@@ -679,6 +697,7 @@ function disp_panel_rect() {
     document.getElementById('pen-colors').style.display = 'none';
     document.getElementById('rectangle-mode').style.display = 'none';
     document.getElementById('gradient').style.display = 'none';
+    document.getElementById("buttons2").before = true;
     //document.getElementById('void').style.display = 'block';
     panels_are_there = 0;
   } else {
@@ -699,6 +718,7 @@ function disp_panel_grad() {
     document.getElementById('pen-colors').style.display = 'none';
     document.getElementById('rectangle-mode').style.display = 'none';
     document.getElementById('gradient').style.display = 'none';
+    document.getElementById("buttons2").before = true;
     //document.getElementById('void').style.display = 'block';
     panels_are_there = 0;
   } else {
@@ -719,6 +739,7 @@ function hidepanels() {
     document.getElementById('rectangle-mode').style.display = 'none';
     document.getElementById('gradient').style.display = 'none';
     document.getElementById('void').style.display = 'block';
+    document.getElementById("buttons2").before = true;
     panels_are_there = 0;
 }
 
@@ -770,6 +791,27 @@ function keyTyped() {
 
 function canvas_save() {
   saveCanvas('myCanvas', 'png');
+}
+
+var img;
+
+function gotFile(file) {
+  
+  if (!file.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+    alert('This is not recognized as an image');
+  } else {
+    img = createImg(file.data).hide();
+      selected_picture = true;
+      image(img,0,0,width,height);
+  }
+}
+
+function ellipseEvent() {
+  if(selected_picture) {
+    myGrad = new colorGrad(nsampling);
+    myGrad.ellipseMethod();
+    color_mode = 'custom';
+  }
 }
 
 var z_xoff = 0;

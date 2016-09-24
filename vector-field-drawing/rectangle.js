@@ -93,6 +93,9 @@ function Rectangle(pos_seed) {
     
     var myalpha = alphaSlider.value()*alphaSlider.value()*255;
     
+    
+        
+    var freq,myred,mygreen,myblue;
     if (color_mode === 'Normal') {
       
       this.h2 = this.h2 + colorGradientSlider.value();
@@ -102,8 +105,7 @@ function Rectangle(pos_seed) {
       var param2 = (sin(0.01*greenSlider.value()*this.h + greenoSlider.value())+1)/2;
       var param3 = (sin(0.01*blueSlider.value()*this.h + blueoSlider.value())+1)/2;
     
-    
-        var freq,myred,mygreen,myblue;
+
         if (color_noise) {
           freq = noisefreqSlider.value()*noisefreqSlider.value();
           myred = this.start_red + this.amp_red*param + colornoiseSlider.value()*(noise(freq*this.h)-0.5) + rednSlider.value()*(noise(freq*this.h + 1478)-0.5);
@@ -115,11 +117,11 @@ function Rectangle(pos_seed) {
           mygreen = this.start_green + this.amp_green*param2;
           myblue = this.start_blue + this.amp_blue*param3;
         }
-      fill(myred, mygreen, myblue, myalpha);
-
     } else {
-      var auxxx = myGrad.getColor(this.h);
-      stroke(auxxx[0], auxxx[1], auxxx[2], myalpha);
+      var auxxx = myGrad.getColor(0.0003*this.h);
+      myred = auxxx[0];
+      myblue = auxxx[1];
+      mygreen = auxxx[2];
     }
     
     stroke(box2Slider.value(),boxSlider.value());
