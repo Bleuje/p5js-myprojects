@@ -826,6 +826,7 @@ var z_xoff = 0;
 var z_yoff = 0;
 var z_zoff = 0;
 
+var auxaux = 0;
 
 function draw() {
 
@@ -899,7 +900,7 @@ function draw() {
   
   frameRate(framerateSlider.value());
 
-  fr.html("FPS : " + floor(frameRate()));
+  if(auxaux === 0 ||frameCount%10 === 0) {fr.html("FPS : " + floor(frameRate()));auxaux++;}
   p6.html('Maximum frame rate : ' + framerateSlider.value());
   
   nbp.html('Current number of particles : ' + NB_PARTICLES);
