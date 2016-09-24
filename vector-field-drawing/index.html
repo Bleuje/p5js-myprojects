@@ -167,13 +167,13 @@ text-shadow: 0px 0px 3px #FFFFFF,
     padding: 10px;">
 <p>
 <h2>Documentation</h2>
-<h3>Physics</h3>
+<h3><strong>Physics</strong></h3>
 Some particles move in a random force field, somehow following Newton's second law of dynamics.
-<h4>Particle settings</h4>
+<h4><strong>Particle settings</strong></h4>
 After the particle speed is updated from the force(s), a slow-down coefficient is applied to the speed.
 The <strong>particle speed</strong> slider lets you choose this coefficient between 0 and 1 (1 means not slowed-down).
 
-<h4>Force field settings</h4>
+<h4><strong>Force field settings</strong></h4>
 The force field is generated from Perlin noise, but there are two methods here.
 </br>
 </br>
@@ -197,12 +197,12 @@ When <strong>Force noise</strong> is increased, some random values of higher int
 <strong>Force change rate</strong> controls the speed at which we evolve using the third dimension of the Perlin Noise. 
 </br>
 </br>
-<h4>Field bias</h4>
+<h4><strong>Field bias</strong></h4>
 Something to add constant values to the force field.
 </br>
 </br>
-<h3>Drawing style</h3>
-<h4>Color gradient</h4>
+<h3><strong>Drawing style</strong></h3>
+<h4><strong>Color gradient</strong></h4>
 The color gradients use functions of the form value(t) = a + b*sin(c + w*t) to compute the red-green-blue components of the colors.
 </br>
 </br>
@@ -210,7 +210,7 @@ The parameters a,b,c and w can be different for each component, and even each pa
 All the sliders in this section are about defining these parameters. 
 </br>
 </br>
-<h4>Color noise settings</h4>
+<h4><strong>Color noise settings</strong></h4>
 Some perlin noise (noise(c + w*t)) can be added to each color component.
 <strong>Synchronized color noise</strong> adds the same noise to all components.
 The previous parameter w is controlled with <strong>noise "frequency"</strong>.
@@ -220,18 +220,18 @@ The parameters a,b,c and w can be different for each component, and even each pa
 All the sliders in this section are about defining these parameters. 
 </br>
 </br>
-<h3>Rectangle mode</h3>
+<h3><strong>Rectangle mode</strong></h3>
 This mode is the same as the default one, excepted that the particles are drawn with rectangles :
  the particles are constrained to move only up down left or right, and a new rectangle is drawn from the previous one using the speed as width or
  height (depending on the direction).
  </br>
  </br>
- <h3>Custom color gradient</h3>
+ <h3><strong>Custom color gradient</strong></h3>
 This panel allows you to paint the canvas with your own picture (press pause to have only the picture on the canvas).
 Then you can define a color gradient from there. So far there is just a method that uses 200 points in an ellipse inside the canvas to define the colors.
  </br>
  </br>
-<h2>Tricks</h2>
+<h2><strong>Tricks</strong></h2>
  Resize your window before reloading the page (Reset button) to use smaller resolutions.
  
  </p>
