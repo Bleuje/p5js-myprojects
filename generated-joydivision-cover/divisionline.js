@@ -67,6 +67,6 @@ var divisionLine = function(t,start_y) {
         //vertex(end_pos,height);
         endShape();
         noStroke();
-        rect(start_pos-1,realY+2,end_pos-start_pos+2,500);
+        rect(start_pos-1,realY+2,end_pos-start_pos+2,end_posh + 1 - realY);
     }
 }
