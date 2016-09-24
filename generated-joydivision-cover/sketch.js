@@ -8,6 +8,7 @@ function setup() {
   
   button = createButton('Reload page');
   button.parent('buttons');
+  button.class('btn btn-default')
   button.mousePressed(reset);
   
   noiseDetail(3);
