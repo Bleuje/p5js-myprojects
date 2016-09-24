@@ -200,6 +200,10 @@ function setup() {
     buttonellipse.mousePressed(ellipseEvent);
   buttonellipse.parent('gradient');
   
+      buttonbackg = createButton('Go back to normal color gradient');
+    buttonbackg.mousePressed(backgEvent);
+  buttonbackg.parent('gradient');
+  
   bounceCbox = createCheckbox('Border bounce',false);
   bounceCbox.parent('physics1');
   bounceCbox.changed(myCheckedEvent);
@@ -812,6 +816,10 @@ function ellipseEvent() {
     myGrad.ellipseMethod();
     color_mode = 'custom';
   }
+}
+
+function backgEvent() {
+    color_mode = 'Normal';
 }
 
 var z_xoff = 0;

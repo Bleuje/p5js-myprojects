@@ -78,7 +78,13 @@ function Particle(pos_seed) {
     var sw = (1-penNoiseSlider.value())*0.5 + penNoiseSlider.value()*noise(20000 + 0.01*frameCount + this.offp);
     
     this.h2 = this.h2 + colorGradientSlider.value()*colorGradientSlider.value();
-    this.h = this.particuleOffset*particleColorOffsetSlider.value() + this.h2;
+    var multiplier;
+    if (color_mode === 'Normal') {
+        multiplier = 1;
+    } else {
+      multiplier = 2;
+    }
+    this.h = this.particuleOffset*particleColorOffsetSlider.value()*multiplier + this.h2;
     var freq,myred,mygreen,myblue;
     if (color_mode === 'Normal') {
         var param = (sin(0.01*redSlider.value()*this.h + redoSlider.value())+1)/2;
@@ -98,7 +104,7 @@ function Particle(pos_seed) {
           myblue = this.start_blue + this.amp_blue*param3;
         }
     } else {
-      var auxxx = myGrad.getColor(0.0003*this.h);
+      var auxxx = myGrad.getColor(0.0008*this.h);
       myred = auxxx[0];
       myblue = auxxx[1];
       mygreen = auxxx[2];

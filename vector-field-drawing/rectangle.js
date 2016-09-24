@@ -99,7 +99,13 @@ function Rectangle(pos_seed) {
     if (color_mode === 'Normal') {
       
       this.h2 = this.h2 + colorGradientSlider.value();
-      this.h = this.rectangleOffset*particleColorOffsetSlider.value() + this.h2;
+          var multiplier;
+    if (color_mode === 'Normal') {
+        multiplier = 1;
+    } else {
+      multiplier = 2;
+    }
+      this.h = this.rectangleOffset*particleColorOffsetSlider.value()*multiplier + this.h2;
       
       var param = (sin(0.01*redSlider.value()*this.h + redoSlider.value())+1)/2;
       var param2 = (sin(0.01*greenSlider.value()*this.h + greenoSlider.value())+1)/2;
@@ -118,7 +124,7 @@ function Rectangle(pos_seed) {
           myblue = this.start_blue + this.amp_blue*param3;
         }
     } else {
-      var auxxx = myGrad.getColor(0.0003*this.h);
+      var auxxx = myGrad.getColor(0.0008*this.h);
       myred = auxxx[0];
       myblue = auxxx[1];
       mygreen = auxxx[2];
