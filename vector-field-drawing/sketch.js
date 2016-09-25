@@ -202,7 +202,7 @@ function setup() {
   methods.parent('gradient1');
   methodt2 = createP('Number of points used : ' + nsampling);
   methodt2.parent('gradient1');
-  complSlider = createSlider(5,nsampling*1.5,nsampling,1);
+  complSlider = createSlider(5,nsampling*3,nsampling,1);
   complSlider.parent('gradient1');
   complSlider.changed(complSliderEvent);
   buttonellipset = createP('Find a color gradient from the canvas </br> with the chosen method :');
