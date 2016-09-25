@@ -30,8 +30,8 @@ var lenSlider;
 var divisionLine = function(start_y,seed) {
     this.y = start_y;
     
-    this.offset = 50*noise(seed + 0.01*start_y);
-    this.offset2 = 0.1*start_y + random(0.1);
+    this.offset = 0.5*noise(seed + 0.07*start_y);
+    this.offset2 = 0.08*start_y + random(0.1);
     
     this.show = function(t) {
         stroke(255,200);
@@ -45,11 +45,11 @@ var divisionLine = function(start_y,seed) {
              
              var x = i*width/nb_points;
           //radius = lenSlider.value()/TWO_PI;
-              var myTime = TWO_PI*(0.027*x + seed + this.offset)/lenSlider.value() + t;
+              var myTime = TWO_PI*(0.025*x + seed + this.offset)/lenSlider.value() + t;
             var radius2 = lenSlider.value()/TWO_PI;
-             var myNoise = noise(radius2*cos(myTime)+0.2*this.offset2,radius2*sin(myTime)+0.2*this.offset2,this.offset2)+0.58;
+             var myNoise = noise(radius2*cos(myTime)+0.2*this.offset2,radius2*sin(myTime)+0.2*this.offset2,this.offset2)+0.56;
              
-             var myNoise2 = - 6*pow(myNoise,7);
+             var myNoise2 = - 5.8*pow(myNoise,7.7) - 10*noise(radius2*cos(myTime)+0.2*this.offset2,radius2*sin(myTime)+0.2*this.offset2,this.offset2+5);
              
              this.addedValue[i] = myRand + myNoise2;
              this.randomArray[i] = myRand;
