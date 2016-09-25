@@ -1,31 +1,17 @@
-
 var nb_points = 400;
-
 var noiseIntensity = 1.5;
-
-var start_pos = 50;
-var end_pos = 350;
-
-var start_posh = 65;
-var end_posh = 370;
-
-var gaussian = function(x) {
-    return Math.exp(-pow(x-width/2,2)/pow(width/5,2));
-}
+var start_pos = 50;var end_pos = 350;
+var start_posh = 65;var end_posh = 370;
 
 var sigmoid = function(x) {
     return 1/(1 + Math.exp(-x));
 }
-
 
 var transition = function(x) {
     var t1 = Math.abs(x-width/2)/(width/2);
     var t = 1/(0.1+pow(2.2*t1,5));
     return sigmoid(t-3);
 }
-
-var radius = 5;
-var lenSlider;
 
 var divisionLine = function(start_y,seed) {
     this.y = start_y;
@@ -44,12 +30,11 @@ var divisionLine = function(start_y,seed) {
              var myRand = random(noiseIntensity);
              
              var x = i*width/nb_points;
-          //radius = lenSlider.value()/TWO_PI;
               var myTime = TWO_PI*(0.025*x + seed + this.offset)/lenSlider.value() + t;
-            var radius2 = lenSlider.value()/TWO_PI;
-             var myNoise = noise(radius2*cos(myTime)+0.2*this.offset2,radius2*sin(myTime)+0.2*this.offset2,this.offset2)+0.56;
+            var radius = lenSlider.value()/TWO_PI;
+             var myNoise = noise(radius*cos(myTime)+0.2*this.offset2,radius*sin(myTime)+0.2*this.offset2,this.offset2)+0.56;
              
-             var myNoise2 = - 5.8*pow(myNoise,7.7) - 10*noise(radius2*cos(myTime)+0.2*this.offset2,radius2*sin(myTime)+0.2*this.offset2,this.offset2+5);
+             var myNoise2 = - 5.8*pow(myNoise,7.7) - 10*noise(radius*cos(myTime)+0.2*this.offset2,radius*sin(myTime)+0.2*this.offset2,this.offset2+5);
              
              this.addedValue[i] = myRand + myNoise2;
              this.randomArray[i] = myRand;
@@ -72,17 +57,11 @@ var divisionLine = function(start_y,seed) {
 }
 
 var cnv;
-
 var lines = [];
-
-var button;
-
-var globalTime = 0;
 var NUMBER_OF_FRAMES = 30*3;
-var globalTimeStep = 0;
+var globalTime = 0;
 
 function setup() {
-  globalTimeStep = - TWO_PI/NUMBER_OF_FRAMES;
   
   cnv = createCanvas(400,400);
   cnv.parent('canvas');
@@ -155,21 +134,6 @@ function increase_time() {
   show_cover();
 }
 
-var frame_start = -10;
-var recording = -1;
-
-function keyTyped() {
-    if (key === 's') {
-        recording = framesSlider.value();
-        console.log('went here1');
-    }
-}
-
 function draw() {
   increase_time();
-  
-  if (recording>0) {
-    console.log(framesSlider.value() - recording);
-    recording--;
-  }
 }
