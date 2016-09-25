@@ -6,7 +6,7 @@ var noiseIntensity = 1.5;
 var start_pos = 50;
 var end_pos = 350;
 
-var start_posh = 60;
+var start_posh = 65;
 var end_posh = 370;
 
 var gaussian = function(x) {
