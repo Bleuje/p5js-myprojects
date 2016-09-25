@@ -106,10 +106,13 @@ function Particle(pos_seed) {
     } else {
       var auxxx = myGrad.getColor(0.0008*this.h);
       myred = auxxx[0];
-      myblue = auxxx[1];
-      mygreen = auxxx[2];
+      mygreen = auxxx[1];
+      myblue = auxxx[2];
     }
-    stroke(myred, myblue, mygreen, myalpha);
+    stroke(myred, mygreen, myblue, myalpha);
+    
+    var c = color(myred,mygreen,myblue,myalpha);
+    fill(c);
     
     var aux_sz = penSizeSlider.value();
     
@@ -119,12 +122,10 @@ function Particle(pos_seed) {
     } else if (defsel === 'circle') {
         strokeWeight(penstrokeSlider.value());
         var radius = aux_sz*aux_sz*sw*sw*sw;
-        fill(myred, mygreen, myblue, myalpha);
         ellipse(this.pos.x, this.pos.y, radius,radius);
     } else if (defsel === 'square') {
         strokeWeight(penstrokeSlider.value());
         var radius = aux_sz*aux_sz*sw*sw*sw;
-        fill(myred, mygreen, myblue, myalpha);
         rect(this.pos.x - radius/2, this.pos.y - radius/2, radius,radius);
     } else if (defsel === 'empty circle') {
         strokeWeight(penstrokeSlider.value());
