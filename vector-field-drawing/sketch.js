@@ -30,7 +30,7 @@ var color_noise = false;
 var field_mode = getRandomInt(0, 1);
 var panels_are_there = 0;
 
-var selected_picture = true;
+var found_grad = false;
 
 var playing = true;
 
@@ -180,7 +180,7 @@ function setup() {
       console.log('test1043');
   
   part5 = createP('<h3>Custom color gradient</h3>');
-  part5.parent('gradient');
+  part5.parent('gradient1');
   
   console.log('test103');
   
@@ -189,20 +189,44 @@ function setup() {
   
   
   inpt = createP('</br> Use your own picture to paint the canvas : ');
-  inpt.parent('gradient');
+  inpt.parent('gradient1');
   inp = createFileInput(gotFile);
-  inp.parent('gradient');
-  inpt2 = createP('</br> </br>');
-  inpt2.parent('gradient');
-  buttonellipset = createP('Find a color gradient from the canvas </br> with the ellipse method :');
-  buttonellipset.parent('gradient');
+  inp.parent('gradient1');
+  inpt2 = createP('</br>');
+  inpt2.parent('gradient1');
+  methodt = createP('Choose a method :');
+  methodt.parent('gradient1');
+  methods = createSelect();
+  methods.option('ellipse');
+  methods.option('random sampling');
+  methods.parent('gradient1');
+  methodt2 = createP('Number of points used : ' + nsampling);
+  methodt2.parent('gradient1');
+  complSlider = createSlider(5,nsampling*1.5,nsampling,1);
+  complSlider.parent('gradient1');
+  complSlider.changed(complSliderEvent);
+  buttonellipset = createP('Find a color gradient from the canvas </br> with the chosen method :');
+  buttonellipset.parent('gradient1');
     buttonellipse = createButton('Go !');
-    buttonellipse.mousePressed(ellipseEvent);
-  buttonellipse.parent('gradient');
+    buttonellipse.mousePressed(findGradEvent);
+  buttonellipse.parent('gradient1');
   
-      buttonbackg = createButton('Go back to normal color gradient');
+    buttonbackg = createButton('Go back to normal color gradient');
     buttonbackg.mousePressed(backgEvent);
-  buttonbackg.parent('gradient');
+  buttonbackg.parent('gradient1');
+  
+  optiT = createP('<h4>Color gradient optimization</h4>');
+  optiT.parent('opti');
+  optiT2 = createP('<em>(My method : Traveling Salesman Problem in RGB space :^) )<em>');
+  optiT2.parent('opti');
+    buttonoptg = createButton('Optimize order with local search');
+    buttonoptg.mousePressed(optimizeEvent);
+  buttonoptg.parent('opti');
+    transpoSlidert = createP('Number of tried transposition </br> when the button is pushed : ' + 2000);
+  transpoSlidert.parent('opti');
+  transpoSlidert.changed(transpoSliderEvent);
+  transpoSlider = createSlider(100,10000,2000,1);
+  transpoSlider.parent('opti');
   
   bounceCbox = createCheckbox('Border bounce',false);
   bounceCbox.parent('physics1');
@@ -218,6 +242,7 @@ function setup() {
   nbp2.parent('physics1');
   particleNumberSlider = createSlider(1, sqrt(sqrt(3000)), sqrt(sqrt(250)), 0.01);
   particleNumberSlider.parent('physics1');
+  particleNumberSlider.changed(particleNumberSliderEvent);
   
   psel5a = createP('<h4>Force field settings</h4>');
   psel5a.parent('physicsf');
@@ -805,17 +830,52 @@ function gotFile(file) {
     alert('This is not recognized as an image');
   } else {
     img = createImg(file.data).hide();
-      selected_picture = true;
       image(img,0,0,width,height);
   }
 }
 
+function findGradEvent() {
+  if(methods.value() === 'ellipse') {
+    ellipseEvent();
+  } else if (methods.value() === 'random sampling') {
+    samplingEvent();
+  }
+    found_grad = true;
+}
+
 function ellipseEvent() {
-  if(selected_picture) {
-    myGrad = new colorGrad(nsampling);
+  if(found_grad) {
+    myGrad = new colorGrad(complSlider.value());
     myGrad.ellipseMethod();
     color_mode = 'custom';
   }
+}
+
+function samplingEvent() {
+  if(found_grad) {
+    myGrad = new colorGrad(complSlider.value());
+    myGrad.samplingMethod();
+    color_mode = 'custom';
+  }
+}
+
+function optimizeEvent() {
+  if(found_grad) {
+    console.log('I am there');
+    myGrad.optimizeOrder(transpoSlider.value());
+  }
+}
+
+function transpoSliderEvent() {
+    transpoSlidert.html('Number of tried transposition </br> when the button is pushed : ' + transpoSlider.value());
+}
+
+function particleNumberSliderEvent() {
+    nbp2.html('Number of particles in the next set : ' + int(particleNumberSlider.value()*particleNumberSlider.value()*particleNumberSlider.value()*particleNumberSlider.value()));
+}
+
+function complSliderEvent() {
+    methodt2.html('Number of points used : ' + complSlider.value());
 }
 
 function backgEvent() {
@@ -907,4 +967,6 @@ function draw() {
   nbp2.html('Number of particles in the next set : ' + int(particleNumberSlider.value()*particleNumberSlider.value()*particleNumberSlider.value()*particleNumberSlider.value()));
 
   filterframe.html('Filter every ' + filterframeSlider.value() + ' frames : ');
+  transpoSlidert.html('Number of tried transposition </br> when the button is pushed : ' + transpoSlider.value());
+  methodt2.html('Number of points used : ' + complSlider.value());
 }
