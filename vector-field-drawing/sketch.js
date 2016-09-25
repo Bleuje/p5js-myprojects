@@ -222,7 +222,7 @@ function setup() {
     buttonoptg = createButton('Optimize order with local search');
     buttonoptg.mousePressed(optimizeEvent);
   buttonoptg.parent('opti');
-    transpoSlidert = createP('Number of tried transposition </br> when the button is pushed : ' + 2000);
+    transpoSlidert = createP('Number of tried transpositions </br> when the button is pushed : ' + 2000);
   transpoSlidert.parent('opti');
   transpoSlidert.changed(transpoSliderEvent);
   transpoSlider = createSlider(100,10000,2000,1);
@@ -835,28 +835,24 @@ function gotFile(file) {
 }
 
 function findGradEvent() {
+    found_grad = true;
   if(methods.value() === 'ellipse') {
     ellipseEvent();
   } else if (methods.value() === 'random sampling') {
     samplingEvent();
   }
-    found_grad = true;
 }
 
 function ellipseEvent() {
-  if(found_grad) {
     myGrad = new colorGrad(complSlider.value());
     myGrad.ellipseMethod();
     color_mode = 'custom';
-  }
 }
 
 function samplingEvent() {
-  if(found_grad) {
     myGrad = new colorGrad(complSlider.value());
     myGrad.samplingMethod();
     color_mode = 'custom';
-  }
 }
 
 function optimizeEvent() {
@@ -867,7 +863,7 @@ function optimizeEvent() {
 }
 
 function transpoSliderEvent() {
-    transpoSlidert.html('Number of tried transposition </br> when the button is pushed : ' + transpoSlider.value());
+    transpoSlidert.html('Number of tried transpositions </br> when the button is pushed : ' + transpoSlider.value());
 }
 
 function particleNumberSliderEvent() {
@@ -967,6 +963,6 @@ function draw() {
   nbp2.html('Number of particles in the next set : ' + int(particleNumberSlider.value()*particleNumberSlider.value()*particleNumberSlider.value()*particleNumberSlider.value()));
 
   filterframe.html('Filter every ' + filterframeSlider.value() + ' frames : ');
-  transpoSlidert.html('Number of tried transposition </br> when the button is pushed : ' + transpoSlider.value());
+  transpoSlidert.html('Number of tried transpositions </br> when the button is pushed : ' + transpoSlider.value());
   methodt2.html('Number of points used : ' + complSlider.value());
 }
