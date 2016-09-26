@@ -15,6 +15,8 @@ var inc = 0.01;
 var scl = 20;
 var cols, rows;
 
+var field_plot_simplification = 2;
+
 var NB_PARTICLES = 250;
 
 var zoff = 0;
@@ -291,6 +293,10 @@ blurgSlider.changed(blurSliderEvent);
   pdisps.parent('physics1');
   pdisps.option('particles');
   pdisps.option('field');
+  lightT = createP('Field view lightness : ');
+  lightT.parent('physics1');
+  lightSlider = createSlider(1, 4, field_plot_simplification, 1);
+  lightSlider.parent('physics1');
   
   psel5a = createP('<h4>Force field settings</h4>');
   psel5a.parent('physicsf');
@@ -831,6 +837,8 @@ function change_mode() {
 
 var predview = -1;
 
+var dont_line = 0;
+
 function change_view() {
     var val = pdisps.value();
     if (val === 'particles') {
@@ -840,6 +848,7 @@ function change_view() {
     } else if (val === 'field') {
         pdisps.value('particles');
         background(255);
+        dont_line = 1;
         predview = 1;
     }
 }
@@ -1012,6 +1021,8 @@ function draw() {
   
   mySelectEvent2();
   
+  var mycnt = 0;
+  
 
   var plot_mode = pdisps.value();
   
@@ -1029,8 +1040,10 @@ function draw() {
         flowfield[index] = v;
         xoff += incSlider.value()*incSlider.value();
         
-        if(plot_mode === 'field'){
+        if((plot_mode === 'field') && (x%lightSlider.value()===0) && (y%lightSlider.value()===0)) {
             draw_arrow(v,(x+0.5)*width/cols,(y+0.5)*height/rows);
+        } else {
+            mycnt += (plot_mode === 'field');
         }
       }
       yoff += incSlider.value()*incSlider.value();
@@ -1057,8 +1070,10 @@ function draw() {
         v.setMag((1-fieldNoiseSlider.value() + 1.5*fieldNoiseSlider.value()*random())*forceMagSlider.value());
         flowfield[index] = v;
         
-        if(plot_mode === 'field'){
+        if(plot_mode === 'field' && (x%lightSlider.value())===0 && (y%lightSlider.value())===0) {
             draw_arrow(v,(x+0.5)*width/cols,(y+0.5)*height/rows);
+        } else {
+            mycnt += (plot_mode === 'field');
         }
         
       }
@@ -1068,7 +1083,9 @@ function draw() {
       z_zoff += 1*random()*fieldChangeRateSlider.value()*fieldChangeRateSlider.value();
     }
   }
-
+  
+  console.log(mycnt);
+  
   if (mode === 0) {
     for (var i = 0; i < particles.length; i++) {
       particles[i].follow(flowfield);
