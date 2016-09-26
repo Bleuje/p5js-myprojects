@@ -829,12 +829,18 @@ function change_mode() {
     new_particles();
 }
 
+var predview = -1;
+
 function change_view() {
     var val = pdisps.value();
     if (val === 'particles') {
         pdisps.value('field');
+        //console.log(predview);
+        predview = 0;
     } else if (val === 'field') {
         pdisps.value('particles');
+        background(255);
+        predview = 1;
     }
 }
 
@@ -1005,6 +1011,8 @@ function draw() {
   background(fade2Slider.value(),255*aux*aux*aux);
   
   mySelectEvent2();
+  
+
   var plot_mode = pdisps.value();
   
   if(plot_mode === 'field') background(255,80);
