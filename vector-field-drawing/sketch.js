@@ -120,6 +120,10 @@ function setup() {
   button7.mousePressed(change_mode);
   button7.parent('buttons0');
   button7.class('btn btn-default');
+button7b = createButton('Change physics view [V]');
+  button7b.mousePressed(change_view);
+  button7b.parent('buttons0');
+  button7b.class('btn btn-default');
   
   console.log('test1041');
   
@@ -816,6 +820,15 @@ function change_mode() {
     new_particles();
 }
 
+function change_view() {
+    var val = pdisps.value();
+    if (val === 'particles') {
+        pdisps.value('field');
+    } else if (val === 'field') {
+        pdisps.value('particles');
+    }
+}
+
 
 function pause_play() {
     if (playing) {
@@ -854,6 +867,8 @@ function keyTyped() {
     disp_panel_grad();
   } else if (key === 'h') {
     hidepanels();
+  } else if (key === 'v') {
+    change_view();
   }
 }
 
