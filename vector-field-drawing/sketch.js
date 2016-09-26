@@ -1,3 +1,12 @@
+/**********************************
+****************
+****************
+VECTOR FIELD DRAWING
+by Etienne Jacob, 2016
+****************
+****************
+this code is really wild now, maybe I'll organize it someday
+**********************************/
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -248,7 +257,7 @@ button7b = createButton('Change physics view [V]');
 heatSlider.changed(heatSliderEvent);
   heatSlider.parent('opti');
   
-  postprocT = createP('<h4>Post-processing :</h4>')
+  postprocT = createP('<h4>Post-processing</h4>')
   postprocT.parent('opti');
   buttonblurg = createButton('Blur the color gradient');
     buttonblurg.mousePressed(blurEvent);
