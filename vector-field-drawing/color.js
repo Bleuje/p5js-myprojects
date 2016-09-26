@@ -1,3 +1,8 @@
+function transitionSA(delta,temperature){
+    var comp = min(1.0,exp(-delta/temperature));
+    return (random() < comp);
+}
+
 function colorGrad(n) {
   this.complexity = n;
   this.colors = [];
@@ -67,6 +72,40 @@ function colorGrad(n) {
     }
   }
   
+  this.optimizeOrderSA = function(optiSteps,temperature) {
+    console.log("I'm here");
+    for(var i = 0; i < optiSteps; i++){
+      var pos1 = floor(random(this.complexity));
+      var pos2 = floor(random(this.complexity));
+      
+      var cost_before;
+      var cost_difference;
+      if (pos1 === pos2) {
+        cost_difference = 0;
+      } else {
+          var arr1 = this.cost(pos1);
+          var arr2 = this.cost(pos2);
+          cost_before = arr1[0] + arr1[1] + arr2[0] + arr2[1];
+          
+          var aux = this.colors[pos1];
+          this.colors[pos1] = this.colors[pos2];
+          this.colors[pos2] = aux;
+          
+          arr1 = this.cost(pos1);
+          arr2 = this.cost(pos2);
+          cost_after = arr1[0] + arr1[1] + arr2[0] + arr2[1];
+          
+          var cost_difference = cost_after - cost_before;
+          
+          if (!transitionSA(cost_difference,temperature)) {
+            var aux = this.colors[pos1];
+            this.colors[pos1] = this.colors[pos2];
+            this.colors[pos2] = aux;
+          }
+      }
+    }
+  }
+  
   this.getColor = function(t) {
     var ind = (t-floor(t))*this.complexity;
     //console.log('pas bug',t);
@@ -76,12 +115,29 @@ function colorGrad(n) {
     return [r,g,b,255];
   }
   
-  this.draw = function(x,y,w,h){
-    for(var i=x; i<x+w; i++){
-      var t = (i-x)/w;
-      stroke(this.getColor(t));
-      
-      line(i,0,i,h);
+  this.visu = function(w){
+    for(var i=0; i<this.complexity; i++){
+      var t = i/this.complexity;
+      fill(this.getColor(t));
+      //console.log(this.getColor(t));
+      var y = t*height;
+      noStroke();
+      rect(width-w,y,w,height/this.complexity);
+    }
+  }
+  
+  this.blur = function(steps){
+    var cmpl = this.complexity;
+    for(var k=0;k<steps;k++){
+      var colors2 = [];
+      for(var i=0; i<cmpl; i++){
+        colors2[i] = this.colors[i];
+      }
+      for(var i=0; i<cmpl; i++){
+        for(var j=0;j<3;j++){
+          this.colors[i][j] = (1*colors2[(i-1+cmpl)%cmpl][j] + 2*colors2[i][j] + 1*colors2[(i+1)%cmpl][j])/4;
+        }
+      }
     }
   }
 }

@@ -215,6 +215,12 @@ function setup() {
     buttonbackg.mousePressed(backgEvent);
   buttonbackg.parent('gradient1');
   
+  buttonvg = createButton('Visualize color gradient');
+    buttonvg.mousePressed(visualizeEvent);
+  buttonvg.parent('gradient1');
+  visuopt = createCheckbox('Print automatically the color gradient after a change',true);
+  visuopt.parent('gradient1');
+  
   optiT = createP('<h4>Color gradient optimization</h4>');
   optiT.parent('opti');
   optiT2 = createP('<em>(My method : Traveling Salesman Problem in RGB space :^) )<em>');
@@ -222,11 +228,31 @@ function setup() {
     buttonoptg = createButton('Optimize order with local search');
     buttonoptg.mousePressed(optimizeEvent);
   buttonoptg.parent('opti');
-    transpoSlidert = createP('Number of tried transpositions </br> when the button is pushed : ' + 2000);
+      buttonoptg2 = createButton('Optimize order with simulated annealing');
+    buttonoptg2.mousePressed(optimizeEventSA);
+  buttonoptg2.parent('opti');
+    transpoSlidert = createP('Number of steps : ' + 2000);
   transpoSlidert.parent('opti');
-  transpoSlidert.changed(transpoSliderEvent);
-  transpoSlider = createSlider(100,10000,2000,1);
+  transpoSlider = createSlider(100,100000,2000,1);
+    transpoSlider.changed(transpoSliderEvent);
   transpoSlider.parent('opti');
+  heatSlidert = createP('Temperature of SA : ' + 1000000000);
+  heatSlidert.parent('opti');
+  heatSlider = createSlider(0.01,1000000000,100000000,0.01);
+heatSlider.changed(heatSliderEvent);
+  heatSlider.parent('opti');
+  
+  postprocT = createP('<h4>Post-processing :</h4>')
+  postprocT.parent('opti');
+  buttonblurg = createButton('Blur the color gradient');
+    buttonblurg.mousePressed(blurEvent);
+  buttonblurg.parent('opti');
+    blurgSlidert = createP('Blur intensity : ' + 1);
+  blurgSlidert.parent('opti');
+  blurgSlider = createSlider(1,100,1,1);
+blurgSlider.changed(blurSliderEvent);
+  blurgSlider.parent('opti');
+  
   
   bounceCbox = createCheckbox('Border bounce',false);
   bounceCbox.parent('physics1');
@@ -309,6 +335,10 @@ function setup() {
   pp5.parent('physicsf');
   fieldChangeRateSlider = createSlider(0, sqrt(0.002), sqrt(0.00008), 0.0000001);
   fieldChangeRateSlider.parent('physicsf');
+  pp5b = createP('Magnitude noise : ');
+  pp5b.parent('physicsf');
+  fieldNoiseSlider = createSlider(0, 1, 0.0, 0.01);
+  fieldNoiseSlider.parent('physicsf');
   pp6 = createP('Color gradient frequency : ');
   pp6.parent('color2');
   colorGradientSlider = createSlider(0, sqrt(50), 1.0, 0.01);
@@ -841,6 +871,7 @@ function findGradEvent() {
   } else if (methods.value() === 'random sampling') {
     samplingEvent();
   }
+  if(visuopt.checked()) myGrad.visu(30);
 }
 
 function ellipseEvent() {
@@ -857,8 +888,22 @@ function samplingEvent() {
 
 function optimizeEvent() {
   if(found_grad) {
-    console.log('I am there');
     myGrad.optimizeOrder(transpoSlider.value());
+    if(visuopt.checked()) myGrad.visu(30);
+  }
+}
+
+function optimizeEventSA() {
+  if(found_grad) {
+    myGrad.optimizeOrder(transpoSlider.value(),heatSlider.value());
+    if(visuopt.checked()) myGrad.visu(30);
+  }
+}
+
+function blurEvent() {
+if(found_grad) {
+    myGrad.blur(blurgSlider.value());
+    if(visuopt.checked()) myGrad.visu(30);
   }
 }
 
@@ -872,6 +917,20 @@ function particleNumberSliderEvent() {
 
 function complSliderEvent() {
     methodt2.html('Number of points used : ' + complSlider.value());
+}
+
+function blurSliderEvent() {
+    blurgSlidert.html('Blur intensity : ' + blurgSlider.value());
+}
+
+function heatSliderEvent() {
+    heatSlidert.html('Temperature of SA : ' + heatSlider.value());
+}
+
+function visualizeEvent() {
+    if(found_grad) {
+        myGrad.visu(30);
+    }
 }
 
 function backgEvent() {
@@ -901,7 +960,7 @@ function draw() {
         var index = x + y * cols;
         var angle = noise(xoff, yoff, zoff) * TWO_PI * 4;
         var v = p5.Vector.fromAngle(angle);
-        v.setMag(forceMagSlider.value());
+        v.setMag((1-fieldNoiseSlider.value() + 1.5*fieldNoiseSlider.value()*random())*forceMagSlider.value());
         flowfield[index] = v;
         xoff += incSlider.value()*incSlider.value();
       }
@@ -926,7 +985,7 @@ function draw() {
   
         var angle = noise(xx + z_xoff, yy + z_yoff, zz + z_zoff) * TWO_PI * 4;
         var v = p5.Vector.fromAngle(angle);
-        v.setMag(forceMagSlider.value());
+        v.setMag((1-fieldNoiseSlider.value() + 1.5*fieldNoiseSlider.value()*random())*forceMagSlider.value());
         flowfield[index] = v;
       }
       //zoff += fieldChangeRateSlider.value()*fieldChangeRateSlider.value();
