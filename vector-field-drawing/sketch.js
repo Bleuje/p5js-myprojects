@@ -10,6 +10,8 @@ var NB_PARTICLES = 250;
 
 var zoff = 0;
 
+var angle_interval = 6;
+
 var fr;
 
 var particles = [];
@@ -269,6 +271,13 @@ blurgSlider.changed(blurSliderEvent);
   particleNumberSlider = createSlider(1, sqrt(sqrt(3000)), sqrt(sqrt(250)), 0.01);
   particleNumberSlider.parent('physics1');
   particleNumberSlider.changed(particleNumberSliderEvent);
+  
+    pdisp = createP('<h4>Physics display</h4>');
+  pdisp.parent('physics1');
+  pdisps = createSelect();
+  pdisps.parent('physics1');
+  pdisps.option('particles');
+  pdisps.option('field');
   
   psel5a = createP('<h4>Force field settings</h4>');
   psel5a.parent('physicsf');
@@ -943,6 +952,15 @@ var z_zoff = 0;
 
 var auxaux = 0;
 
+function draw_arrow(v,x,y) {
+    stroke(0,100);
+    fill(0,100);
+    v.mult(10);
+    strokeWeight(1);
+    line(x,y,x+v.x,y+v.y);
+    ellipse(x+v.x,y+v.y,2,2);
+}
+
 function draw() {
 
   blendMode(BLEND);
@@ -951,6 +969,9 @@ function draw() {
   background(fade2Slider.value(),255*aux*aux*aux);
   
   mySelectEvent2();
+  var plot_mode = pdisps.value();
+  
+  if(plot_mode === 'field') background(255,80);
   
   if (field_mode === 0) {
     var yoff = 0;
@@ -958,11 +979,15 @@ function draw() {
       var xoff = 0;
       for (var x = 0; x < cols; x++) {
         var index = x + y * cols;
-        var angle = noise(xoff, yoff, zoff) * TWO_PI * 4;
+        var angle = noise(xoff, yoff, zoff) * TWO_PI * angle_interval;
         var v = p5.Vector.fromAngle(angle);
         v.setMag((1-fieldNoiseSlider.value() + 1.5*fieldNoiseSlider.value()*random())*forceMagSlider.value());
         flowfield[index] = v;
         xoff += incSlider.value()*incSlider.value();
+        
+        if(plot_mode === 'field'){
+            draw_arrow(v,(x+0.5)*width/cols,(y+0.5)*height/rows);
+        }
       }
       yoff += incSlider.value()*incSlider.value();
   
@@ -983,15 +1008,20 @@ function draw() {
         var yy = r*sin(2*PI*t);
         var zz = radius_y*sin(2*PI*t2);
   
-        var angle = noise(xx + z_xoff, yy + z_yoff, zz + z_zoff) * TWO_PI * 4;
+        var angle = noise(xx + z_xoff, yy + z_yoff, zz + z_zoff) * TWO_PI * angle_interval;
         var v = p5.Vector.fromAngle(angle);
         v.setMag((1-fieldNoiseSlider.value() + 1.5*fieldNoiseSlider.value()*random())*forceMagSlider.value());
         flowfield[index] = v;
+        
+        if(plot_mode === 'field'){
+            draw_arrow(v,(x+0.5)*width/cols,(y+0.5)*height/rows);
+        }
+        
       }
       //zoff += fieldChangeRateSlider.value()*fieldChangeRateSlider.value();
-      z_xoff += 2*random()*fieldChangeRateSlider.value()*fieldChangeRateSlider.value();
-      z_yoff += 2*random()*fieldChangeRateSlider.value()*fieldChangeRateSlider.value();
-      z_zoff += 2*random()*fieldChangeRateSlider.value()*fieldChangeRateSlider.value();
+      z_xoff += 1*random()*fieldChangeRateSlider.value()*fieldChangeRateSlider.value();
+      z_yoff += 1*random()*fieldChangeRateSlider.value()*fieldChangeRateSlider.value();
+      z_zoff += 1*random()*fieldChangeRateSlider.value()*fieldChangeRateSlider.value();
     }
   }
 
@@ -1000,14 +1030,14 @@ function draw() {
       particles[i].follow(flowfield);
       particles[i].update();
       particles[i].edges();
-      particles[i].show();
+      if(plot_mode === 'particles') particles[i].show();
     }
   } else {
     for (var i = 0; i < rectangles.length; i++) {
       rectangles[i].follow(flowfield);
       rectangles[i].update();
       rectangles[i].edges();
-      rectangles[i].show();
+      if(plot_mode === 'particles') rectangles[i].show();
     }
   }
   
