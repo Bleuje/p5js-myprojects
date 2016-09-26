@@ -955,6 +955,18 @@ var auxaux = 0;
 function draw_arrow(v,x,y) {
     stroke(0,100);
     fill(0,100);
+    var vect = createVector(xbiasSlider.value(),ybiasSlider.value());
+    v.add(vect);
+    var swirlb = createVector(-(sbiasYSlider.value() - y) - sbiasRSlider.value()*(sbiasXSlider.value()- x),sbiasXSlider.value()- x - sbiasRSlider.value()*(sbiasYSlider.value() - y));
+    swirlb.normalize();
+    swirlb.mult(sbiasSlider.value()*forceMagSlider.value());
+    v.add(swirlb);
+    //v.add(createVector((2*random()-1)*forceNoiseSlider.value(),(2*random()-1)*forceNoiseSlider.value()));
+    /*
+    if (random()<0.002) {
+        console.log(xbiasSlider.value(),vect,swirlb,v);
+    }*/
+    
     v.mult(10);
     strokeWeight(1);
     line(x,y,x+v.x,y+v.y);
@@ -1001,8 +1013,8 @@ function draw() {
         
         var t = x/cols;
         var t2 = y/rows;
-        var radius_x = 0.6*incSlider.value()*cols/(2*PI);
-        var radius_y = 0.5*incSlider.value()*rows/(2*PI);
+        var radius_x = 0.1*incSlider.value()*cols/(2*PI);
+        var radius_y = 0.1*incSlider.value()*rows/(2*PI);
         var r = radius_x + radius_y*cos(2*PI*t2);
         var xx = r*cos(2*PI*t);
         var yy = r*sin(2*PI*t);
