@@ -125,7 +125,7 @@ function colorGrad(n) {
   this.visuBar = function(w){
     for(var i=0; i<this.complexity; i++){
       var t = i/this.complexity;
-      fill(this.getColor(t));
+      fill(this.getColor(t),255);
       //console.log(this.getColor(t));
       var y = t*height;
       noStroke();
@@ -138,15 +138,15 @@ function colorGrad(n) {
     for(var i=0; i<this.complexity; i++){
       var t = i/this.complexity;
       stroke(this.getColor(t));
-      fill(this.getColor(t));
+      fill(this.getColor(t),255);
       var angle = t*TWO_PI;
       beginShape(); 
       var x = rad*cos(angle);
       var y = rad*sin(angle);
         vertex(x+width/2,y+height/2);
         vertex((rad+w)*cos(angle)+width/2,(rad+w)*sin(angle)+height/2);
-        vertex((rad+w)*cos(angle + 1/this.complexity)+width/2,(rad+w)*sin(angle + 2/this.complexity)+height/2);
-        vertex(rad*cos(angle + 1/this.complexity)+width/2,rad*sin(angle + 2/this.complexity)+height/2);
+        vertex((rad+w)*cos(angle + 3/this.complexity)+width/2,(rad+w)*sin(angle + 3/this.complexity)+height/2);
+        vertex(rad*cos(angle + 3/this.complexity)+width/2,rad*sin(angle + 3/this.complexity)+height/2);
       endShape();
     }
   }

@@ -843,6 +843,9 @@ function disp_panel_grad() {
     //document.getElementById('void').style.display = 'block';
     panels_are_there = 0;
   } else {
+    if (playing) {
+        pause_play();
+    }
     document.getElementById('physics').style.display = 'none';
     document.getElementById('interaction').style.display = 'none';
     document.getElementById('pen-colors').style.display = 'none';
