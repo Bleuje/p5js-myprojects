@@ -222,9 +222,9 @@ button7b = createButton('Change physics view [V]');
   complSlider = createSlider(5,nsampling*3,nsampling,1);
   complSlider.parent('gradient1');
   complSlider.changed(complSliderEvent);
-  buttonellipset = createP('Find a color gradient from the canvas </br> with the chosen method :');
+  buttonellipset = createP('Find a color gradient from the current canvas :');
   buttonellipset.parent('gradient1');
-    buttonellipse = createButton('Go !');
+    buttonellipse = createButton('Take a new color gradient');
     buttonellipse.mousePressed(findGradEvent);
   buttonellipse.parent('gradient1');
   
@@ -242,22 +242,30 @@ button7b = createButton('Change physics view [V]');
   optiT.parent('opti');
   optiT2 = createP('<em>(My method : Traveling Salesman Problem in RGB space :^) )<em>');
   optiT2.parent('opti');
+  optiT2.style('font-size: 0.6em;')
+  advoptBox = createCheckbox('Show advanced settings (Simulated annealing)',false);
+  advoptBox.style('font-size: 0.7em;');
+  advoptBox.parent('opti');
+  advoptBox.changed(advoptBoxEvent);
     buttonoptg = createButton('Optimize order with local search');
     buttonoptg.mousePressed(optimizeEvent);
   buttonoptg.parent('opti');
       buttonoptg2 = createButton('Optimize order with simulated annealing');
     buttonoptg2.mousePressed(optimizeEventSA);
   buttonoptg2.parent('opti');
-    transpoSlidert = createP('Number of steps : ' + 2000);
+  buttonoptg2.hide();
+    transpoSlidert = createP('Number of steps : ' + 10000);
   transpoSlidert.parent('opti');
-  transpoSlider = createSlider(100,100000,2000,1);
+  transpoSlider = createSlider(100,100000,10000,1);
     transpoSlider.changed(transpoSliderEvent);
   transpoSlider.parent('opti');
   heatSlidert = createP('Temperature of SA : ' + 1000000000);
   heatSlidert.parent('opti');
+  heatSlidert.hide();
   heatSlider = createSlider(0.01,1000000000,100000000,0.01);
 heatSlider.changed(heatSliderEvent);
   heatSlider.parent('opti');
+  heatSlider.hide();
   
   postprocT = createP('<h4>Post-processing</h4>')
   postprocT.parent('opti');
@@ -956,7 +964,7 @@ if(found_grad) {
 }
 
 function transpoSliderEvent() {
-    transpoSlidert.html('Number of tried transpositions </br> when the button is pushed : ' + transpoSlider.value());
+    transpoSlidert.html('Number of steps : ' + transpoSlider.value());
 }
 
 function particleNumberSliderEvent() {
@@ -973,6 +981,18 @@ function blurSliderEvent() {
 
 function heatSliderEvent() {
     heatSlidert.html('Temperature of SA : ' + heatSlider.value());
+}
+
+function advoptBoxEvent() {
+    if (advoptBox.checked()) {
+        buttonoptg2.show();
+        heatSlidert.show();
+        heatSlider.show();
+    } else {
+        buttonoptg2.hide();
+        heatSlidert.hide();
+        heatSlider.hide();
+    }
 }
 
 function visualizeEvent() {
@@ -1113,6 +1133,6 @@ function draw() {
   nbp2.html('Number of particles in the next set : ' + int(particleNumberSlider.value()*particleNumberSlider.value()*particleNumberSlider.value()*particleNumberSlider.value()));
 
   filterframe.html('Filter every ' + filterframeSlider.value() + ' frames : ');
-  transpoSlidert.html('Number of tried transpositions </br> when the button is pushed : ' + transpoSlider.value());
+  transpoSlidert.html('Number of steps : ' + transpoSlider.value());
   methodt2.html('Number of points used : ' + complSlider.value());
 }
