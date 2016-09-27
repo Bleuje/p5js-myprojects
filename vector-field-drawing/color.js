@@ -115,6 +115,14 @@ function colorGrad(n) {
   }
   
   this.visu = function(w){
+    if (visuStyle.value() === 'Circle visualization') {
+        this.visuCircle(w);
+    } else {
+        this.visuBar(w);
+    }
+  }
+  
+  this.visuBar = function(w){
     for(var i=0; i<this.complexity; i++){
       var t = i/this.complexity;
       fill(this.getColor(t));
@@ -122,6 +130,24 @@ function colorGrad(n) {
       var y = t*height;
       noStroke();
       rect(width-w,y,w,height/this.complexity);
+    }
+  }
+  
+  this.visuCircle = function(w){
+    var rad = min(height/3,width/3);
+    for(var i=0; i<this.complexity; i++){
+      var t = i/this.complexity;
+      stroke(this.getColor(t));
+      fill(this.getColor(t));
+      var angle = t*TWO_PI;
+      beginShape(); 
+      var x = rad*cos(angle);
+      var y = rad*sin(angle);
+        vertex(x+width/2,y+height/2);
+        vertex((rad+w)*cos(angle)+width/2,(rad+w)*sin(angle)+height/2);
+        vertex((rad+w)*cos(angle + 1/this.complexity)+width/2,(rad+w)*sin(angle + 2/this.complexity)+height/2);
+        vertex(rad*cos(angle + 1/this.complexity)+width/2,rad*sin(angle + 2/this.complexity)+height/2);
+      endShape();
     }
   }
   

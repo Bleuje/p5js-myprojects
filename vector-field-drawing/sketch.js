@@ -237,6 +237,10 @@ button7b = createButton('Change physics view [V]');
   buttonvg.parent('gradient1');
   visuopt = createCheckbox('Print automatically the color gradient after a change',true);
   visuopt.parent('gradient1');
+  visuStyle = createSelect();
+  visuStyle.option('Circle visualization');
+  visuStyle.option('Bar visualization');
+  visuStyle.parent('gradient1');
   
   optiT = createP('<h4>Color gradient optimization</h4>');
   optiT.parent('opti');
