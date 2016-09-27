@@ -39,7 +39,6 @@ function colorGrad(n) {
   }
   
   this.optimizeOrder = function(optiSteps) {
-    console.log("I'm here");
     for(var i = 0; i < optiSteps; i++){
       var pos1 = floor(random(this.complexity));
       var pos2 = floor(random(this.complexity));
@@ -136,6 +135,28 @@ function colorGrad(n) {
       for(var i=0; i<cmpl; i++){
         for(var j=0;j<3;j++){
           this.colors[i][j] = (1*colors2[(i-1+cmpl)%cmpl][j] + 2*colors2[i][j] + 1*colors2[(i+1)%cmpl][j])/4;
+        }
+      }
+    }
+  }
+  
+  this.taubinSmooth = function(steps,lambda,mu){
+    var cmpl = this.complexity;
+    for(var k=0;k<steps;k++){
+      var colors2 = [];
+      for(var i=0; i<cmpl; i++){
+        colors2[i] = this.colors[i];
+      }
+      for(var i=0; i<cmpl; i++){
+        for(var j=0;j<3;j++){
+            var varl = (colors2[(i-1+cmpl)%cmpl][j] + colors2[(i+1)%cmpl][j])/2 - colors2[i][j];
+          this.colors[i][j] += lambda*varl;
+        }
+      }
+      for(var i=0; i<cmpl; i++){
+        for(var j=0;j<3;j++){
+            var varl = (colors2[(i-1+cmpl)%cmpl][j] + colors2[(i+1)%cmpl][j])/2 - colors2[i][j];
+          this.colors[i][j] -= mu*varl;
         }
       }
     }

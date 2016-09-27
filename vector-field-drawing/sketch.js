@@ -243,7 +243,7 @@ button7b = createButton('Change physics view [V]');
   optiT2 = createP('<em>(My method : Traveling Salesman Problem in RGB space :^) )<em>');
   optiT2.parent('opti');
   optiT2.style('font-size: 0.6em;')
-  advoptBox = createCheckbox('Show advanced settings (Simulated annealing)',false);
+  advoptBox = createCheckbox('Show simulated annealing settings',false);
   advoptBox.style('font-size: 0.7em;');
   advoptBox.parent('opti');
   advoptBox.changed(advoptBoxEvent);
@@ -268,15 +268,37 @@ heatSlider.changed(heatSliderEvent);
   heatSlider.hide();
   
   postprocT = createP('<h4>Post-processing</h4>')
-  postprocT.parent('opti');
+  postprocT.parent('postp');
+    advppBox = createCheckbox('Show Taubin smoothing settings',false);
+  advppBox.style('font-size: 0.7em;');
+  advppBox.parent('postp');
+  advppBox.changed(advppBoxEvent);
   buttonblurg = createButton('Blur the color gradient');
     buttonblurg.mousePressed(blurEvent);
-  buttonblurg.parent('opti');
+  buttonblurg.parent('postp');
+    buttonblurg2 = createButton('Taubin smoothing');
+    buttonblurg2.mousePressed(taubinEvent);
+  buttonblurg2.parent('postp');buttonblurg2.hide();
     blurgSlidert = createP('Blur intensity : ' + 1);
-  blurgSlidert.parent('opti');
+  blurgSlidert.parent('postp');
   blurgSlider = createSlider(1,100,1,1);
 blurgSlider.changed(blurSliderEvent);
-  blurgSlider.parent('opti');
+  blurgSlider.parent('postp');
+  
+  lambdaSlidert = createP('Taubin lambda (Shrink) :');
+  lambdaSlidert.parent('postp');
+    lambdaSlidert.hide();
+  lambdaSlider = createSlider(0,1,0.5,0.01);
+lambdaSlider.changed(blurSliderEvent);
+  lambdaSlider.parent('postp');
+  lambdaSlider.hide();
+  muSlidert = createP('Taubin mu (Inflate) :');
+  muSlidert.parent('postp');
+  muSlidert.hide();
+  muSlider = createSlider(0,1,0.9,0.01);
+muSlider.changed(blurSliderEvent);
+  muSlider.parent('postp');
+  muSlider.hide();
   
   
   bounceCbox = createCheckbox('Border bounce',false);
@@ -957,11 +979,19 @@ function optimizeEventSA() {
 }
 
 function blurEvent() {
-if(found_grad) {
-    myGrad.blur(blurgSlider.value());
-    if(visuopt.checked()) myGrad.visu(30);
-  }
+    if(found_grad) {
+        myGrad.blur(blurgSlider.value());
+        if(visuopt.checked()) myGrad.visu(30);
+      }
 }
+
+function taubinEvent() {
+    if(found_grad) {
+        myGrad.taubinSmooth(blurgSlider.value(),lambdaSlider.value(),muSlider.value());
+        if(visuopt.checked()) myGrad.visu(30);
+      }
+}
+
 
 function transpoSliderEvent() {
     transpoSlidert.html('Number of steps : ' + transpoSlider.value());
@@ -992,6 +1022,22 @@ function advoptBoxEvent() {
         buttonoptg2.hide();
         heatSlidert.hide();
         heatSlider.hide();
+    }
+}
+
+function advppBoxEvent() {
+    if (advppBox.checked()) {
+        buttonblurg2.show();
+        lambdaSlidert.show();
+        lambdaSlider.show();
+        muSlidert.show();
+        muSlider.show();
+    } else {
+        buttonblurg2.hide();
+        lambdaSlidert.hide();
+        lambdaSlider.hide();
+        muSlidert.hide();
+        muSlider.hide();
     }
 }
 
