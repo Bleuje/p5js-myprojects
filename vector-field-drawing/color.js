@@ -135,9 +135,17 @@ function colorGrad(n) {
   
   this.visuCircle = function(w){
     var rad = min(height/3,width/3);
+    var ccccc = color(0,0,0,100);
+    stroke(ccccc);
+    strokeWeight(1);
+    noFill();
+    ellipse(width/2,height/2,2*(rad-1),2*(rad-1));
+    ellipse(width/2,height/2,2*(rad+w+1),2*(rad+w+1));
+    
+    
     for(var i=0; i<this.complexity; i++){
       var t = i/this.complexity;
-      stroke(this.getColor(t));
+      noStroke();
       fill(this.getColor(t),255);
       var angle = t*TWO_PI;
       beginShape(); 
@@ -145,9 +153,9 @@ function colorGrad(n) {
       var y = rad*sin(angle);
         vertex(x+width/2,y+height/2);
         vertex((rad+w)*cos(angle)+width/2,(rad+w)*sin(angle)+height/2);
-        vertex((rad+w)*cos(angle + 3/this.complexity)+width/2,(rad+w)*sin(angle + 3/this.complexity)+height/2);
-        vertex(rad*cos(angle + 3/this.complexity)+width/2,rad*sin(angle + 3/this.complexity)+height/2);
-      endShape();
+        vertex((rad+w)*cos(angle + TWO_PI/this.complexity)+width/2,(rad+w)*sin(angle + TWO_PI/this.complexity)+height/2);
+        vertex(rad*cos(angle + TWO_PI/this.complexity)+width/2,rad*sin(angle + TWO_PI/this.complexity)+height/2);
+      endShape(CLOSE);
     }
   }
   
@@ -171,12 +179,20 @@ function colorGrad(n) {
     for(var k=0;k<steps;k++){
       var colors2 = [];
       for(var i=0; i<cmpl; i++){
-        colors2[i] = this.colors[i];
+        colors2[i] = [];
+        for(var j=0;j<3;j++){
+            colors2[i][j] = this.colors[i][j];
+        }
       }
       for(var i=0; i<cmpl; i++){
         for(var j=0;j<3;j++){
             var varl = (colors2[(i-1+cmpl)%cmpl][j] + colors2[(i+1)%cmpl][j])/2 - colors2[i][j];
           this.colors[i][j] += lambda*varl;
+        }
+      }
+      for(var i=0; i<cmpl; i++){
+        for(var j=0;j<3;j++){
+            colors2[i][j] = this.colors[i][j];
         }
       }
       for(var i=0; i<cmpl; i++){

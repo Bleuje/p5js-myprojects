@@ -299,7 +299,7 @@ lambdaSlider.changed(blurSliderEvent);
   muSlidert = createP('Taubin mu (Inflate) :');
   muSlidert.parent('postp');
   muSlidert.hide();
-  muSlider = createSlider(0,1,0.9,0.01);
+  muSlider = createSlider(0,1,0.5,0.01);
 muSlider.changed(blurSliderEvent);
   muSlider.parent('postp');
   muSlider.hide();
