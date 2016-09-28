@@ -211,7 +211,7 @@ button7b = createButton('Change physics view [V]');
   inp.parent('gradient1');
   inpt2 = createP('</br>');
   inpt2.parent('gradient1');
-  methodt = createP('Choose a method :');
+  methodt = createP('Choose a sampling method :');
   methodt.parent('gradient1');
   methods = createSelect();
   methods.option('ellipse');
