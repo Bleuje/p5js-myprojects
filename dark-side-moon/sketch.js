@@ -38,7 +38,7 @@ function setup() {
     maxS = createSlider(5,100,max_rays,1);
     maxS.parent('buttons');
     
-    freqT = createP('Frequancy of apparition');
+    freqT = createP('Frequency of apparition');
     freqT.parent('buttons');
     freqS = createSlider(0.005,0.2,0.03,0.005);
     freqS.parent('buttons');
