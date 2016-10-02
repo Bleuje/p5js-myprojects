@@ -7,14 +7,14 @@ function draw_line1(t,p) {
     fill(255,50);
     stroke(255,50);
     ellipse(x*width,y*height,elw,elw);
-    console.log(x,y);
+    //console.log(x,y);
 }
 
 function draw_line2(t,p) {
     var x = lerp(0.39,0.005+lerp(0.59,0.65,p),t);
     var y = lerp(0.45,lerp(0.40,0.50,p),t);
-    fill(255,75*(1-t)*(1-t));
-    stroke(255,75*(1-t)*(1-t));
+    fill(255,75*(1-t)*sqrt(1-t));
+    stroke(255,75*(1-t)*sqrt(1-t));
     ellipse(x*width,y*height,elw,elw);
 }
 

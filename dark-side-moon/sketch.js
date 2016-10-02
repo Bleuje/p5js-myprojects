@@ -2,7 +2,7 @@ var cnv;
 
 var myRay = [];
 
-var max_rays = 40;
+var max_rays = 60;
 
 function drawTriangle() {
     var y_up = height/4;
@@ -30,18 +30,43 @@ function setup() {
     
     fadeT = createP('Background fade');
     fadeT.parent('buttons');
-    fadeS = createSlider(0,12,4,1);
+    fadeS = createSlider(0,12,3,1);
     fadeS.parent('buttons');
     
     maxT = createP('Maximum particles');
     maxT.parent('buttons');
-    maxS = createSlider(5,100,max_rays,1);
+    maxS = createSlider(5,120,max_rays,1);
     maxS.parent('buttons');
     
-    freqT = createP('Frequency of apparition');
+    freqT = createP('Frequency of new ray');
     freqT.parent('buttons');
-    freqS = createSlider(0.005,0.2,0.03,0.005);
+    freqS = createSlider(0.005,0.2,0.07,0.005);
     freqS.parent('buttons');
+    
+    button = createButton('Remove rays');
+    button.parent('buttons');
+    button.mousePressed(removeEvent);
+}
+
+var record_mode = 0;
+
+var maxFrames = 120;
+
+var skip = 4;
+
+function keyTyped() {
+    if(key === 's') {
+        record_mode = maxFrames;
+    }
+    if(key === 'g') {
+        loop();
+    }
+}
+
+function removeEvent() {
+    while (myRay.length) {
+        myRay.pop();
+    }
 }
 
 function draw() {
@@ -53,5 +78,13 @@ function draw() {
     drawTriangle();
     if (myRay.length<maxS.value() && random()>1-freqS.value()) {
         myRay.push(new ray());
+    }
+    
+    if (record_mode>0 && frameCount%skip === 0) {
+        saveCanvas('gif_frame' + (maxFrames - record_mode),'jpg');
+        record_mode--;
+        if (record_mode%20===0) {
+            noLoop();
+        }
     }
 }
