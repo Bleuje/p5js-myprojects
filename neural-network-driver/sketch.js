@@ -29,7 +29,7 @@ function setup() {
     myCar = new car(myMap,random(1000,wid-1000),random(1000,hei-1000),random(PI*12));
     
     //console.log(2);
-    buttonPlay = createButton('Pause/Play');
+    buttonPlay = createButton('Pause/Play (P)');
     buttonPlay.parent('buttons');
     buttonPlay.mousePressed(pause_play);
     
@@ -47,6 +47,9 @@ function setup() {
     sliderFadeT.parent('buttons');
     sliderFade = createSlider(0,255,255-50,1);
     sliderFade.parent('buttons');
+    
+    infoclickT = createP('Click to change the position of the last CP');
+    infoclickT.parent('buttons');
 }
 
 var playing = true;
@@ -61,6 +64,19 @@ function pause_play() {
     } else {
         loop();
         playing = true;
+    }
+}
+
+function keyTyped() {
+    if (key === 'p') {
+        pause_play();
+    }
+}
+
+function mousePressed() {
+    if (mouseX>=0&&mouseY>=0&&mouseX<width&&mouseY<height) {
+        myMap.cps[2].pos.x = mouseX*scaler;
+        myMap.cps[2].pos.y = mouseY*scaler;
     }
 }
 
