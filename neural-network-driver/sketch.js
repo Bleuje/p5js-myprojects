@@ -48,7 +48,7 @@ function setup() {
     sliderFade = createSlider(0,255,255-50,1);
     sliderFade.parent('buttons');
     
-    infoclickT = createP('Click to change the position of the last CP');
+    infoclickT = createP('Click to change the position of the last checkpoint');
     infoclickT.parent('buttons');
 }
 
