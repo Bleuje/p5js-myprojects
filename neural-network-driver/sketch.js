@@ -10,12 +10,13 @@ var angle_diff_max = 18;
 var pod_rad = 400;
 var slow_down_coeff = 0.75;
 
+var background_grey = 220; 
 var myMap,myCar;
 
 function setup() {
     cnv = createCanvas(wid/scaler,hei/scaler);
     cnv.parent('canvas');
-    background(200);
+    background(background_grey);
     smooth(5)
     
     //console.log(0);
@@ -28,17 +29,55 @@ function setup() {
     myCar = new car(myMap,random(1000,wid-1000),random(1000,hei-1000),random(PI*12));
     
     //console.log(2);
+    buttonPlay = createButton('Pause/Play');
+    buttonPlay.parent('buttons');
+    buttonPlay.mousePressed(pause_play);
+    
+    sliderSlowMotionT = createP('Slow motion');
+    sliderSlowMotionT.parent('buttons');
+    sliderSlowMotion = createSlider(1,20,5,1);
+    sliderSlowMotion.parent('buttons');
+    
+    showAngleDecision = createCheckbox('Show angle choice');
+    showAngleDecision.parent('buttons');
+    showThrustDecision = createCheckbox('Show thurst choice');
+    showThrustDecision.parent('buttons');
+    
+    sliderFadeT = createP('Background fade');
+    sliderFadeT.parent('buttons');
+    sliderFade = createSlider(0,255,255-50,1);
+    sliderFade.parent('buttons');
 }
 
+var playing = true;
+
+var midsteps = 5;
+var curmidstep = 0;
+
+function pause_play() {
+    if (playing) {
+        noLoop();
+        playing = false;
+    } else {
+        loop();
+        playing = true;
+    }
+}
+
+/*
+var mxfrm = 50;
+var frcnt = 0;*/
+
 function draw() {
-    background(200);
-    //console.log(3);
+    background(background_grey,255-sliderFade.value());
+    frameRate(60);
    myMap.show();
-   //console.log(4);
    myCar.gatherChoice();
-   //console.log(5);
-   myCar.show();
-   //console.log(6);
-   myCar.move();
-   //console.log(7);
+   myCar.show(curmidstep/midsteps);
+   if (curmidstep%midsteps === 0) {
+    myCar.move();
+    curmidstep=0;
+    midsteps=sliderSlowMotion.value();
+   }
+   curmidstep = (curmidstep + 1) % midsteps;
 }

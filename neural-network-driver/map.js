@@ -3,7 +3,8 @@ function checkpoint(x_,y_) {
     
     this.show = function(id) {
         stroke(100);
-        fill(150+20*id);
+        var c = color(255-70*id,50,50);
+        fill(c);
         ellipse(this.pos.x/scaler,this.pos.y/scaler,2*cp_radius/scaler,2*cp_radius/scaler);
     }
 }

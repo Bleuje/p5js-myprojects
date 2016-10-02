@@ -15,16 +15,35 @@ function car(g_,x_,y_,a_) {
     
     this.angle = a_;
     
-    this.chosenThrust;
-    this.chosenAngle;
+    this.carColor = color(50+random(205),50+random(205),50+random(205));
     
-    this.show = function () {
-        var c = color(255,0,0);
+    this.chosenThrust = 0;
+    this.chosenAngle = 0;
+    
+    this.show = function (t) {
+        var c = this.carColor;
         fill(c);
         stroke(50);
-        ellipse(this.pos.x/scaler,this.pos.y/scaler,2*pod_rad/scaler,2*pod_rad/scaler);
-        line(this.pos.x/scaler,this.pos.y/scaler,this.pos.x/scaler+pod_rad*cos(this.angle)/scaler,this.pos.y/scaler+pod_rad*sin(this.angle)/scaler)
+        if (t === 0) {
+            ellipse(this.pos.x/scaler,this.pos.y/scaler,2*pod_rad/scaler,2*pod_rad/scaler);
+            line(this.pos.x/scaler,this.pos.y/scaler,this.pos.x/scaler+pod_rad*cos(this.angle)/scaler,this.pos.y/scaler+pod_rad*sin(this.angle)/scaler)
+        } else {
+            var vectl = lerpV(this.prev,this.pos,t);
+            ellipse(vectl.x/scaler,vectl.y/scaler,2*pod_rad/scaler,2*pod_rad/scaler);
+            line(vectl.x/scaler,vectl.y/scaler,vectl.x/scaler+pod_rad*cos(this.angle)/scaler,vectl.y/scaler+pod_rad*sin(this.angle)/scaler);
+        }
         
+        stroke(100,100);
+        if (showAngleDecision.checked()) {
+            fill(100,100,255);
+            var left = map(this.chosenAngle,-18,18,0,height);
+            rect(0,left,25,height-left);
+        }
+        if (showThrustDecision.checked()) {
+            fill(255,255,100);
+            var right = height - map(this.chosenThrust,0,200,0,height);
+            rect(width-25,right,25,height-right);
+        }
     }
     
     this.nextcp = function(prev){
@@ -46,6 +65,7 @@ function car(g_,x_,y_,a_) {
         cy2 = this.game.cps[1].pos.y;
         anglee = this.angle;
         
+        
         inp[0]=d1();
         inp[1]=d2();
         inp[2]=vc();
@@ -55,23 +75,32 @@ function car(g_,x_,y_,a_) {
         inp[6]=as();
         inp[7]=cpc();
         inp[8]=cps();
+        
+        for(var i=0;i<9;i++){
+            console.log(inp[i]);
+        }
+        
+        
         predict();
         //console.log(this.chosenAngle);
-        this.chosenAngle = this.angle + PI*max(-18.0,min(18.0,18*resp[0]))/180;
+        this.chosenAngle = max(-18.0,min(18.0,18*resp[0]));
+        this.angle += PI*max(-18.0,min(18.0,18*resp[0]))/180;
         this.chosenThrust = max(10.0,min(200.0,200*resp[1]));
+        
+        console.log(resp);
     }
     
     this.move = function() {
         //console.log('a');
-        var prev=createVector(this.pos.x,this.pos.y);
+        this.prev=createVector(this.pos.x,this.pos.y);
         //console.log('b');
-        this.speed.add(createVector(this.chosenThrust*cos(this.chosenAngle),this.chosenThrust*sin(this.chosenAngle)));
+        this.speed.add(createVector(this.chosenThrust*cos(this.angle),this.chosenThrust*sin(this.angle)));
         //console.log('c');
         this.pos.add(this.speed);
         //console.log('d');
         this.speed.mult(slow_down_coeff);
         //console.log('e');
-        if(this.nextcp(prev)){
+        if(this.nextcp(this.prev)){
             this.game.evolve();
             console.log('ok');
         }

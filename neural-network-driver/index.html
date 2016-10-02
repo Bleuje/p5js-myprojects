@@ -21,15 +21,23 @@
   <h2> Neural network driver </h2>
 </div>
 
+<div class="container">
+ <p>This is a bot that tries to cross checkpoints as fast as possible. Not the best thing ever but it works with little computation time.</p>
+ <p>At each time step it can change its thrust by a new value between 0 and 200 units/timestep² (one unit = 25 pixels)
+ and change its orientation with a maximum difference of 18 degrees. The speed is multiplied by 0.85 at each turn (friction).</p>
+  <p>This bot makes decisions using a neural network (more information below) trained by supervised learning.
+  I have many versions (many weights) and I'm afraid this is really not the best, but at least it works !</p>
+</div>
+
 <div class="divider">
 </div>
 
 <div class="container">
   <div class="row">
-    <div class="col-md-5"  id="canvas">
+    <div class="col-md-7" id="canvas">
 
 	</div>
-	<div class="col-md-5" id="buttons">
+	<div class="col-md-7" id="buttons">
     </div>
   </div>
 </div>
@@ -40,9 +48,25 @@
 <div class="divider">
 </div>
 
+<div class="container">
+	<h3>Neural network architecture</h3>
+ <p>The neural network had two layers with bias. The activation function is tanh.</p>
+  <p>There are 9 inputs : they give the position of the 2 next checkpoints relative to the car. There are 2 outputs : chosen thrust and chosen angle difference.
+  All those values have been rescaled between -1 and 1 for learning efficiency.</p>
+	<h3>How it has been trained</h3>
+	<p>This bot has been trained using the data collected from another bot I made on the website CodinGame.com.
+	That bot uses prediction many turns in advance and optimization with simulated annealing.</p>
+		<p>The training to get the neural network weights was done by using the simple Python library PyBrain.</p>
+</div>
+
+<div class="divider">
+</div>
+<div class="divider">
+</div>
 
 <div class="container">
-  <p> <a href="../index.html"> Other projects </a> </p>
+  <p> <a href="../index.html"> Other projects </a> 
+  /// <a href="https://www.codingame.com/multiplayer/bot-programming/coders-strike-back"> The competition this came from (my good heavy bot is there) </a> </p>
 </div>
 
 <script>
