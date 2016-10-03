@@ -11,6 +11,8 @@ var tDefault = 0.000008;
 var xDefault = 0.05;
 var hDefault = 160;
 
+var color_mode = 0;
+
 function state() {
     this.tab = [];
     this.tab2 = [];
@@ -80,12 +82,16 @@ function state() {
     }
     
     this.show = function(){
+        colorMode(RGB);
         stroke(0);
         rect(scaler-1,scaler-1,wid - 2*scaler+1,hei - 2*scaler+1);
         noStroke();
+        if(color_mode === 1) colorMode(HSB,255);
         for(var i=1;i<this.nbi-1;i++){
             for(var j=1;j<this.nbj-1;j++){
-                var c = color(map(this.tab[i][j],0,255,100,255),map(this.tab[i][j],0,255,120,255),255);
+                var c;
+                if(color_mode === 0) c = color(map(this.tab[i][j],0,255,100,255),map(this.tab[i][j],0,255,150,255),255);
+                if(color_mode === 1) c = color(map(this.tab[i][j],0,255,230,20),75,map(this.tab[i][j],0,255,150,220));
                 //fill(this.tab[i][j]);
                 fill(c);
                 rect(i*scaler,j*scaler,scaler,scaler);
@@ -130,6 +136,10 @@ function setup() {
     rsButton = createButton('Reset sliders');
     rsButton.parent('buttons');
     rsButton.mousePressed(rsButtonEvent);
+    
+    cmButton = createButton('Change color mode');
+    cmButton.parent('buttons');
+    cmButton.mousePressed(cmButtonEvent);
 }
 
 function mousePressed() {
@@ -146,6 +156,10 @@ function mouseDragged() {
 
 function rdButtonEvent() {
     st.randomize();
+}
+
+function cmButtonEvent() {
+    color_mode = (color_mode + 1)%2;
 }
 
 function rsButtonEvent() {
