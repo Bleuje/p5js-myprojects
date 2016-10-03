@@ -102,11 +102,11 @@ function setup() {
     st = new state();
     
     csliderT = createP('Propagation speed (c) : ');
-    cslider = createSlider(500,5000,cDefault,1);
+    cslider = createSlider(500,4000,cDefault,1);
     lsliderT = createP('Damping coefficient (lambda) : ');
     lslider = createSlider(150,5000,lDefault,1);
     tsliderT = createP('Time step (Delta_t) : ');
-    tslider = createSlider(0.000001,0.000015,tDefault,0.0000001);
+    tslider = createSlider(0.000001,0.000008,tDefault,0.0000001);
     xsliderT = createP('Space step (Delta_x) : ');
     xslider = createSlider(0.03,0.2,xDefault,0.01);
     hsliderT = createP('Added height by click : ');
