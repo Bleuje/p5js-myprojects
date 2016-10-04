@@ -84,7 +84,6 @@ function car(g_,x_,y_,a_) {
         predict();
         //console.log(this.chosenAngle);
         this.chosenAngle = max(-18.0,min(18.0,18*resp[0]));
-        this.angle += PI*max(-18.0,min(18.0,18*resp[0]))/180;
         this.chosenThrust = max(10.0,min(200.0,200*resp[1]));
         
         console.log(resp);
@@ -94,6 +93,7 @@ function car(g_,x_,y_,a_) {
         //console.log('a');
         this.prev=createVector(this.pos.x,this.pos.y);
         //console.log('b');
+        this.angle += PI*this.chosenAngle/180;
         this.speed.add(createVector(this.chosenThrust*cos(this.angle),this.chosenThrust*sin(this.angle)));
         //console.log('c');
         this.pos.add(this.speed);
