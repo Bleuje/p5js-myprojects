@@ -13,6 +13,8 @@ var hDefault = 160;
 
 var color_mode = 0;
 
+var drawing_mode = 1;
+
 function state() {
     this.tab = [];
     this.tab2 = [];
@@ -44,7 +46,7 @@ function state() {
         for(var i=0;i<this.nbi;i++){
             this.tab[i] = [];
             for(var j=0;j<this.nbj;j++){
-                this.tab[i][j] = 100+50*random();
+                this.tab[i][j] = 120+25*random();
             }
         }
         this.copy2();
@@ -84,17 +86,26 @@ function state() {
     this.show = function(){
         colorMode(RGB);
         stroke(0);
+        fill(0);
         rect(scaler-1,scaler-1,wid - 2*scaler+1,hei - 2*scaler+1);
         noStroke();
         if(color_mode === 1) colorMode(HSB,255);
         for(var i=1;i<this.nbi-1;i++){
             for(var j=1;j<this.nbj-1;j++){
-                var c;
-                if(color_mode === 0) c = color(map(this.tab[i][j],0,255,100,255),map(this.tab[i][j],0,255,150,255),255);
-                if(color_mode === 1) c = color(map(this.tab[i][j],0,255,230,20),75,map(this.tab[i][j],0,255,150,220));
-                //fill(this.tab[i][j]);
-                fill(c);
-                rect(i*scaler,j*scaler,scaler,scaler);
+                if (drawing_mode === 1) {
+                    var c;
+                    if(color_mode === 0) c = color(map(this.tab[i][j],0,255,100,255),map(this.tab[i][j],0,255,150,255),255);
+                    if(color_mode === 1) c = color(map(this.tab[i][j],0,255,230,20),75,map(this.tab[i][j],0,255,150,220));
+                    //fill(this.tab[i][j]);
+                    fill(c);
+                    rect(i*scaler,j*scaler,scaler,scaler);
+                } else {
+                    fill(255,200);
+                    noStroke();
+                    var rad = max(0,map(this.tab[i][j],0,255,-0.5*scaler,1.5*scaler));
+                    ellipse(i*scaler+scaler/2,j*scaler+scaler/2,rad,rad);
+                }
+                
             }
         }
     }
@@ -140,6 +151,10 @@ function setup() {
     cmButton = createButton('Change color mode');
     cmButton.parent('buttons');
     cmButton.mousePressed(cmButtonEvent);
+    
+    dmButton = createButton('Change drawing mode');
+    dmButton.parent('buttons');
+    dmButton.mousePressed(dmButtonEvent);
 }
 
 function mousePressed() {
@@ -160,6 +175,10 @@ function rdButtonEvent() {
 
 function cmButtonEvent() {
     color_mode = (color_mode + 1)%2;
+}
+
+function dmButtonEvent() {
+    drawing_mode = (drawing_mode + 1)%2;
 }
 
 function rsButtonEvent() {
