@@ -82,7 +82,7 @@ function setup() {
     
     p2 = createP('Force field "mostly-on-the-edge" parameter" :');
     p2.parent('buttons');
-    s2 = createSlider(0.5,40,3,0.001);
+    s2 = createSlider(0.5,40,10,0.001);
     s2.parent("buttons");
     
     p2bis = createP('Slow-down coefficient :');
