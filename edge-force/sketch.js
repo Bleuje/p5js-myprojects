@@ -26,6 +26,8 @@ function object() {
     }
     
     this.move = function() {
+        this.v.mult(1-s2bis.value());
+        
         this.x += this.v.x;
         this.y += this.v.y;
         
@@ -82,6 +84,11 @@ function setup() {
     p2.parent('buttons');
     s2 = createSlider(0.5,40,3,0.001);
     s2.parent("buttons");
+    
+    p2bis = createP('Slow-down coefficient :');
+    p2bis.parent('buttons');
+    s2bis = createSlider(0,0.08,0.007,0.001);
+    s2bis.parent("buttons");
     
     c1 = createCheckbox('Plot interpolation map');
     c1.parent("buttons");
