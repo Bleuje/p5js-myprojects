@@ -20,8 +20,8 @@ var GRAVITY = 0.05;
 
 var MAX_ACCELERATION = 0.5;
 var MAX_ANGLE_CHANGE = pi_/8;
-var MUT_ANGLE = pi_/15;
-var MUT_ACC = 0.05;
+var MUT_ANGLE = pi_/20;
+var MUT_ACC = 0.02;
 
 var TIME_GROUP_SIZE = 1;
 
@@ -30,7 +30,7 @@ var currentRockets = [];
 var NB_ROCKETS = 200;
 
 
-var NB_ROUNDS = 200;
+var NB_ROUNDS = 1000;
 var round_time = 0;
 var gen = 0;
 
@@ -128,15 +128,15 @@ function Rocket(genome_){
             this.x += this.vx;
             this.y += this.vy;
             
-            this.vx *= DAMPING;
-            this.vy *= DAMPING;
+            this.vx *= sd.value();
+            this.vy *= sd.value();
             
             var i = min(floor(this.time/TIME_GROUP_SIZE),GENOME_SIZE-1);
             var angle2 = this.genome.array[i][0];
             this.vx += cos(this.angle + angle2)*this.genome.array[i][1];
             this.vy += sin(this.angle + angle2)*this.genome.array[i][1];
             
-            this.vy += GRAVITY;
+            this.vy += sg.value();
             
             this.angle += angle2;
             
@@ -154,6 +154,7 @@ function Rocket(genome_){
         if (reached(this.x,this.y)) {
             this.targetReached = true;
             this.whenReached = this.time;
+            this.crashed = false;
         }
         
     }
@@ -177,8 +178,8 @@ function Rocket(genome_){
     
     this.eval_ = 10000;
     this.evaluate = function() {
-        var fst = (!this.targetReached)*(this.minDist + 0.5*this.distSum/this.time) - 10*this.time + 10*GENOME_SIZE*TIME_GROUP_SIZE;
-        this.eval_ = fst + 500*this.crashed + 10*this.targetReached*(this.whenReached - GENOME_SIZE*TIME_GROUP_SIZE);
+        var fst = (!this.targetReached)*(this.minDist + 0.2*this.distSum/this.time) - this.time;
+        this.eval_ = fst + 500*this.crashed + this.targetReached*(this.whenReached - 10000);
     }
     
 }
@@ -260,11 +261,23 @@ function setup() {
     ssvy.parent('buttons');
     ssa.parent('buttons');
     
+    p2 = createP('<h4>Physics parameters</h4>');
+    p2.parent('buttons');
+    pg = createP('Gravity :');
+    pg.parent('buttons');
+    sg = createSlider(0,0.2,GRAVITY,0.001);
+    sg.parent('buttons');
+    pd = createP('Damping :');
+    pd.parent('buttons');
+    sd = createSlider(0.8,1.0,DAMPING,0.001);
+    sd.parent('buttons');
     
     new_rockets();
 }
 
 function new_rockets() {
+    gen = 0;
+    
     for(var i=currentRockets.length-1;i>=0;i--){
         currentRockets.splice(i);
     }
@@ -329,8 +342,12 @@ function draw() {
             //currentRockets[i].genome.crossover(currentRockets[floor(random(NB_ROCKETS/3))].genome);
             currentRockets[i].genome.mutateSmall(1);
         }
-        for(var i=2;i<3*NB_ROCKETS/4;i++){
+        for(var i=2;i<NB_ROCKETS/2;i++){
             currentRockets[i] = new Rocket(currentRockets[i].genome);
+            currentRockets[i].genome.mutate(1);
+        }
+        for(var i=NB_ROCKETS/2;i<3*NB_ROCKETS/4;i++){
+            currentRockets[i] = new Rocket(currentRockets[i%(NB_ROCKETS/10)].genome);
             currentRockets[i].genome.mutate(1);
         }
         for(var i=0;i<NB_ROCKETS;i++){
