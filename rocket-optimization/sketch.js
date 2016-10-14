@@ -177,7 +177,7 @@ function Rocket(genome_){
     
     this.eval_ = 10000;
     this.evaluate = function() {
-        var fst = (!this.targetReached)*(this.minDist + 0.5*this.distSum/this.time);
+        var fst = (!this.targetReached)*(this.minDist + 0.5*this.distSum/this.time) - 10*this.time + 10*GENOME_SIZE*TIME_GROUP_SIZE;
         this.eval_ = fst + 500*this.crashed + 10*this.targetReached*(this.whenReached - GENOME_SIZE*TIME_GROUP_SIZE);
     }
     
