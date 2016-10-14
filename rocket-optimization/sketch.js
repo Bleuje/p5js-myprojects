@@ -281,7 +281,7 @@ function updateTarget2() {
 }
 
 function updateStart() {
-    myTarget3 = new Target(ssx.value(),ssy.value(),10,c3);
+    myTarget3 = new Target(ssx.value(),ssy.value(),20,c3);
 }
 
 
@@ -291,6 +291,12 @@ function draw() {
     updateTarget();
     updateTarget2();
     updateStart();
+    
+    noFill();
+    var crect = color(200,20,20);
+    stroke(crect);
+    strokeWeight(4);
+    rect(0,0,width-1,height-1);
     
     myTarget.show();
     myTarget2.show();
