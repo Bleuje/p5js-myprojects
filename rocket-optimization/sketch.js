@@ -90,7 +90,7 @@ function Rocket(genome_){
     this.x = ssx.value();
     this.y = ssy.value();
     
-    this.angle = -pi_/2;
+    this.angle = ssa.value();
     
     this.vx = ssvx.value();
     this.vy = ssvy.value();
@@ -101,6 +101,7 @@ function Rocket(genome_){
     this.targetReached = false;
     this.whenReached = 10000;
     this.minDist = 10000;
+    this.distSum = 0;
     
     this.genome = new Genome();
     
@@ -116,7 +117,7 @@ function Rocket(genome_){
         this.x = ssx.value();
         this.y = ssy.value();
         
-        this.angle = -pi_/2;
+        this.angle = ssa.value();
         
         this.vx = ssvx.value();
         this.vy = ssvy.value();
@@ -141,7 +142,10 @@ function Rocket(genome_){
             
             this.time++;
             
-            this.minDist = min(myTarget.dist(this.x,this.y),this.minDist);
+            var distT = myTarget.dist(this.x,this.y);
+            
+            this.minDist = min(distT,this.minDist);
+            this.distSum += distT;
         }
         
         if (crash(this.x,this.y)) {
@@ -151,6 +155,7 @@ function Rocket(genome_){
             this.targetReached = true;
             this.whenReached = this.time;
         }
+        
     }
     
     this.show = function(){
@@ -172,7 +177,7 @@ function Rocket(genome_){
     
     this.eval_ = 10000;
     this.evaluate = function() {
-        var fst = (!this.targetReached)*this.minDist;
+        var fst = (!this.targetReached)*(this.minDist + 0.5*this.distSum/this.time);
         this.eval_ = fst + 500*this.crashed + 10*this.targetReached*(this.whenReached - GENOME_SIZE*TIME_GROUP_SIZE);
     }
     
@@ -242,16 +247,18 @@ function setup() {
     soy.parent('buttons');
     sor.parent('buttons');
     
-    ps = createP('Start x y, vx vy :');
+    ps = createP('Start x y, vx vy, angle :');
     ssx = createSlider(0,width,width/2,1);
     ssy = createSlider(0,height,height,1);
     ssvx = createSlider(-10,10,0,0.01);
     ssvy = createSlider(-10,10,0,0.01);
+    ssa = createSlider(-pi_,pi_,-pi_/2,0.01);
     ps.parent('buttons');
     ssx.parent('buttons');
     ssy.parent('buttons');
     ssvx.parent('buttons');
     ssvy.parent('buttons');
+    ssa.parent('buttons');
     
     
     new_rockets();
