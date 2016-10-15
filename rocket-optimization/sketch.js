@@ -330,7 +330,7 @@ function new_rockets() {
     gen = 0;
     
     for(var i=currentRockets.length-1;i>=0;i--){
-        currentRockets.splice(i);
+        currentRockets.splice(i,1);
     }
     
     NB_ROCKETS = sr1.value();
@@ -420,7 +420,7 @@ function draw() {
             currentRockets[i].genome.mutate(floor(random(4))+1);
         }
         for(var i=NB_ROCKETS/2;i<3*NB_ROCKETS/4;i++){
-            currentRockets[i] = new Rocket(currentRockets[i%(5)].genome);
+            currentRockets[i] = new Rocket(currentRockets[i%min(currentRockets.length,5)].genome);
             currentRockets[i].genome.mutate(1);
         }
         for(var i=0;i<NB_ROCKETS;i++){
