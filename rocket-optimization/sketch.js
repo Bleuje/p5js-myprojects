@@ -169,7 +169,7 @@ function Rocket(genome_){
         
         strokeWeight(1);
         if (!this.crashed && !this.targetReached) {
-            var size = 10;
+            var size = srs.value();
         
             stroke(0,100);
             fill(255,200);
@@ -178,13 +178,14 @@ function Rocket(genome_){
             vertex(this.x + size*cos(this.angle + pi_ - pi_/8),this.y + size*sin(this.angle + pi_ - pi_/8));
             vertex(this.x + size*cos(this.angle + pi_ + pi_/8),this.y + size*sin(this.angle + pi_ + pi_/8));
             vertex(this.x + size*cos(this.angle - pi_/8),this.y + size*sin(this.angle - pi_/8));
+            vertex(this.x + 1.5*size*cos(this.angle),this.y + 1.5*size*sin(this.angle));
             endShape(CLOSE);
         }
     }
     
     this.eval_ = 10000;
     this.evaluate = function() {
-        var fst = (!this.targetReached)*(this.minDist + 0.1*this.distSum/this.time - this.time);
+        var fst = (!this.targetReached)*(this.minDist + 0.05*this.distSum/this.time - this.time);
         this.eval_ = fst + 200*this.crashed + this.targetReached*(this.whenReached - 10000);
     }
     
@@ -212,14 +213,14 @@ function Target(x_,y_,r,c,v) {
         
         if(this.activated > 0){
             noStroke();
-            fill(20,200,20,10*this.activated);
+            fill(20,200,20,min(150,10*this.activated));
             this.activated-=0.5;
             ellipse(this.x,this.y,this.halfRadius,this.halfRadius);
         }
     }
     
     this.activate = function() {
-        this.activated=30;
+        this.activated=10;
     }
 }
 
@@ -317,6 +318,10 @@ function setup() {
     pbf.parent('buttons');
     sbf = createSlider(0,255,50,1);
     sbf.parent('buttons');
+    prs = createP('Rocket size :');
+    prs.parent('buttons');
+    srs = createSlider(3,25,7,1);
+    srs.parent('buttons');
     
     new_rockets();
 }
@@ -412,10 +417,10 @@ function draw() {
         }
         for(var i=2;i<NB_ROCKETS/2;i++){
             currentRockets[i] = new Rocket(currentRockets[i].genome);
-            currentRockets[i].genome.mutate(1);
+            currentRockets[i].genome.mutate(floor(random(4))+1);
         }
         for(var i=NB_ROCKETS/2;i<3*NB_ROCKETS/4;i++){
-            currentRockets[i] = new Rocket(currentRockets[i%(NB_ROCKETS/10)].genome);
+            currentRockets[i] = new Rocket(currentRockets[i%(5)].genome);
             currentRockets[i].genome.mutate(1);
         }
         for(var i=0;i<NB_ROCKETS;i++){
