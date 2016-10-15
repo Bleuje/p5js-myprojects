@@ -29,6 +29,8 @@ var myRocket;
 var currentRockets = [];
 var NB_ROCKETS = 200;
 
+var currentExplosions = [];
+
 
 var NB_ROUNDS = 1000;
 var round_time = 0;
@@ -148,13 +150,17 @@ function Rocket(genome_){
             this.distSum += distT;
         }
         
-        if (crash(this.x,this.y)) {
+        if (!this.crashed && crash(this.x,this.y)) {
             this.crashed = true;
+            var c = color(200,20,20);
+            currentExplosions[currentExplosions.length] = new Explosion(this.x,this.y,15);
         }
         if (reached(this.x,this.y)) {
             this.targetReached = true;
             this.whenReached = this.time;
             this.crashed = false;
+            
+            myTarget.activate();
         }
         
     }
@@ -178,28 +184,61 @@ function Rocket(genome_){
     
     this.eval_ = 10000;
     this.evaluate = function() {
-        var fst = (!this.targetReached)*(this.minDist + 0.2*this.distSum/this.time) - this.time;
-        this.eval_ = fst + 500*this.crashed + this.targetReached*(this.whenReached - 10000);
+        var fst = (!this.targetReached)*(this.minDist + 0.1*this.distSum/this.time) - this.time;
+        this.eval_ = fst + 200*this.crashed + this.targetReached*(this.whenReached - 10000);
     }
     
 }
 
-function Target(x_,y_,r,c) {
+function Target(x_,y_,r,c,v) {
     this.x = x_;
     this.y = y_;
     
+    this.col = c;
+    
     this.halfRadius = r;
+    
+    this.activated = v;
     
     this.dist = function (x_,y_) {
         return Math.sqrt((this.x-x_)*(this.x-x_) + (this.y-y_)*(this.y-y_));
     }
     
     this.show = function (){
-        noFill();
         fill(100,100);
-        stroke(c);
+        stroke(this.col);
         strokeWeight(2);
         ellipse(this.x,this.y,this.halfRadius,this.halfRadius);
+        
+        if(this.activated > 0){
+            noStroke();
+            fill(20,200,20,10*this.activated);
+            this.activated-=0.5;
+            ellipse(this.x,this.y,this.halfRadius,this.halfRadius);
+        }
+    }
+    
+    this.activate = function() {
+        this.activated=30;
+    }
+}
+
+function Explosion(x_,y_,r) {
+    this.x = x_;
+    this.y = y_;
+    
+    this.halfRadius = r;
+    
+    this.activated = 10;
+    
+    this.show = function (){
+        if(this.activated > 0){
+            fill(200,20,20,5*this.activated);
+            stroke(200,20,20,10*this.activated);
+            strokeWeight(2);
+            ellipse(this.x,this.y,this.halfRadius + 50 - 5*this.activated,this.halfRadius + 50 - 5*this.activated);
+            this.activated-=0.2;
+        }
     }
 }
 
@@ -212,11 +251,11 @@ function setup() {
     background(51);
     
     c1 = color(20,200,20);
-    myTarget = new Target(50,50,20,c1);
+    myTarget = new Target(50,50,20,c1,0);
     c2 = color(200,20,20);
-    myTarget2 = new Target(150,150,230,c2);
+    myTarget2 = new Target(150,150,230,c2,0);
     c3 = color(20,20,200);
-    myTarget3 = new Target(START_X,START_Y,10,c3);
+    myTarget3 = new Target(START_X,START_Y,10,c3,0);
     
     bt1 = createButton('Reset rockets');
     bt1.parent('buttons');
@@ -248,9 +287,9 @@ function setup() {
     soy.parent('buttons');
     sor.parent('buttons');
     
-    ps = createP('Start x y, vx vy, angle :');
+    ps = createP('Start x y, vx vy, initial angle :');
     ssx = createSlider(0,width,width/2,1);
-    ssy = createSlider(0,height,height,1);
+    ssy = createSlider(0,height-5,height,1);
     ssvx = createSlider(-10,10,0,0.01);
     ssvy = createSlider(-10,10,0,0.01);
     ssa = createSlider(-pi_,pi_,-pi_/2,0.01);
@@ -271,6 +310,13 @@ function setup() {
     pd.parent('buttons');
     sd = createSlider(0.8,1.0,DAMPING,0.001);
     sd.parent('buttons');
+    
+    p3 = createP('<h4>Graphics</h4>');
+    p3.parent('buttons');
+    pbf = createP('Background fade :');
+    pbf.parent('buttons');
+    sbf = createSlider(0,255,50,1);
+    sbf.parent('buttons');
     
     new_rockets();
 }
@@ -293,34 +339,56 @@ function new_rockets() {
 }
 
 function updateTarget() {
-    myTarget = new Target(stx.value(),sty.value(),str.value(),c1);
+    myTarget = new Target(stx.value(),sty.value(),str.value(),c1,myTarget.activated);
 }
 
 function updateTarget2() {
-    myTarget2 = new Target(sox.value(),soy.value(),sor.value(),c2);
+    myTarget2 = new Target(sox.value(),soy.value(),sor.value(),c2,myTarget2.activated);
 }
 
 function updateStart() {
-    myTarget3 = new Target(ssx.value(),ssy.value(),20,c3);
+    myTarget3 = new Target(ssx.value(),ssy.value(),20,c3,myTarget3.activated);
+}
+
+function updateExplosions() {
+    for(var i=currentExplosions.length-1;i>=0;i--){
+        if (currentExplosions[i].activated <= 0) {
+            currentExplosions.splice(i,1);
+        }
+    }
 }
 
 
 function draw() {
-    background(51,200);
+    background(51,sbf.value());
     
     updateTarget();
     updateTarget2();
     updateStart();
+    updateExplosions();
     
     noFill();
     var crect = color(200,20,20);
     stroke(crect);
     strokeWeight(4);
-    rect(0,0,width-1,height-1);
+    rect(1,1,width-1,height-1);
+    
+    var cline1 = color(200,200,20);
+    stroke(cline1);
+    strokeWeight(2);
+    line(myTarget3.x,myTarget3.y,myTarget3.x + 3*ssvx.value(),myTarget3.y + 3*ssvy.value());
+    
+    var cline1 = color(20,200,200);
+    stroke(cline1);
+    strokeWeight(2);
+    line(myTarget3.x,myTarget3.y,myTarget3.x + 10*cos(ssa.value()),myTarget3.y + 10*sin(ssa.value()));
     
     myTarget.show();
     myTarget2.show();
     myTarget3.show();
+    for(var i=0;i<currentExplosions.length;i++){
+        currentExplosions[i].show();
+    }
     
     if (round_time < TIME_GROUP_SIZE*GENOME_SIZE) {
         for(var i=0;i<NB_ROCKETS;i++){
