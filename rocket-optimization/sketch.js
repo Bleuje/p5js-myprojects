@@ -234,8 +234,8 @@ function Explosion(x_,y_,r) {
     
     this.show = function (){
         if(this.activated > 0){
-            fill(200,20,20,5*this.activated);
-            stroke(200,20,20,10*this.activated);
+            fill(200,100,20,2*this.activated);
+            stroke(200,100,20,5*this.activated);
             strokeWeight(2);
             ellipse(this.x,this.y,this.halfRadius + 50 - 5*this.activated,this.halfRadius + 50 - 5*this.activated);
             this.activated-=0.2;
