@@ -37,8 +37,15 @@ var round_time = 0;
 var gen = 0;
 var record = 100000;
 
-function Genome() {
+var mut_by_plot = 100;
+
+function Genome(GG) {
     this.array = [];
+    if(arguments.length === 1){
+        for(var i=0;i<GENOME_SIZE;i++){
+            this.array[i] = GG[i];
+        }
+    }
     
     this.random = function() {
         for(var i=0;i<GENOME_SIZE;i++){
@@ -46,7 +53,7 @@ function Genome() {
         }
     }
     
-    this.random();
+    if(arguments.length === 0) this.random();
     
     this.mutate = function(k) {
         for(var j=0;j<k;j++){
@@ -58,7 +65,7 @@ function Genome() {
     }
     
     this.mutateSmall = function(k) {
-        for(var j=0;j<k;j++){
+        for(var jj=0;jj<k;jj++){
             var i = floor(random(GENOME_SIZE));
             var j = floor(random(2));
             if (j === 0) {
@@ -76,6 +83,19 @@ function Genome() {
                 this.array[i] = other.array[i];
             }
         }
+    }
+    
+    this.geval = 1000000;
+    
+    this.evaluate = function() {
+        var g = this;
+        var r = new Rocket(g);
+        
+        r.moveAndEvaluate();
+        //if(frameCount % 100 === 0) console.log(r);
+        this.geval = r.eval_;
+        //if(frameCount % 100 === 0) console.log(this.geval);
+        return this.geval;
     }
 }
 
@@ -186,10 +206,20 @@ function Rocket(genome_){
         }
     }
     
-    this.eval_ = 10000;
+    this.eval_ = 100000;
     this.evaluate = function() {
         var fst = (!this.targetReached)*(this.minDist + 0.05*this.distSum/this.time - this.time);
         this.eval_ = fst + 200*this.crashed + this.targetReached*(this.whenReached - 10000);
+    }
+    
+    this.moveAndEvaluate = function(){
+        while (!this.crashed && !this.targetReached && (this.time < TIME_GROUP_SIZE*GENOME_SIZE)) {
+            this.move();
+        }
+        
+        this.evaluate();
+        
+        return this.eval_;
     }
     
 }
@@ -248,8 +278,6 @@ function Explosion(x_,y_,r) {
 
 var c1,c2,c3;
 
-var chkexp;
-
 function setup() {
     cnv = createCanvas(wid,hei);
     cnv.parent("canvas");
@@ -269,17 +297,28 @@ function setup() {
     p0 = createP('Record : <em>Didn\'t reach target</em>');
     p0.parent('buttons');
     
-    bt1 = createButton('Reset rockets');
+    p00 = createP('Temperature : ?');
+    p00.parent('buttons');
+    
+    bt1 = createButton('Reset search');
     bt1.parent('buttons');
-    bt1.mousePressed(new_rockets);
+    bt1.mousePressed(new_search);
+    bt1bis = createButton('Reset temperature');
+    bt1bis.parent('buttons');
+    bt1bis.mousePressed(new_temper);
     bt11 = createButton('Reset record');
     bt11.parent('buttons');
     bt11.mousePressed(reset_record);
     
-    pr1 = createP('Number of rockets after reset :');
-    pr1.parent('buttons');
-    sr1 = createSlider(10,500,NB_ROCKETS,1);
-    sr1.parent('buttons');
+    pmut1 = createP('Mutation intensity :');
+    pmut1.parent('buttons');
+    smut1 = createSlider(1,20,3,1);
+    smut1.parent('buttons');
+    
+    ptemp1 = createP('Maximum temperature :');
+    ptemp1.parent('buttons');
+    stemp1 = createSlider(1,1000,10,0.01);
+    stemp1.parent('buttons');
     
     p1 = createP('<h4>Geometric stuff :</h4>');
     p1.parent('buttons');
@@ -339,28 +378,29 @@ function setup() {
     chkexp = createCheckbox('Show Explosions',true);
     chkexp.parent('buttons');
     
-    new_rockets();
-}
-
-function new_rockets() {
-    gen = 0;
+    curG = new Genome();
+    //console.log('ok1');
+    myRocket = new Rocket(curG);
+    //console.log('ok2');
+    showRocket = new Rocket(curG);
+    //console.log('ok3');
     
-    for(var i=currentRockets.length-1;i>=0;i--){
-        currentRockets.splice(i,1);
-    }
+    evalprev = 100000;
     
-    NB_ROCKETS = sr1.value();
-    
-    for(var i=0;i<NB_ROCKETS;i++){
-        var g = new Genome();
-        currentRockets[i] = new Rocket(g);
-    }
-    
-    round_time = 0;
+    tries = 0;
 }
 
 function reset_record() {
     record = 100000;
+}
+
+function new_search() {
+    curG = new Genome();
+    tries = 0;
+}
+
+function new_temper() {
+    tries = 0;
 }
 
 function updateTarget() {
@@ -383,6 +423,22 @@ function updateExplosions() {
     }
 }
 
+function transition(newe,olde,temperature){
+    var proba = min(1,Math.exp((olde-newe)/temperature));
+    return random(1)<proba;
+}
+
+function temper(k){
+    return stemp1.value()/(1+0.1*k);
+}
+
+function copyInto(arr1,arr2) {
+    for(var i=0;i<arr1.length;i++){
+        for(var j = 0;j<2;j++){
+            arr2[i][j] = arr1[i][j];
+        }
+    }
+}
 
 function draw() {
     background(51,sbf.value());
@@ -415,43 +471,56 @@ function draw() {
         currentExplosions[i].show();
     }
     
-    if (round_time < TIME_GROUP_SIZE*GENOME_SIZE) {
-        for(var i=0;i<NB_ROCKETS;i++){
-            currentRockets[i].move();
-            currentRockets[i].show();
+    if (round_time < TIME_GROUP_SIZE*GENOME_SIZE && !showRocket.crashed && !showRocket.targetReached) {
+        copyG = new Genome();
+        copyInto(curG.array,copyG.array);
+        copyG.geval = curG.geval;
+        curG.mutateSmall(smut1.value());
+        //console.log('ok4');
+        curEval = curG.evaluate();
+        //if(frameCount%100 === 0) console.log(curEval);
+        
+        //console.log('ok5');
+        
+        temperature = temper(tries);
+        tries++;
+        if (!transition(curEval,evalprev,temperature)) {
+        //if (curEval>evalprev) {
+            //console.log('ok55');
+            curG = new Genome();
+            copyInto(copyG.array,curG.array);
+            curG.geval = copyG.geval;
+            //console.log('ok6');
+        } else {
+            if(frameCount%30 === 0) console.log(curEval);
+            var saved1 = curG.geval;
+            var saved2 = []
+            for(var i=0;i<GENOME_SIZE;i++){
+                saved2[i] = [];
+            }
+            copyInto(curG.array,saved2);
+            //console.log('ok55');
+            //console.log(curG.array);
+            curG = new Genome();
+            curG.array = saved2;
+            curG.geval = saved1;
+            //console.log('ok7');
         }
+        evalprev = curG.geval;
+        
+        showRocket.move();
+        showRocket.show();
+        
         round_time++;
     } else {
-        for(var i=0;i<NB_ROCKETS;i++){
-            currentRockets[i].evaluate();
-        }
-        currentRockets.sort(function(a, b) {
-            return parseFloat(a.eval_) - parseFloat(b.eval_);
-        });
-        console.log(currentRockets[0].eval_);
-        for(var i=3*NB_ROCKETS/4;i<NB_ROCKETS;i++){
-            var g = currentRockets[i-3*NB_ROCKETS/4].genome;
-            currentRockets[i] = new Rocket(g);
-            //currentRockets[i].genome.crossover(currentRockets[floor(random(NB_ROCKETS/3))].genome);
-            currentRockets[i].genome.mutateSmall(1);
-        }
-        for(var i=2;i<NB_ROCKETS/2;i++){
-            currentRockets[i] = new Rocket(currentRockets[i].genome);
-            currentRockets[i].genome.mutate(floor(random(4))+1);
-        }
-        for(var i=NB_ROCKETS/2;i<3*NB_ROCKETS/4;i++){
-            currentRockets[i] = new Rocket(currentRockets[i%min(currentRockets.length,5)].genome);
-            currentRockets[i].genome.mutate(1);
-        }
-        for(var i=0;i<NB_ROCKETS;i++){
-            currentRockets[i] = new Rocket(currentRockets[i].genome);
-        }
+        showRocket = new Rocket(curG);
         round_time = 0;
         gen++;
         if (NB_ROUNDS === gen) {
             noLoop();
         }
     }
+    p00.html('Temperature : ' + Math.round(10000*temper(tries))/10000);
     if (record<1000) {
         p0.html('Record : ' + record + ' time steps');
     } else {
