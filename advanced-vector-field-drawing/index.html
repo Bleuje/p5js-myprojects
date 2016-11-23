@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  
+  <title> Advanced vector field drawing </title>
+  <meta name="description" content="Draw beautiful things with this interective drawing tool based on moving particles !" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../lib/bootstrap.min.css">
+  <script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
+  <script language="javascript" src="libraries/p5.dom.js"></script>
+  <script language="javascript" src="libraries/p5.sound.js"></script>
+  <script language="javascript" type="text/javascript" src="sketch.js"></script>
+  <script language="javascript" type="text/javascript" src="particle.js"></script>
+  <script language="javascript" type="text/javascript" src="rectangle.js"></script>
+  <script language="javascript" type="text/javascript" src="color.js"></script>
+  <script src="../lib/jquery.min.js"></script>
+  <script src="../lib/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+  
+  <style>
+  .btn {
+	border-radius: 0px;
+	font-family: 'Josefin Sans', arial, sans-serif;
+}
+.btn-default:focus {
+    background: #fff;
+	border: #ccc;
+}
+  </style>
+  
+</head>
+
+<body>
+
+<div class="jumbotron text-center" style="background-size: 100% 140%;text-shadow: 2px 2px 2px #FFFFFF;font-family: 'Josefin Sans', arial, sans-serif;">
+  <h1> Advanced vector field drawing </h1>
+  <h5> (same as "vector field drawing" with additional options) </h5>
+</div>
+
+<div class="container"  id="buttons" style="text-align:center;font-family: 'Josefin Sans', arial, sans-serif;">
+</div>
+
+<div class="container"  id="buttons0" style="text-align:center;font-family: 'Josefin Sans', arial, sans-serif;">
+</div>
+
+<div class="container"  id="buttons00" style="text-align:center;font-family: 'Josefin Sans', arial, sans-serif;">
+</div>
+
+<div class="divider">
+</div>
+
+<div class="container"  id="buttons2" style="text-align:center;padding-left: 5px;">
+
+</div>
+
+<div class="divider">
+</div>
+
+	<div class="container"  id="canvas" style="
+			width:90%;position:absolute;
+           left: 100px;
+           z-index:-1;
+		   ">
+
+	</div>
+
+
+<div class="container" style="color: #000000;
+text-shadow: 0px 0px 3px #FFFFFF,
+			0px 0px 5px #FFFFFF,0px 0px 5px #FFFFFF, 
+               0px 0px 10px #FFFFFF, 
+               0px 0px 10px #FFFFFF;
+			   font-family: 'Josefin Sans', arial, sans-serif;">
+  <div class="row" id="physics" style="z-index: 0;top: 20px;">
+    <div class="col-sm-3" id="physics1" style="border-radius: 10px;
+    border: 4px solid rgba(0,0,0,0.3);
+    padding: 10px;
+	background-color: rgba(255,255,255,0.3);left: 50px;">
+    </div>
+	<div class="col-sm-3" id="physicsf" style="border-radius: 10px;
+    border: 4px solid rgba(0,0,0,0.3);
+    padding: 10px;
+	background-color: rgba(255,255,255,0.3);left: 50px;">
+    </div>
+    <div class="col-sm-3" id="physics2" style="border-radius: 10px;
+    border: 4px solid rgba(0,0,0,0.3);
+    padding: 10px;
+	background-color: rgba(255,255,255,0.3);left: 50px;">
+    </div>
+	</div>
+	
+  <div class="row" id="interaction" style="z-index: 0;width:90%;top: 20px;">
+    <div class="col-sm-4" id="mouse" style="border-radius: 10px;
+    border: 4px solid rgba(0,0,0,0.3);
+    padding: 10px;
+	background-color: rgba(255,255,255,0.3);left: 50px;">
+    </div>
+	<div class="col-sm-4" id="performance" style="border-radius: 10px;
+    border: 4px solid rgba(0,0,0,0.3);
+    padding: 10px;
+	background-color: rgba(255,255,255,0.3);left: 50px;">
+    </div>
+	</div>
+	
+	<div class="row" id="pen-colors" style="z-index: 0;width:90%;top: 20px;">
+	<div class="col-sm-3" id="pen" style="border-radius: 10px;
+    border: 4px solid rgba(0,0,0,0.3);
+    padding: 10px;
+	background-color: rgba(255,255,255,0.3);left: 50px;">
+	</div>
+	<div class="col-sm-3" id="color1" style="border-radius: 10px;
+    border: 4px solid rgba(0,0,0,0.3);
+    padding: 10px;
+	background-color: rgba(255,255,255,0.3);left: 50px;">
+	</div>
+	<div class="col-sm-3" id="color2" style="border-radius: 10px;
+    border: 4px solid rgba(0,0,0,0.3);
+    padding: 10px;
+	background-color: rgba(255,255,255,0.3);left: 50px;">
+    </div>
+	<div class="col-sm-3" id="colorn" style="border-radius: 10px;
+    border: 4px solid rgba(0,0,0,0.3);
+    padding: 10px;
+	background-color: rgba(255,255,255,0.3);left: 50px;">
+    </div>
+	</div>
+	
+	<div class="row" style="z-index: 0;width:90%;top: 20px;">
+	<div class="col-sm-4" id="rectangle-mode" id="rectangle-mode" style="border-radius: 10px;
+    border: 4px solid rgba(0,0,0,0.3);
+    padding: 10px;
+	background-color: rgba(255,255,255,0.3);left: 50px;">
+    </div>
+	</div>
+	<div class="row" id="gradient" style="z-index: 0;width:90%;top: 20px;">
+	<div class="col-sm-5" id="gradient1" style="border-radius: 10px;
+    border: 4px solid rgba(0,0,0,0.3);
+    padding: 10px;
+	background-color: rgba(255,255,255,0.3);left: 50px;">
+    </div>
+	<div class="col-sm-3" id="opti" style="border-radius: 10px;
+    border: 4px solid rgba(0,0,0,0.3);
+    padding: 10px;
+	background-color: rgba(255,255,255,0.3);left: 50px;">
+    </div>
+	<div class="col-sm-3" id="postp" style="border-radius: 10px;
+    border: 4px solid rgba(0,0,0,0.3);
+    padding: 10px;
+	background-color: rgba(255,255,255,0.3);left: 50px;">
+    </div>
+  </div>
+
+</div>
+
+<script>
+    document.getElementById('physics').style.display = 'none';
+    document.getElementById('interaction').style.display = 'none';
+    document.getElementById('pen-colors').style.display = 'none';
+    document.getElementById('rectangle-mode').style.display = 'none';
+    document.getElementById('gradient').style.display = 'none';
+</script>
+
+<div class="container" id="void" style="height: 600px;">
+</div>
+
+<div class="container" style="position: absolute;
+    top: 1200px;">
+	
+<div class="container" id="button3" style="margin-left: 75px;text-align:center;">
+</div>
+
+<div class="divider"></div>
+<div class="divider">
+</div>
+  <p> <a href="../index.html"> Other projects </a>
+  /// <a href="../vector-field-drawing/index.html"> Normal version </a>
+  /// <a href="http://uploadedpicturesofnecessity.tumblr.com/post/150595919944">Blog with examples of pictures</a>
+  /// <em><strong>Contact :</strong> etin (dot) jacob (at) gmail (dot) com</em> </p>
+</div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-84856542-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>
