@@ -3,7 +3,7 @@ var COPIES = 20;
 var RRR = 255;
 var GGG = 255;
 var BBB = 255;
-var TRANSP = 70;
+var TRANSP = 120;
 
 var prevx = 0;
 var prevy = 0;
