@@ -1,5 +1,5 @@
-var ESZ = 2;
-var COPIES = 20;
+var ESZ = 1;
+var COPIES = 40;
 var RRR = 255;
 var GGG = 255;
 var BBB = 255;
@@ -29,11 +29,11 @@ function setup() {
   
   copiesText = createP('Number of copies');
   copiesText.parent('settings');
-  sCOPIES = createSlider(1,75,COPIES,1);
+  sCOPIES = createSlider(1,100,COPIES,1);
   sCOPIES.parent('settings');
   sizeText = createP('Pen size');
   sizeText.parent('settings');
-  sESZ = createSlider(1,25,ESZ,1);
+  sESZ = createSlider(0.1,5,ESZ,0.1);
   sESZ.parent('settings');
   trText = createP('Pen alpha');
   trText.parent('settings');
