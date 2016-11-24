@@ -1,9 +1,9 @@
-var ESZ = 3;
+var ESZ = 2;
 var COPIES = 20;
 var RRR = 255;
 var GGG = 255;
 var BBB = 255;
-var TRANSP = 120;
+var TRANSP = 255;
 
 var prevx = 0;
 var prevy = 0;
@@ -29,7 +29,7 @@ function setup() {
   
   copiesText = createP('Number of copies');
   copiesText.parent('settings');
-  sCOPIES = createSlider(1,40,COPIES,1);
+  sCOPIES = createSlider(1,75,COPIES,1);
   sCOPIES.parent('settings');
   sizeText = createP('Pen size');
   sizeText.parent('settings');
