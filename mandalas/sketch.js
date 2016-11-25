@@ -14,7 +14,6 @@ var p_prevy = 0;
 
 var lining = false;
 var lining_base = true;
-var translation = false;
 
 var particle_mode = false;
 var particle_rt = 0.5;
@@ -159,8 +158,6 @@ function keyTyped() {
 function draw_point() {
     if (mouseX>=0 && mouseY>=0 && mouseX<=width && mouseY<=height) {
         var c = color(sRRR.value(),sGGG.value(),sBBB.value(),sTRANSP.value());
-        translate(-width/2,-height/2);
-        translation = true;
         
         mx2 = mouseX - width/2;
         my2 = mouseY - height/2;
@@ -179,7 +176,6 @@ function draw_point() {
 
 function draw_point_particle() {
         var c = color(sRRR.value(),sGGG.value(),sBBB.value(),sTRANSP.value());
-        if(!translation) translate(-width/2,-height/2);
         mx2 = width/2*particle_rt*cos(particle_theta);
         my2 = height/2*particle_rt*sin(particle_theta);
         noStroke();
@@ -200,8 +196,6 @@ function draw_line() {
         if (mouseX>=0 && mouseY>=0 && mouseX<=width && mouseY<=height) lining = lining_base;
     } else {
       var c = color(sRRR.value(),sGGG.value(),sBBB.value(),sTRANSP.value());
-      translate(-width/2,-height/2);
-      translation = true;
       
       mx2 = mouseX - width/2;
       my2 = mouseY - height/2;
@@ -229,7 +223,6 @@ function draw_line_particle() {
         lining_particle = lining_base;
     } else {
       var c = color(sRRR.value(),sGGG.value(),sBBB.value(),sTRANSP.value());
-      if(!translation) translate(-width/2,-height/2);
       
       mx2 = width/2*particle_rt*cos(particle_theta);
       my2 = height/2*particle_rt*sin(particle_theta);
@@ -253,7 +246,7 @@ function draw_line_particle() {
 
 function draw() {
     background(sBG_color.value(),(sFade.value()/255.0)*(sFade.value()/255.0)*255);
-    translation = false;
+    translate(-width/2,-height/2);
   
     if (mouseIsPressed) {
         draw_line();
