@@ -19,6 +19,8 @@ var particle_mode = false;
 var particle_rt = 0.5;
 var particle_theta = 0;
 
+var polygon_projection = false;
+
 function setup() {
   var cnv = createCanvas(600, 600);
   //cnv.style('width: 100%;margin: 0;justify-content: center;')
@@ -44,6 +46,9 @@ function setup() {
   button7 = createButton('Use particle on/off (U)');
   button7.mousePressed(use_particle);
   button7.parent('buttons');
+  button8 = createButton('Polygon mode on/off (M)');
+  button8.mousePressed(use_polygon);
+  button8.parent('buttons');
   
   copiesText = createP('Number of copies');
   copiesText.parent('settings');
@@ -81,6 +86,11 @@ function setup() {
   cnvSlider = createSlider(250,1000,600,1);
   cnvSlider.parent('settings');
   cnvSlider.changed(cnvChangeEvent);
+  
+  sFacesT = createP('Number of polygon faces');
+  sFacesT.parent('settings');
+  sFaces = createSlider(3,15,4,1);
+  sFaces.parent('settings');
   
   radText = createP('Radius (min,max,variation frequency)');
   sRtmin = createSlider(-0.5,0.5,-0.25,0.01);
@@ -132,6 +142,10 @@ function use_particle() {
   particle_mode = !particle_mode;
 }
 
+function use_polygon() {
+  polygon_projection = !polygon_projection;
+}
+
 function reset() {
     location.reload();
     seedRandom();
@@ -151,6 +165,8 @@ function keyTyped() {
     connexion();
   } else if (key === 'u') {
     use_particle();
+  } else if (key == 'm') {
+    use_polygon();
   }
 }
 
@@ -161,16 +177,37 @@ function draw_point() {
         
         mx2 = mouseX - width/2;
         my2 = mouseY - height/2;
+        
+        var dist = sqrt(mx2*mx2 + my2*my2);
+        var theta0 = (atan2(my2,mx2)+TWO_PI)%(TWO_PI);
+        var realtheta0 = (atan2(my2,mx2)+PI)%PI;
+        
+        dist = dist*cos((realtheta0+PI/sFaces.value())%(PI/sFaces.value()*2)-PI/sFaces.value())/cos((theta0+PI/sFaces.value())%(PI/sFaces.value()*2)-PI/sFaces.value());
+        
+        
         noStroke();
         fill(c);
-        for(var i=0;i<sCOPIES.value();i++){
-          var theta = i*TWO_PI/sCOPIES.value();
-          var xp = mx2*cos(theta) - my2*sin(theta);
-          var yp = mx2*sin(theta) + my2*cos(theta);
-          ellipse(xp+width,yp+height,sESZ.value());
+        if (!polygon_projection) {
+            for(var i=0;i<sCOPIES.value();i++){
+              var theta = i*TWO_PI/sCOPIES.value();
+              var xp = mx2*cos(theta) - my2*sin(theta);
+              var yp = mx2*sin(theta) + my2*cos(theta);
+              ellipse(xp+width,yp+height,sESZ.value());
+            }
+        } else {
+
+            for(var i=0;i<sCOPIES.value();i++){
+              var theta = theta0 + i*TWO_PI/sCOPIES.value();
+              var dist2 = dist*cos((theta0+PI/sFaces.value())%(PI/sFaces.value()*2)-PI/sFaces.value())/cos((theta+PI/sFaces.value())%(PI/sFaces.value()*2)-PI/sFaces.value());
+              var xp = dist2*cos(theta);
+              var yp = dist2*sin(theta);
+              ellipse(xp+width,yp+height,sESZ.value());
+            }
         }
         prevx = mx2;
         prevy = my2;
+        prevdist = dist;
+        prevtheta0 = theta0;
     }
 }
 
@@ -178,16 +215,36 @@ function draw_point_particle() {
         var c = color(sRRR.value(),sGGG.value(),sBBB.value(),sTRANSP.value());
         mx2 = width/2*particle_rt*cos(particle_theta);
         my2 = height/2*particle_rt*sin(particle_theta);
+        
+        var dist = sqrt(mx2*mx2 + my2*my2);
+        var theta0 = (atan2(my2,mx2)+TWO_PI)%(TWO_PI);
+        var realtheta0 = (atan2(my2,mx2)+PI)%PI;
+        
+        dist = dist*cos((realtheta0+PI/sFaces.value())%(PI/sFaces.value()*2)-PI/sFaces.value())/cos((theta0+PI/sFaces.value())%(PI/sFaces.value()*2)-PI/sFaces.value());
+        
         noStroke();
         fill(c);
-        for(var i=0;i<sCOPIES.value();i++){
-          var theta = i*TWO_PI/sCOPIES.value();
-          var xp = mx2*cos(theta) - my2*sin(theta);
-          var yp = mx2*sin(theta) + my2*cos(theta);
-          ellipse(xp+width,yp+height,sESZ.value());
+        if (!polygon_projection) {
+          for(var i=0;i<sCOPIES.value();i++){
+            var theta = i*TWO_PI/sCOPIES.value();
+            var xp = mx2*cos(theta) - my2*sin(theta);
+            var yp = mx2*sin(theta) + my2*cos(theta);
+            ellipse(xp+width,yp+height,sESZ.value());
+          }
+        } else {
+
+            for(var i=0;i<sCOPIES.value();i++){
+              var theta = theta0 + i*TWO_PI/sCOPIES.value();
+              var dist2 = dist*cos((theta0+PI/sFaces.value())%(PI/sFaces.value()*2)-PI/sFaces.value())/cos((theta+PI/sFaces.value())%(PI/sFaces.value()*2)-PI/sFaces.value());
+              var xp = dist2*cos(theta);
+              var yp = dist2*sin(theta);
+            ellipse(xp+width,yp+height,sESZ.value());
+          }
         }
         p_prevx = mx2;
         p_prevy = my2;
+        p_prevdist = dist;
+        p_prevtheta0 = theta0;
 }
 
 function draw_line() {
@@ -199,19 +256,43 @@ function draw_line() {
       
       mx2 = mouseX - width/2;
       my2 = mouseY - height/2;
+      
+      var dist = sqrt(mx2*mx2 + my2*my2);
+      var theta0 = (atan2(my2,mx2)+TWO_PI)%(TWO_PI);
+      var realtheta0 = (atan2(my2,mx2)+PI)%PI;
+      
+      dist = dist*cos((realtheta0+PI/sFaces.value())%(PI/sFaces.value()*2)-PI/sFaces.value())/cos((theta0+PI/sFaces.value())%(PI/sFaces.value()*2)-PI/sFaces.value());
+      //dist = dist*cos((realtheta0+PI/4)%(PI/2)-PI/4)/cos((theta0+PI/4)%(PI/2)-PI/4);
+      
       fill(c);
       strokeWeight(sESZ.value());
       stroke(c);
-      for(var i=0;i<sCOPIES.value();i++){
-        var theta = i*TWO_PI/sCOPIES.value();
-        var xp = mx2*cos(theta) - my2*sin(theta);
-        var yp = mx2*sin(theta) + my2*cos(theta);
-        var xp2 = prevx*cos(theta) - prevy*sin(theta);
-        var yp2 = prevx*sin(theta) + prevy*cos(theta);
-        line(xp2+width,yp2+height,xp+width,yp+height);
+      if (!polygon_projection) {
+        for(var i=0;i<sCOPIES.value();i++){
+          var theta = i*TWO_PI/sCOPIES.value();
+          var xp = mx2*cos(theta) - my2*sin(theta);
+          var yp = mx2*sin(theta) + my2*cos(theta);
+          var xp2 = prevx*cos(theta) - prevy*sin(theta);
+          var yp2 = prevx*sin(theta) + prevy*cos(theta);
+          line(xp2+width,yp2+height,xp+width,yp+height);
+        }
+      } else {
+
+          for(var i=0;i<sCOPIES.value();i++){
+              var theta = theta0 + i*TWO_PI/sCOPIES.value();
+              var dist2 = dist*cos((theta0+PI/sFaces.value())%(PI/sFaces.value()*2)-PI/sFaces.value())/cos((theta+PI/sFaces.value())%(PI/sFaces.value()*2)-PI/sFaces.value());
+              var dist3 = prevdist*cos((prevtheta0+PI/sFaces.value())%(PI/sFaces.value()*2)-PI/sFaces.value())/cos((theta + prevtheta0 - theta0+PI/sFaces.value())%(PI/sFaces.value()*2)-PI/sFaces.value());
+              var xp = dist2*cos(theta);
+              var yp = dist2*sin(theta);
+              var xp2 = dist3*cos(theta + prevtheta0 - theta0);
+              var yp2 = dist3*sin(theta + prevtheta0 - theta0);
+          line(xp2+width,yp2+height,xp+width,yp+height);
+        }
       }
       prevx = mx2;
       prevy = my2;
+      prevdist = dist;
+      prevtheta0 = theta0;
       
       lining = lining_base;
     }
@@ -229,16 +310,39 @@ function draw_line_particle() {
       fill(c);
       strokeWeight(sESZ.value());
       stroke(c);
-      for(var i=0;i<sCOPIES.value();i++){
-        var theta = i*TWO_PI/sCOPIES.value();
-        var xp = mx2*cos(theta) - my2*sin(theta);
-        var yp = mx2*sin(theta) + my2*cos(theta);
-        var xp2 = p_prevx*cos(theta) - p_prevy*sin(theta);
-        var yp2 = p_prevx*sin(theta) + p_prevy*cos(theta);
-        line(xp2+width,yp2+height,xp+width,yp+height);
+      
+      var dist = sqrt(mx2*mx2 + my2*my2);
+      var theta0 = (atan2(my2,mx2)+TWO_PI)%(TWO_PI);
+      var realtheta0 = (atan2(my2,mx2)+PI)%PI;
+      
+      dist = dist*cos((realtheta0+PI/sFaces.value())%(PI/sFaces.value()*2)-PI/sFaces.value())/cos((theta0+PI/sFaces.value())%(PI/sFaces.value()*2)-PI/sFaces.value());
+      
+      if (!polygon_projection) {
+        for(var i=0;i<sCOPIES.value();i++){
+          var theta = i*TWO_PI/sCOPIES.value();
+          var xp = mx2*cos(theta) - my2*sin(theta);
+          var yp = mx2*sin(theta) + my2*cos(theta);
+          var xp2 = p_prevx*cos(theta) - p_prevy*sin(theta);
+          var yp2 = p_prevx*sin(theta) + p_prevy*cos(theta);
+          line(xp2+width,yp2+height,xp+width,yp+height);
+        }
+      } else {
+            
+          for(var i=0;i<sCOPIES.value();i++){
+              var theta = theta0 + i*TWO_PI/sCOPIES.value();
+              var dist2 = dist*cos((theta0+PI/sFaces.value())%(PI/sFaces.value()*2)-PI/sFaces.value())/cos((theta+PI/sFaces.value())%(PI/sFaces.value()*2)-PI/sFaces.value());
+              var dist3 = p_prevdist*cos((p_prevtheta0+PI/sFaces.value())%(PI/sFaces.value()*2)-PI/sFaces.value())/cos((theta + p_prevtheta0 - theta0+PI/sFaces.value())%(PI/sFaces.value()*2)-PI/sFaces.value());
+              var xp = dist2*cos(theta);
+              var yp = dist2*sin(theta);
+              var xp2 = dist3*cos(theta + p_prevtheta0 - theta0);
+              var yp2 = dist3*sin(theta + p_prevtheta0 - theta0);
+            line(xp2+width,yp2+height,xp+width,yp+height);
+          }
       }
       p_prevx = mx2;
       p_prevy = my2;
+      p_prevdist = dist;
+      p_prevtheta0 = theta0;
 
       lining_particle = lining_base;
     }
