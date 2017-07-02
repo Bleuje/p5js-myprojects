@@ -6,7 +6,7 @@ var hei = 583;
 var issX = 0;
 var issY = 0;
 
-var url = 'http://api.open-notify.org/iss-now.json';
+var url = 'https://api.open-notify.org/iss-now.json';
 
 var img;
 function preload() {
@@ -31,8 +31,8 @@ function gotData(data){
     var lat = data.iss_position.latitude;
     issX = (width/360.0) * (180 + lon);
     issY = (height/180.0) * (90 - lat);
-    //println(issX);
-    //println(issY);
+    println(issX);
+    println(issY);
 }
 
 function draw() {
