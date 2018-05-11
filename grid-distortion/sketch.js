@@ -39,7 +39,6 @@ class Dot{
   constructor(i, j){
     this.vx = 0;
     this.vy = 0;
-    this.k = sKGrid.value();
     
     this.x = map(i, 0, N-1, SP, width-SP);
     this.y = map(j, 0, N-1, SP, height-SP);
@@ -59,7 +58,7 @@ class Dot{
     if(mouseIsPressed){
       res.add(spring_force(mouseX, mouseY, this.x, this.y, intensity));
     }
-    res.add(spring_force(this.x0, this.y0, this.x, this.y, this.k));
+    res.add(spring_force(this.x0, this.y0, this.x, this.y, sKGrid.value()));
 
     this.vx += sDT.value()*res.x;
     this.vy += sDT.value()*res.y;
