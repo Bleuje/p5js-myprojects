@@ -295,8 +295,14 @@ function draw() {
           text(months[i],map(i,0,n-1,margin,cnv.width-margin)-10,cnv.height-15);
       }
       
-      text(valmax,10,posmax);
+      stroke(255);
+      fill(255);
+      text(valmax,12,posmax+2);
+      text(valmin,12,cnv.height-posmin+2);
       
+      stroke(0);
+      fill(0);
+      text(valmax,10,posmax);
       text(valmin,10,cnv.height-posmin);
     }
 }
@@ -370,6 +376,9 @@ function mySelectEvent2() {
   } else if(sel2.value()=="2017"){
     year = 2017;
     arrayOffset = 12;
+  } else if(sel2.value()=="2016"){
+    year = 2016;
+    arrayOffset = 12*2;
   }
   initialize(sel.value());
 }
