@@ -198,6 +198,7 @@ function setup() {
     
     sel2.option("2018");
     sel2.option("2017");
+    sel2.option("2016");
     
     sel2.changed(mySelectEvent2);
 
@@ -295,12 +296,13 @@ function draw() {
           text(months[i],map(i,0,n-1,margin,cnv.width-margin)-10,cnv.height-15);
       }
       
-      stroke(255);
+      //stroke(255);
+      noStroke();
       fill(255);
       text(valmax,12,posmax+2);
       text(valmin,12,cnv.height-posmin+2);
       
-      stroke(0);
+      //stroke(0);
       fill(0);
       text(valmax,10,posmax);
       text(valmin,10,cnv.height-posmin);
