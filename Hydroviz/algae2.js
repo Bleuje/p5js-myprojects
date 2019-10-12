@@ -18,7 +18,7 @@ function algae(height,xpos,type) {
             noiseSeed(this.seed);
             smooth();
             
-            let H = this.h*constrain(map(mouseX-this.x+0.75*mouseWidth,0,mouseWidth,0,1),0,1);
+            let H = transform(this.h)*constrain(map(mouseX-this.x+0.75*mouseWidth,0,mouseWidth,0,1),0,1);
             let activation = constrain(map(mouseX-this.x+0.75*mouseWidth,0,mouseWidth,0,1),0,1);
             
             if(type=="chlorophyll"){
@@ -34,7 +34,7 @@ function algae(height,xpos,type) {
             if(type == "chlorophyll"){
                 let from = color(240, 120, 25);
                 let to = color(20,220,20);
-                let inter = lerpColor(from,to,1.2*this.h/cnv.height);
+                let inter = lerpColor(from,to,map(this.h,valmin,valmax,0,1));
                 stroke(inter);
                 fill(inter);
             }
