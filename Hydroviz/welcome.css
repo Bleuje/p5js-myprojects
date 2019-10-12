@@ -1,0 +1,86 @@
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-image: url('images/background.jpg');
+  background-size: cover;
+  background-image: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#name {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+img {
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+h3 , p {
+  margin-top: 50px;
+  color: white;
+  font-family: 'Calibri Light', cursive;
+  font-size: 30px;
+  text-shadow: 3px,3px black;
+  text-align: center;
+}
+
+#global {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0, 0.5);
+}
+
+.bouton {
+  margin: 10px 10px 10px 10px;
+  border: none;
+  text-decoration: none;
+  color: white;
+  padding : 10px 20px;
+  border-radius: 5px;
+  font-family: 'Calibri Light', cursive;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+
+#boite_bouton {
+    margin: 20px 20px 20px 20px;
+}
+
+.a {
+  font-size: 50px;
+}
+
+#toData {
+  box-shadow: 4px 4px 6px rgba(0,0,0,0.4);
+  background: rgba(71, 77, 75, 1);
+}
+
+#toData:hover {
+  background-color: darkcyan;
+  color: white;
+}

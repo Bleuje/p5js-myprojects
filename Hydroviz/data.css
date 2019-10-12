@@ -1,0 +1,147 @@
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+
+}
+
+.container {
+  align-items: center;
+}
+
+#myHeader {
+  background-size: 100% 140%;
+  background-color: #2E2E2E;
+  color : darkcyan;
+  background-size: 100% 140%;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
+#myHeader img {
+  height: 70px;
+  margin-top: 10px;
+}
+
+#graph img {
+  width: 80%;
+}
+
+#graph {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#espace {
+  height: 100px;
+}
+
+#blocktest {
+  height: 500px;
+}
+
+#allBody {
+  display: flex;
+}
+
+#mainBody {
+  width: 93%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+#summary {
+  width: 7%;
+  background-color: #212121;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-end;
+  align-items: center;
+}
+
+#blocktest {
+  height: 200px;
+}
+
+.container , .row {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-end;
+  align-items: center;
+}
+
+#canvas , #selector{
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-end;
+  align-items: center;
+  margin-top: 20px;
+  width: 100%;
+}
+
+#canvas {
+    margin-top: 20px;
+}
+
+#selector select {
+  font-size: 20px;
+  font-family: 'Calibri Light';
+  background-color: #cfd8dc;
+  color : #212121;
+  width: 100%;
+  height: 40px;
+  position: relative;
+  border-radius: 10px 10px 10px 10px;
+}
+
+select-last {
+    text-align: center;
+}
+
+
+option {
+  text-align: center;
+}
+
+#textInfos {
+  margin-top: 20px;
+}
+
+a {
+  color : darkcyan;
+  font-size: 20px;
+  font-family: 'Calibri Light';
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+button {
+  margin-top: 20px;
+}
+
+form {
+  margin-top: 20px;
+}
