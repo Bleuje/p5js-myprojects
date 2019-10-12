@@ -22,7 +22,7 @@ function phrectangle(height,xpos,type) {
             
             push();
             translate(this.x,cnv.height-1.2*h2*activation);
-            let value = map(this.h,100,300,0.1,0.9);
+            let value = map(this.h,valmin,valmax,0.1,0.9);
             rect(-10,0,20,h2);
             colorMode(HSB);
             let col = color(floor(value*255*0.85),200,200);
