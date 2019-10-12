@@ -91,7 +91,7 @@ function setMinMax(keyWord){
   for(let i=0;i<n;i++){
     //console.log("all data",all_data);
     //console.log("data",all_data.data);
-    let value = all_data.data[249-11+i][keyWord];
+    let value = all_data.data[249-11+i-arrayOffset][keyWord];
     console.log(value);
     valmin = Math.min(value,valmin);
     valmax = Math.max(value,valmax);
@@ -100,6 +100,9 @@ function setMinMax(keyWord){
   //valmin = mn;
   //valmax = mx;
 }
+
+var year = 2018;
+var arrayOffset = 0;
 
 function initialize(item){
     removeEvent();
@@ -110,14 +113,14 @@ function initialize(item){
         setMinMax(keyWord);
         for(let i=0;i<n;i++){
             let x = map(i,0,n-1,margin,cnv.width-margin);
-            array[i] = new algae(all_data.data[249-11+i][keyWord],x);
+            array[i] = new algae(all_data.data[249-11+i-arrayOffset][keyWord],x);
         }
     } else if(item=="Matières en suspension"){
       let keyWord = "matieres";
         setMinMax(keyWord);
         for(let i=0;i<n;i++){
             let x = map(i,0,n-1,margin,cnv.width-margin);
-            let test = new particles(all_data.data[249-11+i][keyWord],x,"suspension");
+            let test = new particles(all_data.data[249-11+i-arrayOffset][keyWord],x,"suspension");
             array[i] = test;
         }
     } else if(item=="Oxygène"){
@@ -125,7 +128,7 @@ function initialize(item){
         setMinMax(keyWord);
         for(let i=0;i<n;i++){
             let x = map(i,0,n-1,margin,cnv.width-margin);
-            let test = new particles(all_data.data[249-11+i][keyWord],x,"oxygene");
+            let test = new particles(all_data.data[249-11+i-arrayOffset][keyWord],x,"oxygene");
             array[i] = test;
         }
     } else if(item=="Chlorophylle"){
@@ -133,7 +136,7 @@ function initialize(item){
         setMinMax(keyWord);
         for(let i=0;i<n;i++){
             let x = map(i,0,n-1,margin,cnv.width-margin);
-            let test = new algae(all_data.data[249-11+i][keyWord],x,"chlorophyll");
+            let test = new algae(all_data.data[249-11+i-arrayOffset][keyWord],x,"chlorophyll");
             array[i] = test;
         }
     } else if(item=="pH"){
@@ -141,7 +144,7 @@ function initialize(item){
         setMinMax(keyWord);
         for(let i=0;i<n;i++){
             let x = map(i,0,n-1,margin,cnv.width-margin);
-            let test = new phrectangle(all_data.data[249-11+i][keyWord],x);
+            let test = new phrectangle(all_data.data[249-11+i-arrayOffset][keyWord],x);
             array[i] = test;
         }
     } else if(item=="Salinité"){
@@ -149,7 +152,7 @@ function initialize(item){
         setMinMax(keyWord);
         for(let i=0;i<n;i++){
             let x = map(i,0,n-1,margin,cnv.width-margin);
-            let test = new salt(all_data.data[249-11+i][keyWord],x);
+            let test = new salt(all_data.data[249-11+i-arrayOffset][keyWord],x);
             array[i] = test;
         }
     } else if(item=="Température"){
@@ -157,7 +160,7 @@ function initialize(item){
         setMinMax(keyWord);
         for(let i=0;i<n;i++){
             let x = map(i,0,n-1,margin,cnv.width-margin);
-            let test = new temperature_value(all_data.data[249-11+i][keyWord],x);
+            let test = new temperature_value(all_data.data[249-11+i-arrayOffset][keyWord],x);
             array[i] = test;
         }
     }
@@ -189,6 +192,14 @@ function setup() {
     sel.option("Matières en suspension");
 
     sel.changed(mySelectEvent);
+    
+    sel2.createSelect();
+    sel2.parent("selector");
+    
+    sel2.option("2018");
+    sel2.option("2017");
+    
+    sel2.changed(mySelectEvent2);
 
     
 
@@ -350,6 +361,16 @@ var item = "Nitrates";
 function mySelectEvent() {
   item = sel.value();
   initialize(item);
+}
+
+function mySelectEvent2() {
+  if(sel.value()==2018){
+    year = 2018;
+    arrayOffset = 0;
+  } else if(sel.value()==2017){
+    year = 2017;
+    arrayOffset = 12;
+  }
 }
 
 function draw_thermometer(){
