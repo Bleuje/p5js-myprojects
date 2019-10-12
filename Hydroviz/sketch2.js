@@ -88,8 +88,8 @@ function setMinMax(keyWord){
   let mn = 100000000000;
   let mx = -1;
   for(let i=0;i<n;i++){
-    console.log("all data",all_data);
-    console.log("data",all_data.data);
+    //console.log("all data",all_data);
+    //console.log("data",all_data.data);
     let val = all_data.data[249-11+i][keyWord];
     console.log(val);
     mn = min(val,mn);
