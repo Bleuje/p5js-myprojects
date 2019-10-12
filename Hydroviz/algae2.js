@@ -46,9 +46,8 @@ function algae(height,xpos,type) {
                 if(type == "chlorophyll"){
                     f2 = activation;
                 }
-                //let dx = map(noise(this.freq*i,this.seed+changerate*frameCount),0,0.6,-noiseAmplitude,noiseAmplitude) + 15*sin(PI*i/n);
                 let dx = f*map(noise2.simplex2(this.freq*i,this.seed+changerate2*frameCount),-0.5,0.5,-noiseAmplitude,noiseAmplitude) + f2*15*sin(PI*i/n);
-                let y = map(i,0,n,cnv.height,cnv.height-H+curveOffset);
+                let y = map(i,0,n,cnv.height,transform(H)+curveOffset);
                 vertex(this.x+dx,y);
             }
             for(let i=n;i>=0;i-=3){
@@ -57,9 +56,8 @@ function algae(height,xpos,type) {
                 if(type == "chlorophyll"){
                     f2 = activation;
                 }
-                //let dx = map(noise(this.freq*i,this.seed+changerate*frameCount),0,0.6,-noiseAmplitude,noiseAmplitude) - 15*sin(PI*i/n);
                 let dx = f*map(noise2.simplex2(this.freq*i,this.seed+changerate2*frameCount),-0.5,0.5,-noiseAmplitude,noiseAmplitude) - f2*15*sin(PI*i/n);
-                let y = map(i,0,n,cnv.height,cnv.height-H+curveOffset);
+                let y = map(i,0,n,cnv.height,transform(H)+curveOffset);
                 vertex(this.x+dx,y);
             }
             endShape();
@@ -78,9 +76,8 @@ function algae(height,xpos,type) {
             beginShape();
             for(let i=0;i<=n;i+=3){
                 let f = 1.0*i/n;
-                //let dx = map(noise(this.freq*i,this.seed+changerate*frameCount),0,0.6,-noiseAmplitude,noiseAmplitude);
                 let dx = f*map(noise2.simplex2(this.freq*i,this.seed+changerate2*frameCount),-0.5,0.5,-noiseAmplitude,noiseAmplitude) + 0*sin(PI*i/n);
-                let y = map(i,0,n,cnv.height,cnv.height-H+curveOffset);
+                let y = map(i,0,n,cnv.height,transform(H)+curveOffset);
                 vertex(this.x+dx,y);
             }
             endShape();

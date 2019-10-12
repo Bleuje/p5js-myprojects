@@ -75,27 +75,16 @@ function initialize(item){
 }
 
 function setup() {
-    /*
-    papa.parse(file, {
-    worker: true, // Don't bog down the main thread if its a big file
-    step: function(result) {
-        // do stuff with result
-        data = result.data;
-    },
-    complete: function(results, file) {
-        console.log('parsing complete read', count, 'records.'); 
-    }
-});
-    */
+
     Papa.parse("data.csv", {
-  header: true,
-  download: true,
-  dynamicTyping: true,
-  complete: function(results) {
-    console.log("Finished.",results);
-    all_data = results;
-  }
-});
+        header: true,
+        download: true,
+        dynamicTyping: true,
+        complete: function(results) {
+          console.log("Finished.",results);
+          all_data = results;
+        }
+      });
 
     
     

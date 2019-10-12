@@ -5,12 +5,22 @@ var array = [];
 var n = 12;
 
 let img;
+
+var all_data;
+
+
 function preload() {
   //img = loadImage("https://cdn0.iconfinder.com/data/icons/kitchen-colored-3/48/Household_Kitchen_Artboard_120-512.png");
   img = loadImage("https://i.ibb.co/XLvW3GJ/salt3.png");
 }
 
 const margin = 50;
+
+const posmin = 100;
+const posmax = 50;
+
+var valmin = 50;
+var valmax = 350;
 
 function initialize(item){
     removeEvent();
@@ -61,10 +71,21 @@ function initialize(item){
 }
 
 function setup() {
+    Papa.parse("data.csv", {
+        header: true,
+        download: true,
+        dynamicTyping: true,
+        complete: function(results) {
+          console.log("Finished.",results);
+          all_data = results;
+        }
+      });
+
+  
     sel = createSelect();
     sel.parent("selector");
 
-    cnv = createCanvas(600,400);
+    cnv = createCanvas(1000,600);
     cnv.parent('canvas');
     background('#e0f7fa');
 
@@ -139,6 +160,10 @@ function removeEvent() {
 
 months = ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juillet", "Aout", "Sept", "Oct", "Nov", "Déc"]
 
+function unit(){
+    
+}
+
 function draw() {
     //background(30,50,180);
     background('#e0f7fa');
@@ -164,6 +189,14 @@ function draw() {
     for(let i=0;i<12;i++){
         text(months[i],map(i,0,n-1,margin,cnv.width-margin)-7,cnv.height-15);
     }
+    
+    text(valmax,10,posmax);
+    
+    text(valmin,10,cnv.height-posmin);
+}
+
+function transform(v){
+    return map(v,valmin,valmax,cnv.height-posmin,posmax);
 }
 
 function drawCurve(){
@@ -175,8 +208,8 @@ function drawCurve(){
     for(let i=0;i<n-1;i++){
         let x1 = map(i,0,n-1,margin,cnv.width-margin);
         let x2 = map(i+1,0,n-1,margin,cnv.width-margin);
-        let y1 = cnv.height - array[i].h;
-        let y2 = cnv.height - array[i+1].h;
+        let y1 = transform(array[i].h);
+        let y2 = transform(array[i+1].h);
         let activation = constrain(map(mouseX-(x1+x2)/2+0.75*mouseWidth,0,mouseWidth,0,1),0,1);
         if(show_all_curve){
             activation = 1;
@@ -205,14 +238,14 @@ function drawCurve(){
 
     for(let i=0;i<n;i++){
         let x = map(i,0,n-1,margin,cnv.width-margin);
-        let y = cnv.height - array[i].h;
-
+        let y = transform(array[i].h);
+        
         let activation = constrain(map(mouseX-x+0.75*mouseWidth,0,mouseWidth,0,1),0,1);
         if(show_all_curve){
             activation = 1;
         }
         stroke(15,255*activation);
-
+        
         point(x,y);
     }
 }
@@ -226,62 +259,52 @@ function mySelectEvent() {
 
 function draw_thermometer(){
     push();
-
+    
     translate(mouseX,0);
-
+    
     fill(255);
     noStroke();
-    /*
-    stroke(15,150);
-    strokeWeight(1.0);*/
 
     let radius = 10;
-
-    ellipse(0,cnv.height-25,2.5*radius,2.5*radius);
-
-
-
-    /*
-    stroke(15,150);
-    strokeWeight(11.0);
-
-    line(0,10,0,cnv.height-25);*/
-
+    
+    ellipse(0,cnv.height-50,2.5*radius,2.5*radius);
+    
     stroke(255);
     strokeWeight(9.0);
-
-    line(0,25,0,cnv.height-25);
-
+    
+    line(0,50,0,cnv.height-50);
+    
     let nb = 20;
-
+    
     stroke(15);
     strokeWeight(1.0);
-
+    
     for(let i=0;i<nb;i++){
-        let y = map(i,0,nb-1,50,cnv.height-100);
+        let y = map(i,0,nb-1,100,cnv.height-100);
         line(-6,y,0,y);
     }
-
+    
     let ind = 0.9999*constrain(map(mouseX,margin,cnv.width-margin,0,n-1),0,n-1);
     let ind2 = floor(ind);
     let interp = ind - ind2;
-    let y1 = cnv.height - array[ind2].h;
-    let y2 = cnv.height - array[ind2+1].h;
-
+    let y1 = transform(array[ind2].h);
+    let y2 = transform(array[ind2+1].h);
+    
     let y = lerp(y1,y2,interp);
-
+    
     stroke(240,0,0);
     strokeWeight(4.0);
-
-    line(0,cnv.height-25,0,y);
-
+    
+    line(0,cnv.height-50,0,y);
+    
     fill(240,0,0);
     noStroke();
-
-    ellipse(0,cnv.height-25,1.5*radius,1.5*radius);
-
+    
+    ellipse(0,cnv.height-50,1.5*radius,1.5*radius);
+    
     pop();
 }
+
 
 function displayInfos(){
   divTxt = document.getElementById('textInfos');

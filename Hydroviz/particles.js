@@ -43,19 +43,17 @@ function particles(height,xpos,type) {
             if(type=="suspension"){
                 for(let i=0;i<this.m;i++){
                     noise2.seed(this.seed*i*1.6125);
-                    //noiseSeed();
                     let dx = map(noise2.simplex2(i,0.1*changerate*frameCount),-0.5,0.5,-noiseAmplitude2,noiseAmplitude2);
                     let dy = map(noise2.simplex2(123+i,0.1*changerate*frameCount),-0.5,0.5,-noiseAmplitude2,noiseAmplitude2);
-                    let y = cnv.height-H+0*curveOffset+dy;
+                    let y = transform(H)+dy;
                     point(this.x+dx,y);
                 }
             } else if(type=="oxygene"){
                 for(let i=0;i<this.m;i++){
                     noise2.seed(this.seed*i*1.6125);
-                    //noiseSeed();
                     let dx = map(noise2.simplex2(i,0.1*changerate*frameCount),-0.5,0.5,-noiseAmplitude2,noiseAmplitude2);
                     let dy = map(noise2.simplex2(123+i,0.1*changerate*frameCount),-0.5,0.5,-noiseAmplitude2,noiseAmplitude2);
-                    let y = cnv.height-H+0*curveOffset+dy;
+                    let y = transform(H)+dy;
                     push();
                     translate(this.x+dx,y);
                     this.bub[i].show(H/(this.h+0.001));
