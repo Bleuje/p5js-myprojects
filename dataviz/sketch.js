@@ -6,7 +6,7 @@ var n = 12;
 
 let img;
 
-var data;
+var all_data;
 
 //const fs = require(['fs']);
 //const papa = require('papaparse');
@@ -22,7 +22,7 @@ Papa.parse("data.csv", {
   dynamicTyping: true,
   complete: function(results) {
     console.log(results);
-    data = results;
+    all_data = results;
   }
 });
 
