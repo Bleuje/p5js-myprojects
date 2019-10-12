@@ -91,6 +91,7 @@ function setMinMax(keyWord){
     console.log("all data",all_data);
     console.log("data",all_data.data);
     let val = all_data.data[249-11+i][keyWord];
+    console.log(val);
     mn = min(val,mn);
     mx = max(val,mx);
   }
