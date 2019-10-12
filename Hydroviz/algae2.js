@@ -22,7 +22,7 @@ function algae(height,xpos,type) {
             let activation = constrain(map(mouseX-this.x+0.75*mouseWidth,0,mouseWidth,0,1),0,1);
             
             if(type=="chlorophyll"){
-                H = 0.4*cnv.height;
+                H = 0.75*(valmin+valmax)/2;
             }
             
             let n = 200;
