@@ -9,6 +9,8 @@ let img;
 var all_data;
 
 
+let data_loaded = false;
+
 function preload() {
   //img = loadImage("https://cdn0.iconfinder.com/data/icons/kitchen-colored-3/48/Household_Kitchen_Artboard_120-512.png");
   img = loadImage("https://i.ibb.co/XLvW3GJ/salt3.png");
@@ -20,6 +22,7 @@ function preload() {
         complete: function(results) {
           console.log("Finished.",results);
           all_data = results;
+          data_loaded = true;
         }
       });
 }
@@ -172,7 +175,7 @@ function setup() {
 
     sel.changed(mySelectEvent);
 
-    initialize("Nitrates"); //fait pleins de choses canvas avant initialize
+    
 
     checkbox2 = createCheckbox(' Afficher la courbe', false);
     checkbox2.parent("canvas");
@@ -232,10 +235,16 @@ function unit(){
     
 }
 
+var nothingyet = true;
+
 function draw() {
     //background(30,50,180);
     background('#e0f7fa');
-
+    
+    if(data_loaded&&nothingyet){
+      initialize(sel.value()); //fait pleins de choses canvas avant initialize
+      nothingyet = false;
+    }
 
 
     for(var i=0;i<array.length;i++){
