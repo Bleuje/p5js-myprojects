@@ -12,6 +12,16 @@ var all_data;
 function preload() {
   //img = loadImage("https://cdn0.iconfinder.com/data/icons/kitchen-colored-3/48/Household_Kitchen_Artboard_120-512.png");
   img = loadImage("https://i.ibb.co/XLvW3GJ/salt3.png");
+  
+      Papa.parse("data.csv", {
+        header: true,
+        download: true,
+        dynamicTyping: true,
+        complete: function(results) {
+          console.log("Finished.",results);
+          all_data = results;
+        }
+      });
 }
 
 const margin = 50;
@@ -75,6 +85,8 @@ function setMinMax(keyWord){
   let mn = 100000000000;
   let mx = -1;
   for(let i=0;i<n;i++){
+    console.log("all data",all_data);
+    console.log("data",all_data.data);
     let val = all_data.data[249-11+i][keyWord];
     mn = min(val,mn);
     mx = max(val,mx);
@@ -135,15 +147,7 @@ function initialize(item){
 
 function setup() {
   
-    Papa.parse("data.csv", {
-        header: true,
-        download: true,
-        dynamicTyping: true,
-        complete: function(results) {
-          console.log("Finished.",results);
-          all_data = results;
-        }
-      });
+
 
   
     sel = createSelect();
