@@ -25,7 +25,7 @@ function algae(height,xpos,type) {
                 H = 0.4*cnv.height;
             }
             
-            let n = this.h;
+            let n = 50;
             
             stroke(20,220,20);
             strokeWeight(2.5);
