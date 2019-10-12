@@ -16,8 +16,6 @@ function preload() {
   //img = loadImage("https://cdn0.iconfinder.com/data/icons/kitchen-colored-3/48/Household_Kitchen_Artboard_120-512.png");
   img = loadImage("https://i.ibb.co/XLvW3GJ/salt3.png");
   
-  var data;
-
 Papa.parse("data.csv", {
   header: true,
   download: true,
