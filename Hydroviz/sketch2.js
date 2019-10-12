@@ -71,6 +71,7 @@ function initialize(item){
 }
 
 function setup() {
+  
     Papa.parse("data.csv", {
         header: true,
         download: true,
