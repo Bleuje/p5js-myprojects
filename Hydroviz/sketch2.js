@@ -400,7 +400,7 @@ function draw_thermometer(){
     stroke(255);
     strokeWeight(9.0);
     
-    line(0,50,0,cnv.height-50);
+    line(0,25,0,cnv.height-50);
     
     let nb = 20;
     
