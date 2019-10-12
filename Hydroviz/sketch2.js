@@ -193,7 +193,7 @@ function setup() {
 
     sel.changed(mySelectEvent);
     
-    sel2.createSelect();
+    sel2 = createSelect();
     sel2.parent("selector");
     
     sel2.option("2018");
