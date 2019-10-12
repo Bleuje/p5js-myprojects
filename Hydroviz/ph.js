@@ -27,7 +27,7 @@ function phrectangle(height,xpos,type) {
             let col = color(floor(value*255*0.85),200,200);
             fill(col);
             noStroke();
-            rect(-10,0.7*h2,20,0.35*h2);
+            rect(-10,0.75*h2,20,0.2*h2);
             stroke(20,100);
             noFill();
             rect(-10,0,20,h2);
