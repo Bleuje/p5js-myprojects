@@ -6,7 +6,7 @@ var n = 12;
 
 let img;
 
-let data;
+var data;
 
 //const fs = require(['fs']);
 //const papa = require('papaparse');
