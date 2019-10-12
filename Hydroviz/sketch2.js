@@ -94,6 +94,7 @@ function setMinMax(keyWord){
     console.log(val);
     valmin = min(val,valmin);
     valmax = max(val,valmax);
+    console.log("valmin",valmin,"valmax",valmax);
   }
   //valmin = mn;
   //valmax = mx;
