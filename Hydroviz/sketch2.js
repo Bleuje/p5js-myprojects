@@ -145,6 +145,8 @@ function initialize(item){
             array[i] = test;
         }
     } else if(item=="Salinité"){
+      let keyWord = "salinite";
+        setMinMax(keyWord);
         for(let i=0;i<n;i++){
             let x = map(i,0,n-1,margin,cnv.width-margin);
             let test = new salt(all_data.data[249-11+i][keyWord],x);
