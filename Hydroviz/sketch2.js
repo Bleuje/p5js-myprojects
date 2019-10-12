@@ -21,7 +21,7 @@ const posmax = 50;
 
 var valmin = 50;
 var valmax = 350;
-
+/*
 function initialize(item){
     removeEvent();
     divTxt = document.getElementById('textInfos');
@@ -30,6 +30,69 @@ function initialize(item){
         for(let i=0;i<n;i++){
             let x = map(i,0,n-1,margin,cnv.width-margin);
             array[i] = new algae(random(100,300),x);
+        }
+    } else if(item=="Matières en suspension"){
+        for(let i=0;i<n;i++){
+            let x = map(i,0,n-1,margin,cnv.width-margin);
+            let test = new particles(random(50,350),x,"suspension");
+            array[i] = test;
+        }
+    } else if(item=="Oxygène"){
+        for(let i=0;i<n;i++){
+            let x = map(i,0,n-1,margin,cnv.width-margin);
+            let test = new particles(random(50,350),x,"oxygene");
+            array[i] = test;
+        }
+    } else if(item=="Chlorophylle"){
+        for(let i=0;i<n;i++){
+            let x = map(i,0,n-1,margin,cnv.width-margin);
+            let test = new algae(random(50,350),x,"chlorophyll");
+            array[i] = test;
+        }
+    } else if(item=="pH"){
+        for(let i=0;i<n;i++){
+            let x = map(i,0,n-1,margin,cnv.width-margin);
+            let test = new phrectangle(random(50,350),x);
+            array[i] = test;
+        }
+    } else if(item=="Salinité"){
+        for(let i=0;i<n;i++){
+            let x = map(i,0,n-1,margin,cnv.width-margin);
+            let test = new salt(random(50,350),x);
+            array[i] = test;
+        }
+    } else if(item=="Température"){
+        for(let i=0;i<n;i++){
+            let x = map(i,0,n-1,margin,cnv.width-margin);
+            let test = new temperature_value(random(50,350),x);
+            array[i] = test;
+        }
+    }
+}
+*/
+
+function setMinMax(keyWord){
+  let mn = 100000000000;
+  let mx = -1;
+  for(let i=0;i<n;i++){
+    let val = all_data.data[249-11+i][keyWord];
+    mn = min(val,mn);
+    mx = max(val,mx);
+  }
+  valmin = mn;
+  valmax = mx;
+}
+
+function initialize(item){
+    removeEvent();
+    divTxt = document.getElementById('textInfos');
+    divTxt.innerHTML = '';
+    if(item=="Nitrates"){
+      let keyWord = "nitrates";
+        setMinMax(keyWord);
+        for(let i=0;i<n;i++){
+            let x = map(i,0,n-1,margin,cnv.width-margin);
+            array[i] = new algae(all_data.data[249-11+i][keyWord],x);
         }
     } else if(item=="Matières en suspension"){
         for(let i=0;i<n;i++){
