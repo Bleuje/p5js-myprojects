@@ -240,37 +240,40 @@ var nothingyet = true;
 
 function draw() {
     //background(30,50,180);
-    background('#e0f7fa');
+    
     
     if(data_loaded&&nothingyet){
       initialize(sel.value()); //fait pleins de choses canvas avant initialize
       nothingyet = false;
     }
 
-
-    for(var i=0;i<array.length;i++){
-        array[i].show();
+    if(!nothingyet){
+      background('#e0f7fa');
+      
+      for(var i=0;i<array.length;i++){
+          array[i].show();
+      }
+  
+      if(show_curve){
+          drawCurve();
+      }
+  
+      if(item=="Température"){
+          draw_thermometer();
+      }
+  
+      textSize(15);
+      fill(15);
+      noStroke();
+  
+      for(let i=0;i<12;i++){
+          text(months[i],map(i,0,n-1,margin,cnv.width-margin)-7,cnv.height-15);
+      }
+      
+      text(valmax,10,posmax);
+      
+      text(valmin,10,cnv.height-posmin);
     }
-
-    if(show_curve){
-        drawCurve();
-    }
-
-    if(item=="Température"){
-        draw_thermometer();
-    }
-
-    textSize(15);
-    fill(15);
-    noStroke();
-
-    for(let i=0;i<12;i++){
-        text(months[i],map(i,0,n-1,margin,cnv.width-margin)-7,cnv.height-15);
-    }
-    
-    text(valmax,10,posmax);
-    
-    text(valmin,10,cnv.height-posmin);
 }
 
 function transform(v){
