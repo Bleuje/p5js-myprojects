@@ -256,7 +256,7 @@ function removeEvent() {
     }
 }
 
-months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septempbre", "Octobre", "Novembre", "Décembre"]
+months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"]
 
 function unit(){
     
@@ -293,7 +293,7 @@ function draw() {
       noStroke();
   
       for(let i=0;i<12;i++){
-          text(months[i],map(i,0,n-1,margin,cnv.width-margin)-10,cnv.height-15);
+          text(months[i],map(i,0,n-1,margin,cnv.width-margin)-20,cnv.height-15);
       }
       
       //stroke(255);
