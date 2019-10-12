@@ -85,6 +85,7 @@ function initialize(item){
 */
 
 function setMinMax(keyWord){
+  console.log("valmin",valmin,"valmax",valmax);
   valmin = 100000000000;
   valmax = -1;
   for(let i=0;i<n;i++){
