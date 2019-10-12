@@ -364,10 +364,10 @@ function mySelectEvent() {
 }
 
 function mySelectEvent2() {
-  if(sel.value()==2018){
+  if(sel2.value()=="2018"){
     year = 2018;
     arrayOffset = 0;
-  } else if(sel.value()==2017){
+  } else if(sel2.value()=="2017"){
     year = 2017;
     arrayOffset = 12;
   }
