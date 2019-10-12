@@ -350,7 +350,7 @@ function drawCurve(){
     for(let i=0;i<n;i++){
       let x = map(i,0,n-1,margin,cnv.width-margin);
       let y = transform(array[i].h);
-      let af = exp(-abs(x-mouseX)/10.0);
+      let af = exp(-abs(x-mouseX)/25.0);
       
       fill(0,af*255);
       noStroke();
