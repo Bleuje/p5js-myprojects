@@ -413,13 +413,13 @@ function draw_thermometer(){
     
     line(0,25,0,cnv.height-50);
     
-    let nb = 20;
+    let nb = 23;
     
     stroke(15);
     strokeWeight(1.0);
     
     for(let i=0;i<nb;i++){
-        let y = map(i,0,nb-1,100,cnv.height-100);
+        let y = map(i,0,nb-1,35,cnv.height-100);
         line(-6,y,0,y);
     }
     
