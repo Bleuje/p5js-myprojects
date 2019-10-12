@@ -86,15 +86,15 @@ function initialize(item){
 
 function setMinMax(keyWord){
   console.log("valmin",valmin,"valmax",valmax);
-  valmin = 100000000000;
+  valmin = 100000000;
   valmax = -1;
   for(let i=0;i<n;i++){
     //console.log("all data",all_data);
     //console.log("data",all_data.data);
     let val = all_data.data[249-11+i][keyWord];
     console.log(val);
-    valmin = min(val,valmin);
-    valmax = max(val,valmax);
+    valmin = Math.min(val,valmin);
+    valmax = Math.max(val,valmax);
     console.log("valmin",valmin,"valmax",valmax);
   }
   //valmin = mn;
