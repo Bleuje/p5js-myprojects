@@ -92,7 +92,7 @@ function setup() {
   download: true,
   dynamicTyping: true,
   complete: function(results) {
-    console.log(results);
+    console.log("Finished.",results);
     all_data = results;
   }
 });
