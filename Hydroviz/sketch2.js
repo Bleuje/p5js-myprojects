@@ -346,6 +346,17 @@ function drawCurve(){
         //vertex(x,y);
     }
     //endShape();
+    
+    for(let i=0;i<n;i++){
+      let x = map(i,0,n-1,margin,cnv.width-margin);
+      let y = transform(array[i].h);
+      let af = exp(-abs(x-mouseX)/10.0);
+      
+      fill(0,af*255);
+      noStroke();
+      
+      text(array[i].h,x+7,y-12)
+    }
 
     strokeWeight(4.0);
     stroke(15);
