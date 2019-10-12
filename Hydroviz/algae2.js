@@ -1,5 +1,5 @@
-const changerate2 = 0.007;
-const noiseAmplitude = 7;
+const changerate2 = 0.01;
+const noiseAmplitude = 9;
 const curveOffset = 11;
 
 const mouseWidth = 60;
