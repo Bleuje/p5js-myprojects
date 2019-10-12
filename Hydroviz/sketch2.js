@@ -91,10 +91,10 @@ function setMinMax(keyWord){
   for(let i=0;i<n;i++){
     //console.log("all data",all_data);
     //console.log("data",all_data.data);
-    let val = all_data.data[249-11+i][keyWord];
+    let value = all_data.data[249-11+i][keyWord];
     console.log(val);
-    valmin = Math.min(val,valmin);
-    valmax = Math.max(val,valmax);
+    valmin = Math.min(value,valmin);
+    valmax = Math.max(value,valmax);
     console.log("valmin",valmin,"valmax",valmax);
   }
   //valmin = mn;
