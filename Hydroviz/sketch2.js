@@ -317,7 +317,7 @@ function drawCurve(){
             let from = color(50, 50, 50, 200*activation);
             let to = color(255,50,0,200*activation);
             let h = (array[i].h+array[i+1].h)/2;
-            let inter = lerpColor(from,to,1.2*h/cnv.height);
+            let inter = lerpColor(from,to,1.2*map(this.h,valmin,valmax,0,1));
             //console.log(inter);
             stroke(inter);
         }
