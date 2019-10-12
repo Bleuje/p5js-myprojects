@@ -113,39 +113,49 @@ function initialize(item){
             array[i] = new algae(all_data.data[249-11+i][keyWord],x);
         }
     } else if(item=="Matières en suspension"){
+      let keyWord = "matieres";
+        setMinMax(keyWord);
         for(let i=0;i<n;i++){
             let x = map(i,0,n-1,margin,cnv.width-margin);
-            let test = new particles(random(50,350),x,"suspension");
+            let test = new particles(all_data.data[249-11+i][keyWord],x,"suspension");
             array[i] = test;
         }
     } else if(item=="Oxygène"){
+      let keyWord = "oxygene";
+        setMinMax(keyWord);
         for(let i=0;i<n;i++){
             let x = map(i,0,n-1,margin,cnv.width-margin);
-            let test = new particles(random(50,350),x,"oxygene");
+            let test = new particles(all_data.data[249-11+i][keyWord],x,"oxygene");
             array[i] = test;
         }
     } else if(item=="Chlorophylle"){
+      let keyWord = "chlorophylle";
+        setMinMax(keyWord);
         for(let i=0;i<n;i++){
             let x = map(i,0,n-1,margin,cnv.width-margin);
-            let test = new algae(random(50,350),x,"chlorophyll");
+            let test = new algae(all_data.data[249-11+i][keyWord],x,"chlorophyll");
             array[i] = test;
         }
     } else if(item=="pH"){
+      let keyWord = "ph";
+        setMinMax(keyWord);
         for(let i=0;i<n;i++){
             let x = map(i,0,n-1,margin,cnv.width-margin);
-            let test = new phrectangle(random(50,350),x);
+            let test = new phrectangle(all_data.data[249-11+i][keyWord],x);
             array[i] = test;
         }
     } else if(item=="Salinité"){
         for(let i=0;i<n;i++){
             let x = map(i,0,n-1,margin,cnv.width-margin);
-            let test = new salt(random(50,350),x);
+            let test = new salt(all_data.data[249-11+i][keyWord],x);
             array[i] = test;
         }
     } else if(item=="Température"){
+      let keyWord = "temperature";
+        setMinMax(keyWord);
         for(let i=0;i<n;i++){
             let x = map(i,0,n-1,margin,cnv.width-margin);
-            let test = new temperature_value(random(50,350),x);
+            let test = new temperature_value(all_data.data[249-11+i][keyWord],x);
             array[i] = test;
         }
     }
