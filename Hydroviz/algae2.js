@@ -47,7 +47,7 @@ function algae(height,xpos,type) {
                     f2 = activation;
                 }
                 let dx = f*map(noise2.simplex2(this.freq*i,this.seed+changerate2*frameCount),-0.5,0.5,-noiseAmplitude,noiseAmplitude) + f2*15*sin(PI*i/n);
-                let y = map(i,0,n,cnv.height,transform(H)+curveOffset);
+                let y = map(i,0,n,cnv.height-10,transform(H)+curveOffset);
                 vertex(this.x+dx,y);
             }
             for(let i=n;i>=0;i-=3){
@@ -57,7 +57,7 @@ function algae(height,xpos,type) {
                     f2 = activation;
                 }
                 let dx = f*map(noise2.simplex2(this.freq*i,this.seed+changerate2*frameCount),-0.5,0.5,-noiseAmplitude,noiseAmplitude) - f2*15*sin(PI*i/n);
-                let y = map(i,0,n,cnv.height,transform(H)+curveOffset);
+                let y = map(i,0,n,cnv.height-10,transform(H)+curveOffset);
                 vertex(this.x+dx,y);
             }
             endShape();
@@ -77,7 +77,7 @@ function algae(height,xpos,type) {
             for(let i=0;i<=n;i+=3){
                 let f = 1.0*i/n;
                 let dx = f*map(noise2.simplex2(this.freq*i,this.seed+changerate2*frameCount),-0.5,0.5,-noiseAmplitude,noiseAmplitude) + 0*sin(PI*i/n);
-                let y = map(i,0,n,cnv.height,transform(H)+curveOffset);
+                let y = map(i,0,n,cnv.height-10,transform(H)+curveOffset);
                 vertex(this.x+dx,y);
             }
             endShape();
