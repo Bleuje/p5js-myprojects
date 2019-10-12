@@ -371,6 +371,7 @@ function mySelectEvent2() {
     year = 2017;
     arrayOffset = 12;
   }
+  initialize(sel.value());
 }
 
 function draw_thermometer(){

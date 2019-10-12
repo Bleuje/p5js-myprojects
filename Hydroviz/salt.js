@@ -22,7 +22,7 @@ function salt(height,xpos,type) {
             
             push();
             translate(this.x,0.8*cnv.height-150*activation+160);
-            let value = map(this.h,100,300,0.15,0.35);
+            let value = map(this.h,valmin,valmax,0.15,0.35);
             scale(value*activation);
             image(img,-img.width/2,-img.height/2);
             pop();
