@@ -16,17 +16,7 @@ function preload() {
   //img = loadImage("https://cdn0.iconfinder.com/data/icons/kitchen-colored-3/48/Household_Kitchen_Artboard_120-512.png");
   img = loadImage("https://i.ibb.co/XLvW3GJ/salt3.png");
   
-Papa.parse("data.csv", {
-  header: true,
-  download: true,
-  dynamicTyping: true,
-  complete: function(results) {
-    console.log(results);
-    all_data = results;
-  }
-});
 
-    
 
 }
 
@@ -97,6 +87,17 @@ function setup() {
     }
 });
     */
+    Papa.parse("data.csv", {
+  header: true,
+  download: true,
+  dynamicTyping: true,
+  complete: function(results) {
+    console.log(results);
+    all_data = results;
+  }
+});
+
+    
     
     background(240);
     sel = createSelect();
