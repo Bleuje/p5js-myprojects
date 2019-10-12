@@ -355,7 +355,7 @@ function drawCurve(){
       fill(0,af*255);
       noStroke();
       
-      text(array[i].h,x+7,y-12)
+      text(array[i].h,x+7,y-12);
     }
 
     strokeWeight(4.0);
