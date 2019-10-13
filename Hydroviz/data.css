@@ -146,3 +146,7 @@ button {
 form {
   margin-top: 20px;
 }
+
+checkbox {
+	font-size: 20px;
+}
