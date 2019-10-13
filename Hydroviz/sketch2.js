@@ -564,7 +564,7 @@ function drawCurve2(){
 }
 
 
-var item = "Nitrates";
+var item = "Température";
 
 function mySelectEvent() {
   item = sel.value();
