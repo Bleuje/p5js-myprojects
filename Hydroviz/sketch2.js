@@ -290,6 +290,7 @@ function myCheckedEvent3() {
     console.log('Unchecking!');
     show_curve2 = false;
   }
+  initialize(sel.value());
 }
 
 function keyTyped() {
