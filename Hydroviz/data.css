@@ -115,6 +115,7 @@ body {
   height: 40px;
   position: relative;
   border-radius: 10px 10px 10px 10px;
+  margin-top: 10px;
 }
 
 select-last {
