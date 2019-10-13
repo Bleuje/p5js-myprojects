@@ -194,10 +194,6 @@ function initialize(item){
 }
 
 function setup() {
-  
-
-
-  
     sel = createSelect();
     sel.parent("selector");
 
