@@ -483,7 +483,7 @@ function drawCurve2(){
         }
 
         stroke(255,0,0,100*activation);
-
+/*
         if(item=="Température"){
             //console.log("Here!\n");
             let from = color(50, 50, 50, 200*activation);
@@ -492,7 +492,7 @@ function drawCurve2(){
             let inter = lerpColor(from,to,1.2*map(h,valmin,valmax,0,1));
             //console.log(inter);
             stroke(inter);
-        }
+        }*/
 
         line(x1,y1,x2,y2);
 
