@@ -310,7 +310,30 @@ function removeEvent() {
 months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"]
 
 function unit(){
-    
+    let str;
+    if (item == "Nitrates"){
+      str = "(&micro mol/L)";
+  }
+  else if (item == "Température") {
+    str = "°C";
+  }
+  else if (item == "Salinité") {
+    str = "(&micro mol/L)";
+  }
+  else if (item == "pH") {
+    str = "";
+  }
+  else if (item == "Matières en suspension") {
+    str = "(mg/L)";
+  }
+  else if (item == "Oxygène") {
+    str = "(mL/L)";
+  }
+  else if (item == "Chlorophylle") {
+    str = "(&micro g/L)";
+  }
+  
+  return str;
 }
 
 var nothingyet = true;
@@ -351,6 +374,8 @@ function draw() {
           text(months[i],map(i,0,n-1,margin,cnv.width-margin)-20,cnv.height-15);
       }
       
+      let str = unit();
+      
       //stroke(255);
       let precision = 1000.0;
       let v1 = floor(precision*valmin)/precision;
@@ -360,11 +385,15 @@ function draw() {
       fill(255);
       text(v2,12,posmax+2);
       text(v1,12,cnv.height-posmin+2);
+      text(str,7,7;
       
       //stroke(0);
       fill(0);
       text(v2,10,posmax);
       text(v1,10,cnv.height-posmin);
+      text(str,5,5);
+      
+      
     }
 }
 
