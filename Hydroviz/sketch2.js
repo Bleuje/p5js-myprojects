@@ -197,7 +197,7 @@ function setup() {
     sel = createSelect();
     sel.parent("selector");
 
-    cnv = createCanvas(1000,400);
+    cnv = createCanvas(1000,370);
     cnv.parent('canvas');
     background('#e0f7fa');
 

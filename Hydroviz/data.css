@@ -93,7 +93,7 @@ body {
   align-items: center;
 }
 
-#canvas , #selector {
+#canvas , #selector , #divButton{
   display: flex;
   flex-direction: column;
   justify-content:flex-end;
