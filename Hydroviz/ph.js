@@ -28,7 +28,7 @@ function phrectangle(height,xpos,type) {
             fill(col);
             noStroke();
             rect(-10,0.75*h2,20,0.2*h2);
-            stroke(20,100);
+            stroke(20,40);
             noFill();
             rect(-10,0,20,h2);
             pop();

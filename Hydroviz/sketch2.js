@@ -199,6 +199,14 @@ function setup() {
     sel2.option("2018");
     sel2.option("2017");
     sel2.option("2016");
+    sel2.option("2015");
+    sel2.option("2014");
+    sel2.option("2013");
+    sel2.option("2012");
+    sel2.option("2011");
+    sel2.option("2010");
+    sel2.option("2009");
+    sel2.option("2008");
     
     sel2.changed(mySelectEvent2);
 
@@ -398,7 +406,32 @@ function mySelectEvent2() {
   } else if(sel2.value()=="2016"){
     year = 2016;
     arrayOffset = 12*2;
+  } else if(sel2.value()=="2015"){
+    year = 2015;
+    arrayOffset = 12*3;
+  } else if(sel2.value()=="2014"){
+    year = 2014;
+    arrayOffset = 12*4;
+  } else if(sel2.value()=="2013"){
+    year = 2013;
+    arrayOffset = 12*5;
+  } else if(sel2.value()=="2012"){
+    year = 2012;
+    arrayOffset = 12*6;
+  } else if(sel2.value()=="2011"){
+    year = 2011;
+    arrayOffset = 12*7;
+  } else if(sel2.value()=="2010"){
+    year = 2010;
+    arrayOffset = 12*8;
+  } else if(sel2.value()=="2009"){
+    year = 2009;
+    arrayOffset = 12*9;
+  } else if(sel2.value()=="2008"){
+    year = 2008;
+    arrayOffset = 12*10;
   }
+  
   initialize(sel.value());
 }
 
