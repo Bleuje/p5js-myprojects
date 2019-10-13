@@ -93,13 +93,20 @@ body {
   align-items: center;
 }
 
-#canvas , #selector{
+#canvas , #selector {
   display: flex;
   flex-direction: column;
   justify-content:flex-end;
   align-items: center;
   margin-top: 20px;
   width: 100%;
+}
+
+#divButton {
+  display: flex;
+  flex-direction: row;
+  justify-content:center;
+  align-items: center;
 }
 
 #canvas {

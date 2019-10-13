@@ -235,16 +235,16 @@ function setup() {
     
 
     checkbox2 = createCheckbox(' Afficher la courbe', false);
-    checkbox2.parent("canvas");
+    checkbox2.parent("divButton");
     checkbox2.changed(myCheckedEvent2);
     
     checkbox3 = createCheckbox(' Afficher la courbe moyenne 2008-2017', false);
-    checkbox3.parent("canvas");
+    checkbox3.parent("divButton");
     checkbox3.changed(myCheckedEvent3);
     checkbox3.style('color', '#ff0000')
 
     but = createButton("Plus d'infos");
-    but.parent("canvas");
+    but.parent("divButton");
     but.mouseClicked(displayInfos);
 
 
