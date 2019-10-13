@@ -391,7 +391,7 @@ function draw() {
       fill(0);
       text(v2,10,posmax);
       text(v1,10,cnv.height-posmin);
-      text(str,5,23;
+      text(str,5,23);
       
       
     }
