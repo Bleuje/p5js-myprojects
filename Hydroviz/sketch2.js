@@ -385,7 +385,7 @@ function draw() {
       fill(255);
       text(v2,12,posmax+2);
       text(v1,12,cnv.height-posmin+2);
-      text(str,7,7;
+      text(str,7,7);
       
       //stroke(0);
       fill(0);
