@@ -297,15 +297,19 @@ function draw() {
       }
       
       //stroke(255);
+      let precision = 1000.0;
+      let v1 = floor(precision*valmin)/precision;
+      let v2 = floor(precision*valmax)/precision;
+      
       noStroke();
       fill(255);
-      text(valmax,12,posmax+2);
-      text(valmin,12,cnv.height-posmin+2);
+      text(v2,12,posmax+2);
+      text(v1,12,cnv.height-posmin+2);
       
       //stroke(0);
       fill(0);
-      text(valmax,10,posmax);
-      text(valmin,10,cnv.height-posmin);
+      text(v2,10,posmax);
+      text(v1,10,cnv.height-posmin);
     }
 }
 
@@ -347,6 +351,8 @@ function drawCurve(){
     }
     //endShape();
     
+    let precision = 1000.0;
+    
     for(let i=0;i<n;i++){
       let x = map(i,0,n-1,margin,cnv.width-margin);
       let y = transform(array[i].h);
@@ -355,7 +361,7 @@ function drawCurve(){
       fill(0,af*255);
       noStroke();
       
-      text(array[i].h,x+7,y-12);
+      text(floor(precision*array[i].h)/precision,x+7,y-12);
     }
 
     strokeWeight(4.0);
