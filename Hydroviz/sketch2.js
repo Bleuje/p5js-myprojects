@@ -399,7 +399,7 @@ function draw() {
       }
       
       let str = unit();
-      let str2 = currentValue();
+      let str2 = "Aujourd'hui à 6h00 : " + currentValue();
       
       //stroke(255);
       let precision = 1000.0;
