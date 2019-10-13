@@ -385,13 +385,13 @@ function draw() {
       fill(255);
       text(v2,12,posmax+2);
       text(v1,12,cnv.height-posmin+2);
-      text(str,7,7);
+      text(str,7,25);
       
       //stroke(0);
       fill(0);
       text(v2,10,posmax);
       text(v1,10,cnv.height-posmin);
-      text(str,5,5);
+      text(str,5,23;
       
       
     }
