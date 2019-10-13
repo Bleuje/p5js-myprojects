@@ -25,7 +25,7 @@ body {
   align-items: center;
 }
 
-img {
+#background {
   height: 100px;
   display: flex;
   flex-direction: column;
@@ -33,6 +33,10 @@ img {
   align-items: center;
   margin-top: 50px;
   margin-bottom: 50px;
+}
+
+#logo {
+	height: 100px;
 }
 
 h3 , p {
