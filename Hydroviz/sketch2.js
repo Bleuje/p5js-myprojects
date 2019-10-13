@@ -333,6 +333,33 @@ function unit(){
   return str;
 }
 
+function currentValue(){
+    let str;
+    if (item == "Nitrates"){
+      str = "";
+  }
+  else if (item == "Température") {
+    str = "15,42";
+  }
+  else if (item == "Salinité") {
+    str = "34,91";
+  }
+  else if (item == "pH") {
+    str = "7,97";
+  }
+  else if (item == "Matières en suspension") {
+    str = "5";
+  }
+  else if (item == "Oxygène") {
+    str = "5,42";
+  }
+  else if (item == "Chlorophylle") {
+    str = "0,4";
+  }
+  
+  return str;
+}
+
 var nothingyet = true;
 
 function draw() {
@@ -372,6 +399,7 @@ function draw() {
       }
       
       let str = unit();
+      let str2 = currentValue();
       
       //stroke(255);
       let precision = 1000.0;
@@ -384,15 +412,20 @@ function draw() {
       text(v1,12,cnv.height-posmin+2);
       text(str,7,25);
       
+      text(str2,cnv.width*0.75,30);
+      
       //stroke(0);
       fill(0);
       text(v2,10,posmax);
       text(v1,10,cnv.height-posmin);
       text(str,5,23);
       
+      text(str2,cnv.width*0.75,30);
       
     }
 }
+
+
 
 function transform(v){
     return map(v,valmin,valmax,cnv.height-posmin,posmax);
