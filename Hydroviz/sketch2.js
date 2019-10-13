@@ -481,7 +481,7 @@ function drawCurve2(){
             activation = 1;
         }
 
-        stroke(35,100*activation);
+        stroke(255,0,0,100*activation);
 
         if(item=="Température"){
             //console.log("Here!\n");
@@ -506,10 +506,10 @@ function drawCurve2(){
       let y = transform(meanArray[i]);
       let af = exp(-abs(x-mouseX)/25.0);
       
-      fill(0,af*255);
+      fill(255,0,0,af*255);
       noStroke();
       
-      text(floor(precision*meanArray[i])/precision,x-7,y+13);
+      text(floor(precision*meanArray[i])/precision,x+7,y+13);
     }
 
     strokeWeight(4.0);
@@ -523,7 +523,7 @@ function drawCurve2(){
         if(show_all_curve){
             activation = 1;
         }
-        stroke(15,255*activation);
+        stroke(255,0,0,255*activation);
         
         point(x,y);
     }
