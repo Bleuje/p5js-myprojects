@@ -19,7 +19,7 @@ function particles(height,xpos,type) {
     
     this.seed = random(10,1000);
     
-    this.m = floor(map(this.h,0,400,0,25));
+    this.m = floor(map(this.h,valmin,valmax,2,25));
     
     this.bub = [];
     
