@@ -366,12 +366,12 @@ function draw() {
           draw_thermometer();
       }
   
-      textSize(19);
+      textSize(16);
       fill(15);
       noStroke();
   
       for(let i=0;i<12;i++){
-          text(months[i],map(i,0,n-1,margin,cnv.width-margin)-30,cnv.height-15);
+          text(months[i],map(i,0,n-1,margin,cnv.width-margin)-25,cnv.height-15);
       }
       
       let str = unit();
