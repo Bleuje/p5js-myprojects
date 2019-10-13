@@ -424,7 +424,7 @@ function drawCurve(){
             let from = color(50, 50, 50, 200*activation);
             let to = color(255,50,0,200*activation);
             let h = (array[i].h+array[i+1].h)/2;
-            let inter = lerpColor(from,to,1.2*map(this.h,valmin,valmax,0,1));
+            let inter = lerpColor(from,to,1.2*map(h,valmin,valmax,0,1));
             //console.log(inter);
             stroke(inter);
         }
@@ -474,8 +474,8 @@ function drawCurve2(){
     for(let i=0;i<n-1;i++){
         let x1 = map(i,0,n-1,margin,cnv.width-margin);
         let x2 = map(i+1,0,n-1,margin,cnv.width-margin);
-        let y1 = transform(meanArray);
-        let y2 = transform(meanArray);
+        let y1 = transform(meanArray[i]);
+        let y2 = transform(meanArray[i+1]);
         let activation = constrain(map(mouseX-(x1+x2)/2+0.75*mouseWidth,0,mouseWidth,0,1),0,1);
         if(show_all_curve){
             activation = 1;
@@ -488,7 +488,7 @@ function drawCurve2(){
             let from = color(50, 50, 50, 200*activation);
             let to = color(255,50,0,200*activation);
             let h = (meanArray[i]+meanArray[i+1])/2;
-            let inter = lerpColor(from,to,1.2*map(this.h,valmin,valmax,0,1));
+            let inter = lerpColor(from,to,1.2*map(h,valmin,valmax,0,1));
             //console.log(inter);
             stroke(inter);
         }
@@ -509,7 +509,7 @@ function drawCurve2(){
       fill(0,af*255);
       noStroke();
       
-      text(floor(precision*meanArray[i])/precision,x+7,y-12);
+      text(floor(precision*meanArray[i])/precision,x-7,y+13);
     }
 
     strokeWeight(4.0);
