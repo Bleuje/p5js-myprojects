@@ -255,7 +255,7 @@ function setup() {
 }
 
 let show_curve = true;
-let show_curve = false;
+let show_curve2 = false;
 let show_all_curve = false;
 
 function myCheckedEvent() {
@@ -281,7 +281,7 @@ function myCheckedEvent2() {
   }
 }
 
-function myCheckedEvent2() {
+function myCheckedEvent3() {
   if (this.checked()) {
     console.log('Checking!');
     show_all_curve = true;
