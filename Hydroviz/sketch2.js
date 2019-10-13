@@ -92,10 +92,10 @@ function setMinMax(keyWord){
     //console.log("all data",all_data);
     //console.log("data",all_data.data);
     let value = all_data.data[249-11+i-arrayOffset][keyWord];
-    console.log(value);
+    //console.log(value);
     valmin = Math.min(value,valmin);
     valmax = Math.max(value,valmax);
-    console.log("valmin",valmin,"valmax",valmax);
+    //console.log("valmin",valmin,"valmax",valmax);
   }
   //valmin = mn;
   //valmax = mx;
@@ -103,6 +103,26 @@ function setMinMax(keyWord){
 
 var year = 2018;
 var arrayOffset = 0;
+
+var K = 10;
+
+meanArray = [];
+
+function setMeanArray(keyWord){
+  for(let i=0;i<n;i++){
+    let sum = 0;
+    for(let j=1;j<=K;j++){
+      sum += all_data.data[249-11+i-n*j][keyWord];
+    }
+    sum = sum/K;
+    meanArray[i] = sum;
+  }
+  for(let i=0;i<n;i++){
+    let value = meanArray[i];
+    valmin = Math.min(value,valmin);
+    valmax = Math.max(value,valmax);
+  }
+}
 
 function initialize(item){
     removeEvent();
@@ -115,6 +135,7 @@ function initialize(item){
             let x = map(i,0,n-1,margin,cnv.width-margin);
             array[i] = new algae(all_data.data[249-11+i-arrayOffset][keyWord],x);
         }
+        setMeanArray(keyWord);
     } else if(item=="Matières en suspension"){
       let keyWord = "matieres";
         setMinMax(keyWord);
@@ -123,6 +144,7 @@ function initialize(item){
             let test = new particles(all_data.data[249-11+i-arrayOffset][keyWord],x,"suspension");
             array[i] = test;
         }
+        setMeanArray(keyWord);
     } else if(item=="Oxygène"){
       let keyWord = "oxygene";
         setMinMax(keyWord);
@@ -131,6 +153,7 @@ function initialize(item){
             let test = new particles(all_data.data[249-11+i-arrayOffset][keyWord],x,"oxygene");
             array[i] = test;
         }
+        setMeanArray(keyWord);
     } else if(item=="Chlorophylle"){
       let keyWord = "chlorophylle";
         setMinMax(keyWord);
@@ -139,6 +162,7 @@ function initialize(item){
             let test = new algae(all_data.data[249-11+i-arrayOffset][keyWord],x,"chlorophyll");
             array[i] = test;
         }
+        setMeanArray(keyWord);
     } else if(item=="pH"){
       let keyWord = "ph";
         setMinMax(keyWord);
@@ -147,6 +171,7 @@ function initialize(item){
             let test = new phrectangle(all_data.data[249-11+i-arrayOffset][keyWord],x);
             array[i] = test;
         }
+        setMeanArray(keyWord);
     } else if(item=="Salinité"){
       let keyWord = "salinite";
         setMinMax(keyWord);
@@ -155,6 +180,7 @@ function initialize(item){
             let test = new salt(all_data.data[249-11+i-arrayOffset][keyWord],x);
             array[i] = test;
         }
+        setMeanArray(keyWord);
     } else if(item=="Température"){
       let keyWord = "temperature";
         setMinMax(keyWord);
@@ -163,6 +189,7 @@ function initialize(item){
             let test = new temperature_value(all_data.data[249-11+i-arrayOffset][keyWord],x);
             array[i] = test;
         }
+        setMeanArray(keyWord);
     }
 }
 
@@ -215,6 +242,10 @@ function setup() {
     checkbox2 = createCheckbox(' Afficher la courbe', false);
     checkbox2.parent("canvas");
     checkbox2.changed(myCheckedEvent2);
+    
+    checkbox3 = createCheckbox(' Afficher la courbe moyenne', false);
+    checkbox3.parent("canvas");
+    checkbox3.changed(myCheckedEvent3);
 
     but = createButton("Plus d'infos");
     but.parent("canvas");
@@ -224,6 +255,7 @@ function setup() {
 }
 
 let show_curve = true;
+let show_curve = false;
 let show_all_curve = false;
 
 function myCheckedEvent() {
@@ -243,6 +275,17 @@ function myCheckedEvent2() {
     console.log('Checking!');
     show_all_curve = true;
     show_curve = true;
+  } else {
+    console.log('Unchecking!');
+    show_all_curve = false;
+  }
+}
+
+function myCheckedEvent2() {
+  if (this.checked()) {
+    console.log('Checking!');
+    show_all_curve = true;
+    show_curve2 = true;
   } else {
     console.log('Unchecking!');
     show_all_curve = false;
@@ -290,6 +333,10 @@ function draw() {
   
       if(show_curve){
           drawCurve();
+      }
+      
+      if(show_curve2){
+          drawCurve2();
       }
   
       if(item=="Température"){
@@ -388,6 +435,71 @@ function drawCurve(){
         point(x,y);
     }
 }
+
+function drawCurve2(){
+    stroke(35,35,200);
+    noFill();
+    strokeWeight(3.0);
+
+    //beginShape();
+    for(let i=0;i<n-1;i++){
+        let x1 = map(i,0,n-1,margin,cnv.width-margin);
+        let x2 = map(i+1,0,n-1,margin,cnv.width-margin);
+        let y1 = transform(meanArray);
+        let y2 = transform(meanArray);
+        let activation = constrain(map(mouseX-(x1+x2)/2+0.75*mouseWidth,0,mouseWidth,0,1),0,1);
+        if(show_all_curve){
+            activation = 1;
+        }
+
+        stroke(35,100*activation);
+
+        if(item=="Température"){
+            //console.log("Here!\n");
+            let from = color(50, 50, 50, 200*activation);
+            let to = color(255,50,0,200*activation);
+            let h = (meanArray[i]+meanArray[i+1])/2;
+            let inter = lerpColor(from,to,1.2*map(this.h,valmin,valmax,0,1));
+            //console.log(inter);
+            stroke(inter);
+        }
+
+        line(x1,y1,x2,y2);
+
+        //vertex(x,y);
+    }
+    //endShape();
+    
+    let precision = 1000.0;
+    
+    for(let i=0;i<n;i++){
+      let x = map(i,0,n-1,margin,cnv.width-margin);
+      let y = transform(meanArray[i]);
+      let af = exp(-abs(x-mouseX)/25.0);
+      
+      fill(0,af*255);
+      noStroke();
+      
+      text(floor(precision*meanArray[i])/precision,x+7,y-12);
+    }
+
+    strokeWeight(4.0);
+    stroke(15,15,220);
+
+    for(let i=0;i<n;i++){
+        let x = map(i,0,n-1,margin,cnv.width-margin);
+        let y = transform(meanArray[i]);
+        
+        let activation = constrain(map(mouseX-x+0.75*mouseWidth,0,mouseWidth,0,1),0,1);
+        if(show_all_curve){
+            activation = 1;
+        }
+        stroke(15,255*activation);
+        
+        point(x,y);
+    }
+}
+
 
 var item = "Nitrates";
 
