@@ -312,13 +312,13 @@ months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aou
 function unit(){
     let str;
     if (item == "Nitrates"){
-      str = "(&micro mol/L)";
+      str = "(μmol/L)";
   }
   else if (item == "Température") {
     str = "°C";
   }
   else if (item == "Salinité") {
-    str = "(&micro mol/L)";
+    str = "(μmol/L)";
   }
   else if (item == "pH") {
     str = "";
@@ -330,7 +330,7 @@ function unit(){
     str = "(mL/L)";
   }
   else if (item == "Chlorophylle") {
-    str = "(&micro g/L)";
+    str = "(μg/L)";
   }
   
   return str;
