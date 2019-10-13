@@ -205,11 +205,10 @@ function setup() {
     //sel.position(10, 10);
 
 
-
-    sel.option("Nitrates");
     sel.option("Température");
-    sel.option("Salinité");
+    sel.option("Nitrates");
     sel.option("Chlorophylle");
+    sel.option("Salinité");
     sel.option("pH");
     sel.option("Oxygène");
     sel.option("Matières en suspension");
@@ -357,7 +356,12 @@ function currentValue(){
     str = "0,4";
   }
   
-  return str;
+  let prefix= "";
+  if(item!="Nitrates"){
+    prefix = "Aujourd'hui à 6h00 : ";
+  }
+  
+  return prefix+str;
 }
 
 var nothingyet = true;
@@ -399,7 +403,7 @@ function draw() {
       }
       
       let str = unit();
-      let str2 = "Aujourd'hui à 6h00 : " + currentValue();
+      let str2 = currentValue();
       
       //stroke(255);
       let precision = 1000.0;
