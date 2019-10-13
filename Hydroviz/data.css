@@ -102,10 +102,6 @@ body {
   width: 100%;
 }
 
-#divButton {
-  display: flex;
-  flex-direction: row;
-}
 
 #canvas {
     margin-top: 10px;
