@@ -246,6 +246,7 @@ function setup() {
     checkbox3 = createCheckbox(' Afficher la courbe moyenne (en rouge)', false);
     checkbox3.parent("canvas");
     checkbox3.changed(myCheckedEvent3);
+    checkbox3.style('color', '#ff0000')
 
     but = createButton("Plus d'infos");
     but.parent("canvas");
@@ -284,11 +285,10 @@ function myCheckedEvent2() {
 function myCheckedEvent3() {
   if (this.checked()) {
     console.log('Checking!');
-    show_all_curve = true;
     show_curve2 = true;
   } else {
     console.log('Unchecking!');
-    show_all_curve = false;
+    show_curve2 = false;
   }
 }
 
@@ -366,12 +366,12 @@ function draw() {
           draw_thermometer();
       }
   
-      textSize(15);
+      textSize(19);
       fill(15);
       noStroke();
   
       for(let i=0;i<12;i++){
-          text(months[i],map(i,0,n-1,margin,cnv.width-margin)-20,cnv.height-15);
+          text(months[i],map(i,0,n-1,margin,cnv.width-margin)-30,cnv.height-15);
       }
       
       let str = unit();
