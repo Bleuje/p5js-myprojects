@@ -243,7 +243,7 @@ function setup() {
     checkbox2.parent("canvas");
     checkbox2.changed(myCheckedEvent2);
     
-    checkbox3 = createCheckbox(' Afficher la courbe moyenne (en rouge)', false);
+    checkbox3 = createCheckbox(' Afficher la courbe moyenne 2008-2017', false);
     checkbox3.parent("canvas");
     checkbox3.changed(myCheckedEvent3);
     checkbox3.style('color', '#ff0000')
